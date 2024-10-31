@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wdth,wght@95.1,318&display=swap');
+@import 'search.scss';
+@import 'navbar.scss';
+
+*{
+    font-family: "Afacad Flux", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+
+                                                                 /*SLIDER*/
+@media (max-width: 575px) { /* Adjust the max-width to your needs */
+    .sort-by-row {
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 100%;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+    }
+    
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 100%;
+    }
+    
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+}
+                                                                 /*MOUNTAINS WITH MAPS*/
+
+.mountain-column {
+    padding: 1rem;
+    background-color: #ffffff; // White background for the mountain column
+    border-radius: 8px; // Rounded corners
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Subtle shadow
+    max-height: 100vh; // Prevent exceeding viewport height
+    overflow-y: auto; // Scroll if content exceeds height
+
+    .mountain-container { // New class for the container
+        position: relative; // Necessary for proper positioning of child elements
+        overflow: hidden; // Prevents the image from overflowing its container
+        border-radius: 8px; // Rounded corners
+
+        .mountain-pic {
+            width: 100%; // Full width for images
+            height: 250px; // Fixed height for image box
+            border-radius: 8px; // Rounded corners
+            object-fit: cover; // Ensure the image covers the box while maintaining aspect ratio
+            transition: transform 0.3s ease; // Smooth scaling effect
+
+            &:hover {
+                transform: scale(1.1); // Scales the image up by 10% on hover
+            }
+        }
+    }
+
+    .about-mountain {
+        p {
+            margin: 0; // Remove default margin
+        }
+    }
+}
+
+
+.map-container {
+    height: auto; // Full height for the map container
+    background-color: #e9ecef; // Light gray background for the map
+    border-radius: 8px; // Rounded corners
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Subtle shadow
+
+    #map-iframe {
+        height: 100%; // Full height for the map iframe
+        border-radius: 8px; // Rounded corners
+    }
+}
+
+.list-group-item {
+    border: none; // Remove borders
+    background-color: red; // Background color for list items
+    height: 500px !important;
+
+    .mountains {
+        .about-mountain {
+            height: 150px; // Set a fixed height for the description area
+            overflow-y: auto; // Enable vertical scrolling
+        }
+
+        .bookmark-icon {
+            position: absolute; // Position it absolutely within the mountains div
+            top: 30px; // Distance from the top
+            right: 30px; // Distance from the right
+            font-size: 24px; // Adjust size as needed
+            color: #000000; // Change color to your preference
+            background-color: white;
+            padding: 5px;   
+            border-radius: 20px;
+            cursor: pointer; // Change cursor to pointer for better UX
+            transition: color 0.3s; // Optional: add a transition for hover effect
+
+            &:hover {
+                color: green; // Change color on hover
+            }
+        }
+    }
+}
+
+
+
+
+                                                         /*FOOTER*/
+.footer1{
+    background-color: rgb(47, 126, 47); /* Lighter green */
+
+    .ftr-icon{
+        color: rgb(255, 255, 255);
+        font-size: 50px;
+    }
+
+    .footer-title {
+        color: white;
+        position: relative; // Set position to relative for positioning the pseudo-element
+    }
+    .footer1-des{
+        color: white;
+    }
+}
+
+
+
+
+@media (max-width: 768px) {
+    .footer-title {
+        font-size: 1.5rem; // Adjust font size for smaller screens
+    }
+
+    .des{
+        text-wrap: wrap;
+    }
+    .social-icons a {
+        padding: 10px; // Adjust padding for smaller screens
+        margin: 5px; // Reduce margin for smaller screens
+    }
+}
+

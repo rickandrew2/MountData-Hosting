@@ -1,0 +1,214 @@
+                                                                 /*NAVIGATION BAR*/
+.navbar-container {
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    background: transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+    .nav-item {
+        position: relative;
+        margin: 10px;
+    }
+
+    a {
+        color: rgb(0, 0, 0);
+
+        &:hover {
+            color: green;
+        }
+    }
+
+    .nav-login {
+        border-radius: 20px;
+        text-align: center;
+
+        .profilecon {
+            background-color: transparent;
+
+            .profilepic {
+                border-radius: 50%;
+                display: inline;
+            }
+
+            .username {
+                display: none;
+            }
+        }
+    }
+}
+
+.nav-link.navlog {
+    border-radius: 20px;
+    text-decoration: none;
+    background-color: green !important;
+    color: white !important;
+
+    &:hover {
+        background-color: rgb(0, 0, 0); /* Change background to black on hover */
+        color: rgb(255, 255, 255) !important; /* Change text color to white on hover */
+    }
+}
+
+
+
+
+.dropdown-menu {
+    position: absolute;
+    left: -50px;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    max-width: 100%;
+    min-width: 50px;
+
+    li {
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+
+            &:hover {
+                background-color: #F0F0F0;
+            }
+
+            .dd-icon {
+                margin-right: 8px;
+                font-size: 23px;
+                color: #000000;
+                padding: 5px;
+                background-color: #E0E0E0;
+                border-radius: 10px;
+            }
+
+            .dd-text {
+                font-size: 17px;
+                font-weight: 400;
+                color: rgb(0, 0, 0);
+            }
+        }
+    }
+}
+
+/* Media Queries for Responsive Display */
+/* Hide profile picture on small screens */
+@media (max-width: 991px) {
+    li {
+
+        .nav-link {
+            text-align: center; /* Center the text for the nav link */
+        }
+    
+        .dropdown-menu {
+            width: 100%;
+
+            .dropdown-item {
+                display: flex; /* Use flexbox for alignment */
+                align-items: center; /* Center items vertically */
+                justify-content: center; /* Center items horizontally */
+                text-align: center; /* Center text for dropdown items */
+    
+                .dd-icon, .dd-text {
+                    text-align: center; /* Center text for icon and text */
+                }
+            }
+        }
+    }
+
+    .nav-login{
+
+        .profilepic { /* Ensure you are targeting the correct element */
+            display: none; /* Hide the profile picture */
+        }
+
+        .username { /* Also, ensure this targets the correct element */
+            display: inline !important; /* Show the username */
+            color: black; /* Change color if necessary */
+        }
+
+        
+        a { /* Target the <a> tag inside .nav-login */
+            border-radius: 20px; /* Rounded corners */
+            color: rgb(0, 0, 0);
+            text-decoration: none; /* Remove underline */
+
+            &:active {
+                background-color: transparent;
+                color: rgb(255, 255, 255) !important; /* Change text color to white on hover */
+            }
+        }
+
+        }
+
+
+
+    .dropdown-menu{
+        width: 100%;
+
+        li {
+            .dropdown-item{
+                width: 100%;
+            }
+        }
+    }   
+
+    .dropdown-menu-end{
+        width: 100%;
+
+        .dd-item-login{
+            color: white !important;
+        }
+    }
+}
+
+/* Show profile picture on larger screens */
+@media (min-width: 991px) {
+
+    .username {
+        display: none; /* Hide the username */
+    }
+
+    .nav-login .profilepic { /* Ensure you are targeting the correct element */
+        display: inline !important; /* Hide the profile picture */
+        
+    }
+}                        
+
+.search-container {
+    display: inline-flex; /* Keep inline-flex for horizontal alignment */
+    align-items: center;
+    border: 2px solid #ccc; /* Light border for the input */
+    border-radius: 50px; /* Round border for the input container */
+    padding: 5px 15px;
+    flex: 1; /* Allow the search container to grow and shrink */
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 15px; /* Space between the search bar and navigation links */
+    background-color: #fff; /* White background for input */
+
+    .material-symbols-outlined {
+        font-size: 24px;
+        color: #000000; /* Icon color */
+        margin-right: 10px; /* Space between icon and input */
+    }
+
+    .search-bar {
+        border: none; /* Remove default border */
+        outline: none; /* Remove outline on focus */
+        padding: 10px;
+        width: 100%; /* Full width for the input */
+        font-size: 1rem;
+        border-radius: 50px; /* Rounded edges */
+        &::placeholder {
+            color: #aaa; /* Placeholder text color */
+        }
+    }
+
+    &:hover {
+        border: solid 1px green;
+    }
+
+  
+}

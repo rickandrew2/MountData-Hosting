@@ -1,0 +1,497 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wdth,wght@95.1,318&display=swap');
+
+*{
+    font-family: "Afacad Flux", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.custom-input {
+    height: 31px; /* Set a desired height */
+    padding: 10px; /* Adjust padding as needed */
+}
+
+
+.btn-outline-secondary {
+    padding: 5px 10px; /* Adjusts padding */
+    font-size: 0.8rem; /* Smaller font size */
+    width: auto;
+}
+
+.input-group .btn {
+    height: 130%; /* Makes button height the same as input */
+    border-radius: 0 0.25rem 0.25rem 0; /* Rounds only the outer corners */
+}
+
+
+/* Use flexbox for form container to make it responsive */
+.form-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    width: 100%;
+    max-width: 800px; /* Adjust container width */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px; /* Optional, depending on your design */
+}
+
+.img-fluid {
+    max-width: 80%; /* Adjust this value as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.login-img {
+    width: 700px; /* Set the desired width */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 100%; /* Make it responsive */
+}
+
+
+.custom-green {
+    background-color: #28a745; /* Green background */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+}
+
+.custom-green:hover {
+    background-color: #218838; /* Darker green for hover effect */
+}
+
+form {
+    width: 100%; /* Ensure the form takes full width of the container */
+}
+
+form input {
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%; /* Make inputs full width */
+    margin-bottom: 15px; /* Add space between inputs */
+}
+
+form button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Make button full width */
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+input[type="password"] + button {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+
+/* Google reCAPTCHA styling */
+.g-recaptcha {
+    max-width: 100%; /* Ensure the CAPTCHA doesn't overflow */
+    margin: 0 auto; /* Center the CAPTCHA */
+}
+
+
+
+
+
+                                                                                                /* Register link styling */
+.register-link {
+    margin-top: 20px;
+    text-align: center; /* Center text for better aesthetics */
+}
+
+.register-link p {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.register-link a button {
+    background-color: transparent;
+    color: #2980B9;
+    border: 1px solid #2980B9;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Register button hover effect */
+.register-link a button:hover {
+    background-color: #2980B9;
+    color: white;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Back link styling */
+.back-link {
+    margin-bottom: 20px; /* Space between the back link and the heading */
+    text-align: left; /* Align the text to the left */
+}
+
+.back-link a {
+    text-decoration: none; /* Remove underline from link */
+}
+
+.back-link a i {
+    font-size: 24px; /* Size of the back icon */
+    color: #2980B9; /* Icon color */
+    cursor: pointer; /* Cursor style on hover */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+/* Hover effect for back icon */
+.back-link a i:hover {
+    color: #1A73E8; /* Change color on hover */
+}
+
+.error-message {
+    color: red; /* Change to your desired color */
+    margin-bottom: 10px; /* Space below the message */
+    text-align: center; /* Center the message */
+    font-weight: bold; /* Make it bold */
+}
+
+                                                                 /*NAVIGATION BAR*/
+/* NAVIGATION BAR */
+.navbar-container {
+    width: 100%;
+    z-index: 10; /* Ensure nav is above other elements */
+    background: transparent; /* Maintain transparent background */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow */
+    display: flex; /* Use flexbox for horizontal alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between items */
+}
+
+.nav-item {
+    position: relative; /* Ensures the dropdown menu positions itself relative to this item */
+    margin: 10px; /* Adjusts spacing between nav items */
+}
+
+.navbar-container a {
+    color: rgb(0, 0, 0); /* Default link color */
+}
+
+.navbar-container a:hover {
+    color: green;
+}
+
+.nav-login {
+    border-radius: 20px; /* Rounded corners */
+    text-align: center; /* Centers text inside the button */
+}
+
+.nav-login a {
+    border-radius: 20px; /* Rounded corners */
+    color: white;
+    text-decoration: none; /* Remove underline */
+    background-color: green;
+}
+
+.nav-login a:hover {
+    background-color: rgb(0, 0, 0); /* Change background to black on hover */
+    color: rgb(255, 255, 255) !important; /* Change text color to white on hover */
+}
+
+.dropdown-menu {
+    position: absolute; /* Positions dropdown menu */
+    left: -50px; /* Moves the dropdown menu to the left */
+    z-index: 1000; /* Ensures the dropdown appears above other elements */
+    background-color: white; /* Sets a background color for the dropdown */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow */
+    padding: 5px; /* Adds padding around the dropdown */
+    width: 200px; /* Adjusts the width of the dropdown menu */
+    min-width: 100%; /* Minimum width for the dropdown */
+}
+
+.dropdown-menu li .dropdown-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+
+}
+
+.dropdown-menu li .dropdown-item:hover {
+    background-color: #F0F0F0; /* Change background to light gray on hover */
+}
+
+.dd-icon {
+    margin-right: 8px;
+    font-size: 23px; /* Adjust icon size */
+    color: #000000; 
+    padding: 5px;
+    background-color: #E0E0E0; /* Light Gray */
+    border-radius: 10px;
+}
+
+.dd-text {
+    font-size: 17px;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+}
+
+/* Media Queries for Responsive Display */
+/* Hide profile picture on small screens */
+@media (max-width: 991px) {
+    li .nav-link {
+        text-align: center; /* Center the text for the nav link */
+    }
+
+    .dropdown-menu {
+        width: 100%;
+    }
+
+    .dropdown-menu .dropdown-item {
+        display: flex; /* Use flexbox for alignment */
+        align-items: center; /* Center items vertically */
+        justify-content: center; /* Center items horizontally */
+        text-align: center; /* Center text for dropdown items */
+    }
+
+    .dropdown-menu .dropdown-item .dd-icon,
+    .dropdown-menu .dropdown-item .dd-text {
+        text-align: center; /* Center text for icon and text */
+    }
+
+    .nav-login .profilepic { /* Ensure you are targeting the correct element */
+        display: none; /* Hide the profile picture */
+    }
+
+    .nav-login .username { /* Also, ensure this targets the correct element */
+        display: inline !important; /* Show the username */
+        color: black; /* Change color if necessary */
+    }
+
+    .nav-login a { /* Target the <a> tag inside .nav-login */
+        border-radius: 20px; /* Rounded corners */
+        color: rgb(0, 0, 0);
+        text-decoration: none; /* Remove underline */
+    }
+
+    .nav-login a:active {
+        background-color: transparent;
+        color: rgb(255, 255, 255) !important; /* Change text color to white on active */
+    }
+
+    .dropdown-menu {
+        width: 100%;
+    }
+
+    .dropdown-menu li .dropdown-item {
+        width: 100%;
+    }
+
+    .dropdown-menu-end {
+        width: 100%;
+    }
+
+    .dropdown-menu-end .dd-item-login {
+        color: white !important;
+    }
+}
+
+
+.search-container {
+    display: inline-flex; /* Keep inline-flex for horizontal alignment */
+    align-items: center;
+    border: 2px solid #ccc; /* Light border for the input */
+    border-radius: 50px; /* Round border for the input container */
+    padding: 5px 15px;
+    flex: 1; /* Allow the search container to grow and shrink */
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 15px; /* Space between the search bar and navigation links */
+    background-color: #fff; /* White background for input */
+}
+
+.search-container .material-symbols-outlined {
+    font-size: 24px;
+    color: #000000; /* Icon color */
+    margin-right: 10px; /* Space between icon and input */
+}
+
+.search-container .search-bar {
+    border: none; /* Remove default border */
+    outline: none; /* Remove outline on focus */
+    padding: 10px;
+    width: 100%; /* Full width for the input */
+    font-size: 1rem;
+    border-radius: 50px; /* Rounded edges */
+}
+
+.search-container .search-bar::placeholder {
+    color: #aaa; /* Placeholder text color */
+}
+
+.search-container:hover {
+    border: solid 1px green;
+}
+
+.login{
+    max-width: 100vw !important; /* Set your desired max width */
+    width: 100%; /* Make it responsive */
+    margin: 0 auto; /* Center it */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px; /* Reduce padding on smaller screens */
+    }
+
+    h2 {
+        font-size: 1.5rem; /* Adjust heading size */
+    }
+
+    input, button {
+        padding: 12px; /* Increase padding for better usability */
+    }
+
+    .register-link {
+        width: 100%; /* Ensure the register link takes full width */
+    }
+
+    .back-link {
+        width: 100%; /* Ensure the back link takes full width */
+        text-align: center; /* Center text on smaller screens */
+    }
+}
+
+.search-results {
+    position: absolute; /* Keep it absolute for positioning */
+    background-color: white;
+    width: 100%; /* Full width of the search bar */
+    max-width: 25em; /* Maximum width */
+    max-height: 300px; /* Limit height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    z-index: 10; /* Ensure it stays above other elements */
+    box-shadow: 0 2px 4px rgb(0, 0, 0); /* Shadow */
+    border-radius: 5px; /* Rounded corners */
+    top: 80%; /* Position below the search bar */
+    left: 7em; /* Align to the left */
+}
+
+@media (max-width: 768px) {
+    .search-results {
+        max-width: 90%; /* Use a larger percentage for small screens */
+        left: 5%; /* Center the search results */
+    }
+}
+
+.result-item {
+    display: flex; /* Ensure flexbox layout */
+    padding: 15px; /* Padding for each item */
+    border-bottom: 1px solid #eee; /* Bottom border for separation */
+    transition: background-color 0.3s, transform 0.3s; /* Transition for hover effects */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px;
+}
+
+.result-item:last-child {
+    border-bottom: none; /* Remove border for last item */
+}
+
+.result-item:hover {
+    background-color: #f5f5f5; /* Light gray background on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+}
+
+.material-symbols-outlined {
+    align-self: center;
+    font-size: 24px; /* Icon size */
+    color: #000000; /* Icon color */
+    margin-right: 10px; /* Space between icon and text */
+    max-height: 50px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#search-icon{
+    background-color: transparent !important;
+}
+
+.mountain-name {
+    align-self: center;
+    font-weight: bold; /* Bold name */
+    margin: 0 10px; /* Margin for spacing */
+    flex: 1; /* Allow this to grow and take available space */
+}
+
+.location,
+.elevation {
+    margin: 5px;
+    text-align: center;
+    margin: 0; /* Reset margin */
+    font-size: 0.9em; /* Smaller font size for location and elevation */
+    color: #555; /* Darker text color for better readability */
+}
+
+
+/* FOOTER */
+.footer1 {
+    background-color: rgb(47, 126, 47); /* Lighter green */
+}
+
+.footer1 .ftr-icon {
+    color: rgb(255, 255, 255);
+    font-size: 50px;
+}
+
+.footer1 .footer-title {
+    color: white;
+    position: relative; /* Set position to relative for positioning the pseudo-element */
+}
+
+.footer1 .footer1-des {
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .footer1 .footer-title {
+        font-size: 1.5rem; /* Adjust font size for smaller screens */
+    }
+
+    .footer1 .footer1-des {
+        word-wrap: break-word; /* Change to word-wrap for CSS */
+    }
+
+    .footer1 .social-icons a {
+        padding: 10px; /* Adjust padding for smaller screens */
+        margin: 5px; /* Reduce margin for smaller screens */
+    }
+}
+
+

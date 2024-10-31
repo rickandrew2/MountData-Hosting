@@ -1,0 +1,873 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wdth,wght@95.1,318&display=swap');
+@import 'search.scss';
+@import 'navbar.scss';
+
+*{
+    font-family: "Afacad Flux", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+
+.mountain-container {
+     width: 75%; 
+     margin: 0 auto; 
+     border-radius: 10px;
+     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Add this line for border shadow */
+
+    .mountain-pic-header {  
+        color: white;
+        height: 60vh;
+        width: 100%;
+        background-size: cover;
+        background-repeat: no-repeat; /* Prevent the image from repeating */
+        border-radius: 10px 10px 0 0;
+        cursor: pointer;
+        margin: 0 !important;
+        
+        .mountain-name-wrapper {
+            padding-top: auto;  
+
+            h3{
+                align-self: flex-end;  /* Ensure it aligns properly in the flex container */
+                color: white;          /* Text color */
+                font-size: 3rem;       /* Increase font size for better visibility */
+                letter-spacing: 2px;   /* Adjust letter spacing for clarity */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add text shadow for depth */
+                margin: 0;             /* Remove default margin */
+            }
+        }
+        
+        .mountain-name {
+            margin: 0; /* Reset the margin inside the heading if any */
+        }
+        
+        .difficulty-n-rating{
+
+            h4, .fas{
+                align-self: flex-end;  /* Ensure it aligns properly in the flex container */
+                color: white;          /* Text color */
+                font-size: 1.5rem;       /* Increase font size for better visibility */
+                letter-spacing: 2px;   /* Adjust letter spacing for clarity */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add text shadow for depth */
+                margin: 0;             /* Remove default margin */
+            }
+        }
+
+        h5{
+                align-self: flex-end;  /* Ensure it aligns properly in the flex container */
+                color: white;          /* Text color */
+                font-size: 1.5rem;       /* Increase font size for better visibility */
+                letter-spacing: 2px;   /* Adjust letter spacing for clarity */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add text shadow for depth */
+                margin: 0;             /* Remove default margin */
+        }
+
+    }
+}
+
+.rating-container {
+
+    .reviews-content {
+        
+        .write-review{
+         
+            h5{
+                background-color: rgb(3, 66, 3);
+                color: white;
+                padding: 1rem;
+                border-radius: 30px;
+
+                &:active {
+                    background-color: rgb(0, 102, 0); // Darker green when active
+                    transform: scale(0.97); // Slight shrinking effect on click
+                }
+        
+                &:hover, &:focus {
+                    background-color: rgb(0, 102, 0); // Same effect for hover or focus
+                }
+            }
+        }
+        .search-reviews{
+            
+            .search-bar{
+                width: 100%; 
+                padding: 1rem 2.5rem;
+                border-radius: 30px;
+                background-color: #E0E0E0;
+                border: none;
+                outline: none;
+
+                &:focus {
+                    background-color: white;
+                    border: solid 1px black;
+                }
+            }
+
+            .filter-icon {
+                transition: outline 0.3s ease;
+                background-color: white; 
+                border-radius: 50%; 
+                padding: 0.5rem 0.8rem;
+            }
+            
+            .filter-icon:hover {
+                outline: 2px solid black;
+            }
+        }
+    }
+}
+
+.photos-content {
+
+
+    .upload-photos {
+
+        h5 {
+            background-color: rgb(3, 66, 3);
+            color: white;
+            padding: 1rem;
+            border-radius: 30px;
+
+            &:active {
+                background-color: rgb(0, 102, 0); // Darker green when active
+                transform: scale(0.97); // Slight shrinking effect on click
+            }
+
+            &:hover, &:focus {
+                background-color: rgb(0, 102, 0); // Same effect for hover or focus
+            }
+        }
+    }
+}
+
+
+
+/* Lightbox style */
+.lightbox {
+    display: none; /* Initially hidden */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Hide overflowing elements */
+    background-color: rgba(0, 0, 0, 0.8); /* Black with transparency */
+}
+
+/* Blurred background image */
+.lightbox-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px); /* Blur the background image */
+    z-index: -1; /* Behind the lightbox content */
+}
+
+/* Lightbox content (full-screen image) */
+.lightbox-content {
+    margin: auto;
+    display: block;
+    width: 90%;
+    max-width: 1200px; /* Larger maximum size for full-screen image */
+    position: relative;
+    z-index: 10; /* Sit on top of the blurred background */
+}
+
+/* Close button (X) */
+.lightbox .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 20; /* Sit on top of everything */
+}
+
+/* Zoom animation */
+.lightbox-content {
+    animation: zoom 0.6s;
+}
+
+@keyframes zoom {
+    from {transform: scale(0.1)} 
+    to {transform: scale(1)}
+}
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    
+
+    .mountain-pic-header {
+        padding: 1rem; /* Add padding for touch devices */
+    }
+
+    .description {
+        margin: 1rem; /* Reduce margin on smaller screens */
+    }
+
+
+    .tab-buttons .underline {
+        display: none; /* Hide underline for mobile */
+    }
+}
+
+@media (max-width: 576px) {
+    .length, .elevation, .bookmark {
+        text-align: center; /* Center text for small screens */
+        margin-bottom: 1rem; /* Add space between items */
+    }
+
+    .reviews-content, .photos-content {
+        margin: 1rem 0; /* Add margin for content */
+    }
+
+    .search-reviews input {
+        width: 90%; /* Reduce input width for small screens */
+    }
+}
+
+                                                                 //UPLOAD PHOTOS
+#caption {
+    border: 2px solid #ccc; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Padding for input */
+    width: 100%; /* Full width */
+    max-width: 700px; /* Maximum width */
+    height: 200px;
+    font-size: 16px; /* Font size */
+}
+
+#swal2-confirm {
+    background-color: #28a745; /* Green background for the upload button */
+    color: white; /* Text color */
+}
+
+.tab-buttons {
+    position: relative;
+    padding: 10px;
+    display: flex; /* Enable flexbox for alignment */
+
+    .reviews-btn, .photos-btn {
+        flex: 1; /* Make buttons take equal space */
+        background-color: rgb(126, 143, 10); /* Base background color */
+        color: white; /* Text color */
+        padding: 10px; /* Padding for buttons */
+        border: none; /* Remove border */
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+
+       
+    }
+
+    .active {
+        background-color: green; /* Active tab background color */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Add shadow for emphasis */
+    }
+}
+
+
+
+.responsive-image {
+    width: calc(25% - 10px); /* Adjust the width based on your preference */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+    .responsive-image {
+        width: calc(50% - 10px); /* Two images per row on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .responsive-image {
+        width: calc(100% - 10px); /* One image per row on mobile screens */
+    }
+}
+
+.photos {
+    padding: 2rem 1rem;
+
+    .photo-item {
+        // Adjust dimensions as necessary
+        width: 100%; // Makes the photo item take full width
+        height: 200px; // Set a fixed height
+    
+        img {
+            width: 100%; // Ensures image takes full width of the photo item
+            height: 100%; // Ensures image takes full height of the photo item
+            object-fit: cover; // Ensures the aspect ratio is maintained while covering the area
+            border-radius: 0.5rem; // Slightly more rounded corners
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); // Increased shadow for depth
+            border: solid 1px black;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out; // Smooth transition
+    
+            &:hover {
+                transform: scale(1.1); // Slightly larger scale on hover
+            }
+        }
+    }
+
+    .no-reviews {
+        text-align: center;
+
+        .material-symbols-outlined {
+            display: block;
+            margin: 0 auto;
+            font-size: 4rem; // Slightly smaller size
+        }
+
+        h3 {
+            margin-top: 1rem;
+            font-size: 1.5rem; // Larger title for better visibility
+        }
+
+        p {
+            color: #8a8a8a;
+            font-size: 1rem; // Base font size for better readability
+        }
+    }
+}
+
+.photo-container img {
+    display: inline-block; /* Ensure images are in line */
+    max-width: 150px; /* Adjust as needed */
+    margin-right: 10px; /* Space between images */
+}
+
+.review-photos {
+    margin-top: 1rem;
+
+    &.d-flex {
+        display: flex;
+        overflow-x: auto; // Enable horizontal scrolling
+        max-width: 100%;  // Prevent overflow
+    }
+}
+
+.review-photo {
+    max-width: 250px; // Maximum width of individual photos
+    max-height: 200px; // Maximum height of individual photos
+    margin: 5px;      // Margin around each photo
+}
+
+.modalWrapper {
+    background-color: rgba(0, 0, 0, 0.8);
+
+    #photoModal {
+        position: fixed;
+        top: 50px;
+        z-index: 1050;
+        width: 100%;
+        height: 100%;
+        display: none; // Initially hidden
+
+        @media (max-width: 600px) {
+            top: 200px; 
+           
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%; // Sets width to 80% of the modal
+            max-width: 700px; // Maximum width for larger screens
+            height: 300px; // Fixed height for modal images (adjust as necessary)
+            object-fit: cover; // Ensure the image covers the area without distortion
+            border: solid 1px white; // Optional: Border for better visibility
+
+            @media (max-width: 600px) {
+                width: 80%; // Increase width for small screens
+                max-width: none; // Remove max width to allow full width
+                height: 200px; // Adjust height for smaller screens if necessary
+            }
+        }
+
+        #modalOverlay {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffffff;
+            text-align: center;
+            display: flex;
+            flex-direction: column; // Stack items vertically
+            align-items: center; // Center items horizontally
+            gap: 0.5rem; // Space between profile pic and text
+            padding: 5px; // Padding for better visibility
+            margin-top: 10px; // 10px space below the photo modal
+
+            #profilePic {
+                width: 40px; // Size of the profile picture
+                height: 40px; // Size of the profile picture
+                border-radius: 50%; // Keep round shape
+                border: 2px solid white; // Optional: Add a border for better contrast
+            }
+
+            span {
+                font-size: 1rem; // Base font size
+                text-align: center; // Center text
+            }
+
+            #username {
+                white-space: nowrap; // Prevent username from wrapping
+                overflow: hidden; // Hide overflow
+                text-overflow: ellipsis; // Add ellipsis if text is too long
+            }
+
+            @media (max-width: 600px) {
+                span {
+                    font-size: 0.9rem; // Adjust font size for small screens
+                }
+            }
+        }
+
+        .close {
+            position: fixed;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+
+            &:hover {
+                color: #ccc;
+            }
+
+            @media (max-width: 600px) {
+                top: 10px; // Adjust position for smaller screens
+                right: 20px; // Adjust position for smaller screens
+                font-size: 1.5rem; // Reduce size for better fit
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+                                                            //PAGINATION
+                                                            .pagination {
+    display: flex;
+    justify-content: center; /* Center pagination */
+    align-items: center; /* Align items vertically */
+    margin-top: 20px; /* Space above pagination */
+}
+
+// Variables
+$primary-color: #006400;
+$background-color: #ddd;
+$image-size-default: 70px;
+$image-size-small: 50px;
+
+$primary-color: #006400;
+$hover-background: #f0f0f0;
+$current-background: #ddd;
+$border-color: #ccc;
+
+                                                                    // Pagination Styles
+.pagination {
+    a {
+        text-decoration: none !important;
+        color: $primary-color !important;
+        padding: 10px 15px; // Increased space around links
+        border: 2px solid $border-color; // Thicker border for links
+        border-radius: 5px; // Rounded corners
+        transition: background-color 0.3s; // Smooth transition
+        font-size: 1.1em; // Slightly larger font size
+
+        &:hover {
+            background-color: $hover-background; // Change background on hover
+        }
+    }
+
+    strong {
+        padding: 10px 15px; // Increased space around current page
+        background-color: $current-background; // Background for current page
+        border-radius: 5px; // Rounded corners for current page
+        font-size: 1.1em; // Slightly larger font size for current page
+    }
+
+    // Media Queries for Responsiveness
+    @media (max-width: 768px) {
+        a,
+        strong {
+            padding: 8px 12px; // Adjust padding for medium screens
+            font-size: 1em; // Slightly smaller font size for medium screens
+        }
+    }
+
+    @media (max-width: 480px) {
+        a,
+        strong {
+            padding: 6px 10px; // Further adjust padding for small screens
+            font-size: 0.9em; // Smaller font size for small screens
+        }
+    }
+}
+
+
+// Review Comment Styles
+.review-comment {
+    display: flex; // Use flexbox for layout
+    flex-wrap: wrap; // Allow wrapping for smaller screens
+    align-items: center; // Center items vertically
+    margin-top: 20px; // Maintain spacing
+
+    img {
+        width: $image-size-default; // Default width
+        height: $image-size-default; // Default height
+        border-radius: 50%; // Make the image circular
+        object-fit: cover; // Ensures the image fits well within the circle
+    }
+
+    .name-n-date {
+        flex: 1; // Allow this to grow and fill available space
+        margin-left: 15px; // Space between image and text
+
+        h5,
+        h6 {
+            margin: 0; // Remove default margins for headings
+        }
+    }
+
+    @media (max-width: 768px) {
+        img {
+            width: $image-size-small; // Adjust width for smaller screens
+            height: $image-size-small; // Adjust height for smaller screens
+        }
+
+        .name-n-date {
+            h5 {
+                font-size: 1rem; // Smaller font size for username
+            }
+
+            h6 {
+                font-size: 0.875rem; // Smaller font size for date
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        flex-direction: column; // Stack elements vertically on very small screens
+        align-items: flex-start; // Align items to the start
+
+        .name-n-date {
+            margin-left: 0; // Remove left margin when stacked
+        }
+    }
+}
+
+.comment-text {
+    max-width: 100%; /* Ensure it doesn't exceed the container width */
+    word-wrap: break-word; /* Break long words onto the next line */
+    overflow-wrap: break-word; /* For better compatibility */
+    margin: 10px 0; /* Optional: add some margin for spacing */
+}
+
+
+
+@media (max-width: 768px) {
+    .length p, .elevation p {
+      font-size: 1rem; /* Adjust this size for smaller screens */
+    }
+  
+    .bookmark .material-symbols-outlined {
+      font-size: 2rem; /* Adjust icon size for smaller screens */
+    }
+  }
+  
+  @media (max-width: 576px) {
+
+    .upload-photos-btn{
+        margin-left: 20px;
+        margin-top: 20px;
+    }
+
+    .length p, .elevation p {
+      font-size: 0.9rem; /* Further adjust for even smaller screens */
+    }
+  
+    .bookmark .material-symbols-outlined {
+      font-size: 1.8rem !important;
+    }
+  }
+
+                                                           /*FOOTER*/
+.footer1{
+    background-color: rgb(47, 126, 47); /* Lighter green */
+
+    .ftr-icon{
+        color: rgb(255, 255, 255);
+        font-size: 50px;
+    }
+
+    .footer-title {
+        color: white;
+        position: relative; // Set position to relative for positioning the pseudo-element
+    }
+    .footer1-des{
+        color: white;
+    }
+}
+
+.swal-title-custom {
+    font-size: 1.5rem;
+    color: #4CAF50; /* Customize success color */
+}
+
+.swal-icon-custom {
+    border: 2px solid #4CAF50; /* Customize success icon border */
+}
+
+.animated {
+    animation-duration: 0.5s;
+}
+
+.fadeInDown {
+    animation-name: fadeInDown;
+}
+
+.shake {
+    animation-name: shake;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+}
+
+
+.star-rating {
+    font-size: 50px; /* Increase size of stars */
+    color: gray; /* Default color (unselected) */
+    cursor: pointer; /* Pointer cursor */
+    display: inline-flex; /* Align stars horizontally */
+    transition: color 0.2s ease; /* Smooth transition */
+}
+
+.star {
+    margin: 0 5px; /* Add some spacing between stars */
+    transition: transform 0.2s ease; /* Smooth scaling on hover */
+}
+
+.star:hover {
+    transform: scale(1.3); /* Scale up on hover */
+    color: #b2e0b2; /* Change color on hover */
+}
+
+/* To keep selected stars highlighted */
+.star.selected {
+    color: #b2e0b2; /* Color for selected stars */
+}
+
+.weather-info {
+    background-color: #f2f2f2;
+    color: #333333; // Darker text for better readability
+    padding: 20px; // Add padding for spacing
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); // Subtle shadow for depth
+    text-align: center; // Center text
+    margin-bottom: 20px; // Space below the current weather section
+
+    h3 {
+        font-size: 1.5rem; // Increase font size for the title
+        font-weight: bold; // Bold font weight
+        margin-bottom: 15px; // Space below the title
+        color: #333;; // Set title color to a bright blue for emphasis
+        text-transform: uppercase; // Uppercase title for emphasis
+    }
+
+    img {
+        max-width: 100px; // Limit image size for better layout
+        margin-bottom: 10px; // Space between image and text
+    }
+
+    p {
+        margin: 5px 0; // Space between paragraphs
+        font-weight: bold; // Bold text for temperature
+    }
+}
+
+.forecast-info {
+    display: flex; // Use flexbox to arrange items in a row
+    overflow-x: auto; // Allow horizontal scrolling on small screens
+    padding: 10px; // Padding for better spacing
+    justify-content: space-around;
+
+    .forecast-day {
+        background-color: #f8f9fa; // Light gray background for forecast days
+        border: 1px solid #dee2e6; // Border for forecast days
+        border-radius: 8px; // Rounded corners
+        padding: 10px; // Padding inside forecast day
+        transition: transform 0.2s; // Animation for hover effect       
+        height: 100%;
+        max-height: auto;
+
+
+        &:hover {
+            transform: scale(1.05); // Slightly enlarge on hover
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Shadow on hover
+
+            @media(max-with: 576px){
+                transform: none; // Slightly enlarge on hover
+                box-shadow: none; // Shadow on hover
+            }
+        }
+
+       
+
+        p {
+            margin: 5px 0; // Space between paragraphs
+            font-weight: normal; // Normal font weight for forecast descriptions
+        }
+
+        img {
+            max-width: 60px; // Limit image size for forecast icons
+            margin-bottom: 5px; // Space between image and text
+        }
+    }
+}
+
+.contact-numbers {
+    padding: 20px;
+    margin-top: 20px; // Space above the section
+    text-align: center; // Center text
+    margin-bottom: 20px; // Space below the current weather section
+
+    h5 {
+        text-align: center;
+        margin-bottom: 15px; // Increased spacing below the header
+        font-size: 1.5rem; // Larger font size for the header
+        color: #333333; // Darker text for better readability
+        border-bottom: 2px solid #28a745; // Green underline
+        padding-bottom: 10px; // Spacing between header and list
+        font-weight: bold; // Bold header for emphasis
+    }
+
+    .contact-list {
+        list-style-type: none; // No default list styling
+        padding-left: 0; // Reset padding
+        display: flex; // Flexbox for alignment
+        overflow-x: auto; // Allow horizontal scrolling
+        overflow-y: hidden; // Hide vertical overflow
+        max-width: 100%; // Ensure it doesn't exceed the container width
+
+        li {
+            flex: 1 0 auto; // Allow items to grow and shrink but maintain a minimum width
+            margin: 10px; // Increased margin for separation
+            font-size: 1.2rem; // Slightly larger font for list items
+            color: #28a745; // Green color for contact numbers
+            display: flex; // Flexbox for alignment
+            align-items: center; // Center vertically
+            transition: background-color 0.3s ease; // Smooth background transition
+            padding: 10px; // Padding for better click area
+            border-radius: 5px; // Rounded corners for list items
+
+            &:hover {
+                background-color: #f8f9fa; // Light gray background on hover
+                color: #218838; // Darker green on hover
+                cursor: pointer; // Pointer cursor on hover
+            }
+
+            i {
+                margin-right: 10px; // Space between icon and text
+                font-size: 1.2rem; // Size of the icon
+                color: #28a745; // Green color for the icon
+            }
+        }
+    }
+}
+
+
+.bookmark {
+    .bookmark-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.2s ease;
+  
+      &:focus {
+        outline: none;
+      }
+  
+      // Subtle hover effect for both states
+      &:hover {
+        transform: scale(1.05);
+      }
+  
+      &.bookmarked {
+        background-color: #4CAF50; // green background for bookmarked state
+        color: white;
+        border-radius: 50%; // circular shape
+        padding: 0.5rem; // minimal padding for compactness
+        transform: scale(1.1); // subtle scale effect
+        box-shadow: 0px 0px 5px rgba(76, 175, 80, 0.4); // subtle glowing effect
+  
+        span {
+          color: white; // icon color in bookmarked state
+        }
+      }
+  
+      // Default icon styling
+      span {
+        font-size: 1.3rem;
+        color: #555;
+        transition: color 0.3s ease;
+  
+        &:hover {
+          color: #333; // hover color for icon
+        }
+      }
+
+      .material-symbols-outlined {
+        font-size: 2rem; // Slightly smaller size
+        }
+    }
+  }
+  
+  
+  

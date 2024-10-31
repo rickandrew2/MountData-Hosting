@@ -1,0 +1,943 @@
+@import url("https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wdth,wght@95.1,318&display=swap");
+.search-results {
+  position: absolute; /* Keep it absolute for positioning */
+  background-color: white;
+  width: 100%; /* Full width of the search bar */
+  max-width: 25em;
+  max-height: 300px; /* Limit height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  z-index: 10; /* Ensure it stays above other elements */
+  box-shadow: 0 2px 4px rgb(0, 0, 0); /* Shadow */
+  border-radius: 5px; /* Rounded corners */
+  top: 80%; /* Position below the search bar */
+  left: 7em; /* Align to the left */
+}
+@media (max-width: 768px) {
+  .search-results { /* Adjust for smaller screens */
+    max-width: 90%; /* Use a larger percentage for small screens */
+    left: 5%; /* Center the search results */
+  }
+}
+.search-results .result-item {
+  display: flex; /* Ensure flexbox layout */
+  padding: 15px; /* Padding for each item */
+  border-bottom: 1px solid #eee; /* Bottom border for separation */
+  transition: background-color 0.3s, transform 0.3s; /* Transition for hover effects */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px;
+}
+.search-results .result-item:last-child {
+  border-bottom: none; /* Remove border for last item */
+}
+.search-results .result-item:hover {
+  background-color: #f5f5f5; /* Light gray background on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+}
+.search-results .result-item .material-symbols-outlined {
+  align-self: center;
+  font-size: 24px; /* Icon size */
+  color: #666; /* Icon color */
+  margin-right: 10px; /* Space between icon and text */
+  background-color: lightgray;
+  max-height: 50px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.search-results .result-item .mountain-name {
+  align-self: center;
+  font-weight: bold; /* Bold name */
+  margin: 0 10px; /* Margin for spacing */
+  flex: 1; /* Allow this to grow and take available space */
+}
+.search-results .result-item .location,
+.search-results .result-item .elevation {
+  margin: 5px;
+  text-align: center;
+  margin: 0; /* Reset margin */
+  font-size: 0.9em; /* Smaller font size for location and elevation */
+  color: #555; /* Darker text color for better readability */
+}
+
+/*NAVIGATION BAR*/
+.navbar-container {
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+  background: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.navbar-container .nav-item {
+  position: relative;
+  margin: 10px;
+}
+.navbar-container a {
+  color: rgb(0, 0, 0);
+}
+.navbar-container a:hover {
+  color: green;
+}
+.navbar-container .nav-login {
+  border-radius: 20px;
+  text-align: center;
+}
+.navbar-container .nav-login .profilecon {
+  background-color: transparent;
+}
+.navbar-container .nav-login .profilecon .profilepic {
+  border-radius: 50%;
+  display: inline;
+}
+.navbar-container .nav-login .profilecon .username {
+  display: none;
+}
+
+.nav-link.navlog {
+  border-radius: 20px;
+  text-decoration: none;
+  background-color: green !important;
+  color: white !important;
+}
+.nav-link.navlog:hover {
+  background-color: rgb(0, 0, 0); /* Change background to black on hover */
+  color: rgb(255, 255, 255) !important; /* Change text color to white on hover */
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: -50px;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  max-width: 100%;
+  min-width: 50px;
+}
+.dropdown-menu li .dropdown-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+.dropdown-menu li .dropdown-item:hover {
+  background-color: #F0F0F0;
+}
+.dropdown-menu li .dropdown-item .dd-icon {
+  margin-right: 8px;
+  font-size: 23px;
+  color: #000000;
+  padding: 5px;
+  background-color: #E0E0E0;
+  border-radius: 10px;
+}
+.dropdown-menu li .dropdown-item .dd-text {
+  font-size: 17px;
+  font-weight: 400;
+  color: rgb(0, 0, 0);
+}
+
+/* Media Queries for Responsive Display */
+/* Hide profile picture on small screens */
+@media (max-width: 991px) {
+  li .nav-link {
+    text-align: center; /* Center the text for the nav link */
+  }
+  li .dropdown-menu {
+    width: 100%;
+  }
+  li .dropdown-menu .dropdown-item {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    text-align: center; /* Center text for dropdown items */
+  }
+  li .dropdown-menu .dropdown-item .dd-icon, li .dropdown-menu .dropdown-item .dd-text {
+    text-align: center; /* Center text for icon and text */
+  }
+  .nav-login .profilepic { /* Ensure you are targeting the correct element */
+    display: none; /* Hide the profile picture */
+  }
+  .nav-login .username { /* Also, ensure this targets the correct element */
+    display: inline !important; /* Show the username */
+    color: black; /* Change color if necessary */
+  }
+  .nav-login a { /* Target the <a> tag inside .nav-login */
+    border-radius: 20px; /* Rounded corners */
+    color: rgb(0, 0, 0);
+    text-decoration: none; /* Remove underline */
+  }
+  .nav-login a:active {
+    background-color: transparent;
+    color: rgb(255, 255, 255) !important; /* Change text color to white on hover */
+  }
+  .dropdown-menu {
+    width: 100%;
+  }
+  .dropdown-menu li .dropdown-item {
+    width: 100%;
+  }
+  .dropdown-menu-end {
+    width: 100%;
+  }
+  .dropdown-menu-end .dd-item-login {
+    color: white !important;
+  }
+}
+/* Show profile picture on larger screens */
+@media (min-width: 991px) {
+  .username {
+    display: none; /* Hide the username */
+  }
+  .nav-login .profilepic { /* Ensure you are targeting the correct element */
+    display: inline !important; /* Hide the profile picture */
+  }
+}
+.search-container {
+  display: inline-flex; /* Keep inline-flex for horizontal alignment */
+  align-items: center;
+  border: 2px solid #ccc; /* Light border for the input */
+  border-radius: 50px; /* Round border for the input container */
+  padding: 5px 15px;
+  flex: 1; /* Allow the search container to grow and shrink */
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 15px; /* Space between the search bar and navigation links */
+  background-color: #fff; /* White background for input */
+}
+.search-container .material-symbols-outlined {
+  font-size: 24px;
+  color: #000000; /* Icon color */
+  margin-right: 10px; /* Space between icon and input */
+}
+.search-container .search-bar {
+  border: none; /* Remove default border */
+  outline: none; /* Remove outline on focus */
+  padding: 10px;
+  width: 100%; /* Full width for the input */
+  font-size: 1rem;
+  border-radius: 50px; /* Rounded edges */
+}
+.search-container .search-bar::placeholder {
+  color: #aaa; /* Placeholder text color */
+}
+.search-container:hover {
+  border: solid 1px green;
+}
+
+* {
+  font-family: "Afacad Flux", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.mountain-container {
+  width: 75%;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Add this line for border shadow */
+}
+.mountain-container .mountain-pic-header {
+  color: white;
+  height: 60vh;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+  margin: 0 !important;
+}
+.mountain-container .mountain-pic-header .mountain-name-wrapper {
+  padding-top: auto;
+}
+.mountain-container .mountain-pic-header .mountain-name-wrapper h3 {
+  align-self: flex-end; /* Ensure it aligns properly in the flex container */
+  color: white; /* Text color */
+  font-size: 3rem; /* Increase font size for better visibility */
+  letter-spacing: 2px; /* Adjust letter spacing for clarity */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add text shadow for depth */
+  margin: 0; /* Remove default margin */
+}
+.mountain-container .mountain-pic-header .mountain-name {
+  margin: 0; /* Reset the margin inside the heading if any */
+}
+.mountain-container .mountain-pic-header .difficulty-n-rating h4, .mountain-container .mountain-pic-header .difficulty-n-rating .fas {
+  align-self: flex-end; /* Ensure it aligns properly in the flex container */
+  color: white; /* Text color */
+  font-size: 1.5rem; /* Increase font size for better visibility */
+  letter-spacing: 2px; /* Adjust letter spacing for clarity */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add text shadow for depth */
+  margin: 0; /* Remove default margin */
+}
+.mountain-container .mountain-pic-header h5 {
+  align-self: flex-end; /* Ensure it aligns properly in the flex container */
+  color: white; /* Text color */
+  font-size: 1.5rem; /* Increase font size for better visibility */
+  letter-spacing: 2px; /* Adjust letter spacing for clarity */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add text shadow for depth */
+  margin: 0; /* Remove default margin */
+}
+
+.rating-container .reviews-content .write-review h5 {
+  background-color: rgb(3, 66, 3);
+  color: white;
+  padding: 1rem;
+  border-radius: 30px;
+}
+.rating-container .reviews-content .write-review h5:active {
+  background-color: rgb(0, 102, 0);
+  transform: scale(0.97);
+}
+.rating-container .reviews-content .write-review h5:hover, .rating-container .reviews-content .write-review h5:focus {
+  background-color: rgb(0, 102, 0);
+}
+.rating-container .reviews-content .search-reviews .search-bar {
+  width: 100%;
+  padding: 1rem 2.5rem;
+  border-radius: 30px;
+  background-color: #E0E0E0;
+  border: none;
+  outline: none;
+}
+.rating-container .reviews-content .search-reviews .search-bar:focus {
+  background-color: white;
+  border: solid 1px black;
+}
+.rating-container .reviews-content .search-reviews .filter-icon {
+  transition: outline 0.3s ease;
+  background-color: white;
+  border-radius: 50%;
+  padding: 0.5rem 0.8rem;
+}
+.rating-container .reviews-content .search-reviews .filter-icon:hover {
+  outline: 2px solid black;
+}
+
+.photos-content .upload-photos h5 {
+  background-color: rgb(3, 66, 3);
+  color: white;
+  padding: 1rem;
+  border-radius: 30px;
+}
+.photos-content .upload-photos h5:active {
+  background-color: rgb(0, 102, 0);
+  transform: scale(0.97);
+}
+.photos-content .upload-photos h5:hover, .photos-content .upload-photos h5:focus {
+  background-color: rgb(0, 102, 0);
+}
+
+/* Lightbox style */
+.lightbox {
+  display: none; /* Initially hidden */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Hide overflowing elements */
+  background-color: rgba(0, 0, 0, 0.8); /* Black with transparency */
+}
+
+/* Blurred background image */
+.lightbox-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(20px); /* Blur the background image */
+  z-index: -1; /* Behind the lightbox content */
+}
+
+/* Lightbox content (full-screen image) */
+.lightbox-content {
+  margin: auto;
+  display: block;
+  width: 90%;
+  max-width: 1200px; /* Larger maximum size for full-screen image */
+  position: relative;
+  z-index: 10; /* Sit on top of the blurred background */
+}
+
+/* Close button (X) */
+.lightbox .close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 20; /* Sit on top of everything */
+}
+
+/* Zoom animation */
+.lightbox-content {
+  animation: zoom 0.6s;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+/* Responsive styles */
+@media (max-width: 768px) {
+  .mountain-pic-header {
+    padding: 1rem; /* Add padding for touch devices */
+  }
+  .description {
+    margin: 1rem; /* Reduce margin on smaller screens */
+  }
+  .tab-buttons .underline {
+    display: none; /* Hide underline for mobile */
+  }
+}
+@media (max-width: 576px) {
+  .length, .elevation, .bookmark {
+    text-align: center; /* Center text for small screens */
+    margin-bottom: 1rem; /* Add space between items */
+  }
+  .reviews-content, .photos-content {
+    margin: 1rem 0; /* Add margin for content */
+  }
+  .search-reviews input {
+    width: 90%; /* Reduce input width for small screens */
+  }
+}
+#caption {
+  border: 2px solid #ccc; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px; /* Padding for input */
+  width: 100%; /* Full width */
+  max-width: 700px; /* Maximum width */
+  height: 200px;
+  font-size: 16px; /* Font size */
+}
+
+#swal2-confirm {
+  background-color: #28a745; /* Green background for the upload button */
+  color: white; /* Text color */
+}
+
+.tab-buttons {
+  position: relative;
+  padding: 10px;
+  display: flex; /* Enable flexbox for alignment */
+}
+.tab-buttons .reviews-btn, .tab-buttons .photos-btn {
+  flex: 1; /* Make buttons take equal space */
+  background-color: rgb(126, 143, 10); /* Base background color */
+  color: white; /* Text color */
+  padding: 10px; /* Padding for buttons */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+.tab-buttons .active {
+  background-color: green; /* Active tab background color */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Add shadow for emphasis */
+}
+
+.responsive-image {
+  width: calc(25% - 10px); /* Adjust the width based on your preference */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+  .responsive-image {
+    width: calc(50% - 10px); /* Two images per row on smaller screens */
+  }
+}
+@media (max-width: 480px) {
+  .responsive-image {
+    width: calc(100% - 10px); /* One image per row on mobile screens */
+  }
+}
+.photos {
+  padding: 2rem 1rem;
+}
+.photos .photo-item {
+  width: 100%;
+  height: 200px;
+}
+.photos .photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border: solid 1px black;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+.photos .photo-item img:hover {
+  transform: scale(1.1);
+}
+.photos .no-reviews {
+  text-align: center;
+}
+.photos .no-reviews .material-symbols-outlined {
+  display: block;
+  margin: 0 auto;
+  font-size: 4rem;
+}
+.photos .no-reviews h3 {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+.photos .no-reviews p {
+  color: #8a8a8a;
+  font-size: 1rem;
+}
+
+.photo-container img {
+  display: inline-block; /* Ensure images are in line */
+  max-width: 150px; /* Adjust as needed */
+  margin-right: 10px; /* Space between images */
+}
+
+.review-photos {
+  margin-top: 1rem;
+}
+.review-photos.d-flex {
+  display: flex;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.review-photo {
+  max-width: 250px;
+  max-height: 200px;
+  margin: 5px;
+}
+
+.modalWrapper {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.modalWrapper #photoModal {
+  position: fixed;
+  top: 50px;
+  z-index: 1050;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+@media (max-width: 600px) {
+  .modalWrapper #photoModal {
+    top: 200px;
+  }
+}
+.modalWrapper #photoModal .modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  height: 300px;
+  object-fit: cover;
+  border: solid 1px white;
+}
+@media (max-width: 600px) {
+  .modalWrapper #photoModal .modal-content {
+    width: 80%;
+    max-width: none;
+    height: 200px;
+  }
+}
+.modalWrapper #photoModal #modalOverlay {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 5px;
+  margin-top: 10px;
+}
+.modalWrapper #photoModal #modalOverlay #profilePic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+.modalWrapper #photoModal #modalOverlay span {
+  font-size: 1rem;
+  text-align: center;
+}
+.modalWrapper #photoModal #modalOverlay #username {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 600px) {
+  .modalWrapper #photoModal #modalOverlay span {
+    font-size: 0.9rem;
+  }
+}
+.modalWrapper #photoModal .close {
+  position: fixed;
+  top: 20px;
+  right: 35px;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modalWrapper #photoModal .close:hover {
+  color: #ccc;
+}
+@media (max-width: 600px) {
+  .modalWrapper #photoModal .close {
+    top: 10px;
+    right: 20px;
+    font-size: 1.5rem;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center; /* Center pagination */
+  align-items: center; /* Align items vertically */
+  margin-top: 20px; /* Space above pagination */
+}
+
+.pagination a {
+  text-decoration: none !important;
+  color: #006400 !important;
+  padding: 10px 15px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  font-size: 1.1em;
+}
+.pagination a:hover {
+  background-color: #f0f0f0;
+}
+.pagination strong {
+  padding: 10px 15px;
+  background-color: #ddd;
+  border-radius: 5px;
+  font-size: 1.1em;
+}
+@media (max-width: 768px) {
+  .pagination a,
+  .pagination strong {
+    padding: 8px 12px;
+    font-size: 1em;
+  }
+}
+@media (max-width: 480px) {
+  .pagination a,
+  .pagination strong {
+    padding: 6px 10px;
+    font-size: 0.9em;
+  }
+}
+
+.review-comment {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 20px;
+}
+.review-comment img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.review-comment .name-n-date {
+  flex: 1;
+  margin-left: 15px;
+}
+.review-comment .name-n-date h5,
+.review-comment .name-n-date h6 {
+  margin: 0;
+}
+@media (max-width: 768px) {
+  .review-comment img {
+    width: 50px;
+    height: 50px;
+  }
+  .review-comment .name-n-date h5 {
+    font-size: 1rem;
+  }
+  .review-comment .name-n-date h6 {
+    font-size: 0.875rem;
+  }
+}
+@media (max-width: 480px) {
+  .review-comment {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .review-comment .name-n-date {
+    margin-left: 0;
+  }
+}
+
+.comment-text {
+  max-width: 100%; /* Ensure it doesn't exceed the container width */
+  word-wrap: break-word; /* Break long words onto the next line */
+  overflow-wrap: break-word; /* For better compatibility */
+  margin: 10px 0; /* Optional: add some margin for spacing */
+}
+
+@media (max-width: 768px) {
+  .length p, .elevation p {
+    font-size: 1rem; /* Adjust this size for smaller screens */
+  }
+  .bookmark .material-symbols-outlined {
+    font-size: 2rem; /* Adjust icon size for smaller screens */
+  }
+}
+@media (max-width: 576px) {
+  .upload-photos-btn {
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+  .length p, .elevation p {
+    font-size: 0.9rem; /* Further adjust for even smaller screens */
+  }
+  .bookmark .material-symbols-outlined {
+    font-size: 1.8rem !important;
+  }
+}
+/*FOOTER*/
+.footer1 {
+  background-color: rgb(47, 126, 47); /* Lighter green */
+}
+.footer1 .ftr-icon {
+  color: rgb(255, 255, 255);
+  font-size: 50px;
+}
+.footer1 .footer-title {
+  color: white;
+  position: relative;
+}
+.footer1 .footer1-des {
+  color: white;
+}
+
+.swal-title-custom {
+  font-size: 1.5rem;
+  color: #4CAF50; /* Customize success color */
+}
+
+.swal-icon-custom {
+  border: 2px solid #4CAF50; /* Customize success icon border */
+}
+
+.animated {
+  animation-duration: 0.5s;
+}
+
+.fadeInDown {
+  animation-name: fadeInDown;
+}
+
+.shake {
+  animation-name: shake;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}
+.star-rating {
+  font-size: 50px; /* Increase size of stars */
+  color: gray; /* Default color (unselected) */
+  cursor: pointer; /* Pointer cursor */
+  display: inline-flex; /* Align stars horizontally */
+  transition: color 0.2s ease; /* Smooth transition */
+}
+
+.star {
+  margin: 0 5px; /* Add some spacing between stars */
+  transition: transform 0.2s ease; /* Smooth scaling on hover */
+}
+
+.star:hover {
+  transform: scale(1.3); /* Scale up on hover */
+  color: #b2e0b2; /* Change color on hover */
+}
+
+/* To keep selected stars highlighted */
+.star.selected {
+  color: #b2e0b2; /* Color for selected stars */
+}
+
+.weather-info {
+  background-color: #f2f2f2;
+  color: #333333;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  margin-bottom: 20px;
+}
+.weather-info h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+  text-transform: uppercase;
+}
+.weather-info img {
+  max-width: 100px;
+  margin-bottom: 10px;
+}
+.weather-info p {
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.forecast-info {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  justify-content: space-around;
+}
+.forecast-info .forecast-day {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px;
+  transition: transform 0.2s;
+  height: 100%;
+  max-height: auto;
+}
+.forecast-info .forecast-day:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+@media (max-with: 576px) {
+  .forecast-info .forecast-day:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+.forecast-info .forecast-day p {
+  margin: 5px 0;
+  font-weight: normal;
+}
+.forecast-info .forecast-day img {
+  max-width: 60px;
+  margin-bottom: 5px;
+}
+
+.contact-numbers {
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.contact-numbers h5 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333333;
+  border-bottom: 2px solid #28a745;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+.contact-numbers .contact-list {
+  list-style-type: none;
+  padding-left: 0;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+.contact-numbers .contact-list li {
+  flex: 1 0 auto;
+  margin: 10px;
+  font-size: 1.2rem;
+  color: #28a745;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  padding: 10px;
+  border-radius: 5px;
+}
+.contact-numbers .contact-list li:hover {
+  background-color: #f8f9fa;
+  color: #218838;
+  cursor: pointer;
+}
+.contact-numbers .contact-list li i {
+  margin-right: 10px;
+  font-size: 1.2rem;
+  color: #28a745;
+}
+
+.bookmark .bookmark-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.2s ease;
+}
+.bookmark .bookmark-button:focus {
+  outline: none;
+}
+.bookmark .bookmark-button:hover {
+  transform: scale(1.05);
+}
+.bookmark .bookmark-button.bookmarked {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 50%;
+  padding: 0.5rem;
+  transform: scale(1.1);
+  box-shadow: 0px 0px 5px rgba(76, 175, 80, 0.4);
+}
+.bookmark .bookmark-button.bookmarked span {
+  color: white;
+}
+.bookmark .bookmark-button span {
+  font-size: 1.3rem;
+  color: #555;
+  transition: color 0.3s ease;
+}
+.bookmark .bookmark-button span:hover {
+  color: #333;
+}
+.bookmark .bookmark-button .material-symbols-outlined {
+  font-size: 2rem;
+}/*# sourceMappingURL=mountains_profiles.css.map */

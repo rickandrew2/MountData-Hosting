@@ -1,0 +1,365 @@
+@import url("https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wdth,wght@95.1,318&display=swap");
+.search-results {
+  position: absolute; /* Keep it absolute for positioning */
+  background-color: white;
+  width: 100%; /* Full width of the search bar */
+  max-width: 25em;
+  max-height: 300px; /* Limit height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  z-index: 10; /* Ensure it stays above other elements */
+  box-shadow: 0 2px 4px rgb(0, 0, 0); /* Shadow */
+  border-radius: 5px; /* Rounded corners */
+  top: 80%; /* Position below the search bar */
+  left: 7em; /* Align to the left */
+}
+@media (max-width: 768px) {
+  .search-results { /* Adjust for smaller screens */
+    max-width: 90%; /* Use a larger percentage for small screens */
+    left: 5%; /* Center the search results */
+  }
+}
+.search-results .result-item {
+  display: flex; /* Ensure flexbox layout */
+  padding: 15px; /* Padding for each item */
+  border-bottom: 1px solid #eee; /* Bottom border for separation */
+  transition: background-color 0.3s, transform 0.3s; /* Transition for hover effects */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px;
+}
+.search-results .result-item:last-child {
+  border-bottom: none; /* Remove border for last item */
+}
+.search-results .result-item:hover {
+  background-color: #f5f5f5; /* Light gray background on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+}
+.search-results .result-item .material-symbols-outlined {
+  align-self: center;
+  font-size: 24px; /* Icon size */
+  color: #666; /* Icon color */
+  margin-right: 10px; /* Space between icon and text */
+  background-color: lightgray;
+  max-height: 50px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.search-results .result-item .mountain-name {
+  align-self: center;
+  font-weight: bold; /* Bold name */
+  margin: 0 10px; /* Margin for spacing */
+  flex: 1; /* Allow this to grow and take available space */
+}
+.search-results .result-item .location,
+.search-results .result-item .elevation {
+  margin: 5px;
+  text-align: center;
+  margin: 0; /* Reset margin */
+  font-size: 0.9em; /* Smaller font size for location and elevation */
+  color: #555; /* Darker text color for better readability */
+}
+
+/*NAVIGATION BAR*/
+.navbar-container {
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+  background: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.navbar-container .nav-item {
+  position: relative;
+  margin: 10px;
+}
+.navbar-container a {
+  color: rgb(0, 0, 0);
+}
+.navbar-container a:hover {
+  color: green;
+}
+.navbar-container .nav-login {
+  border-radius: 20px;
+  text-align: center;
+}
+.navbar-container .nav-login .profilecon {
+  background-color: transparent;
+}
+.navbar-container .nav-login .profilecon .profilepic {
+  border-radius: 50%;
+  display: inline;
+}
+.navbar-container .nav-login .profilecon .username {
+  display: none;
+}
+
+.nav-link.navlog {
+  border-radius: 20px;
+  text-decoration: none;
+  background-color: green !important;
+  color: white !important;
+}
+.nav-link.navlog:hover {
+  background-color: rgb(0, 0, 0); /* Change background to black on hover */
+  color: rgb(255, 255, 255) !important; /* Change text color to white on hover */
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: -50px;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  max-width: 100%;
+  min-width: 50px;
+}
+.dropdown-menu li .dropdown-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+.dropdown-menu li .dropdown-item:hover {
+  background-color: #F0F0F0;
+}
+.dropdown-menu li .dropdown-item .dd-icon {
+  margin-right: 8px;
+  font-size: 23px;
+  color: #000000;
+  padding: 5px;
+  background-color: #E0E0E0;
+  border-radius: 10px;
+}
+.dropdown-menu li .dropdown-item .dd-text {
+  font-size: 17px;
+  font-weight: 400;
+  color: rgb(0, 0, 0);
+}
+
+/* Media Queries for Responsive Display */
+/* Hide profile picture on small screens */
+@media (max-width: 991px) {
+  li .nav-link {
+    text-align: center; /* Center the text for the nav link */
+  }
+  li .dropdown-menu {
+    width: 100%;
+  }
+  li .dropdown-menu .dropdown-item {
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    text-align: center; /* Center text for dropdown items */
+  }
+  li .dropdown-menu .dropdown-item .dd-icon, li .dropdown-menu .dropdown-item .dd-text {
+    text-align: center; /* Center text for icon and text */
+  }
+  .nav-login .profilepic { /* Ensure you are targeting the correct element */
+    display: none; /* Hide the profile picture */
+  }
+  .nav-login .username { /* Also, ensure this targets the correct element */
+    display: inline !important; /* Show the username */
+    color: black; /* Change color if necessary */
+  }
+  .nav-login a { /* Target the <a> tag inside .nav-login */
+    border-radius: 20px; /* Rounded corners */
+    color: rgb(0, 0, 0);
+    text-decoration: none; /* Remove underline */
+  }
+  .nav-login a:active {
+    background-color: transparent;
+    color: rgb(255, 255, 255) !important; /* Change text color to white on hover */
+  }
+  .dropdown-menu {
+    width: 100%;
+  }
+  .dropdown-menu li .dropdown-item {
+    width: 100%;
+  }
+  .dropdown-menu-end {
+    width: 100%;
+  }
+  .dropdown-menu-end .dd-item-login {
+    color: white !important;
+  }
+}
+/* Show profile picture on larger screens */
+@media (min-width: 991px) {
+  .username {
+    display: none; /* Hide the username */
+  }
+  .nav-login .profilepic { /* Ensure you are targeting the correct element */
+    display: inline !important; /* Hide the profile picture */
+  }
+}
+.search-container {
+  display: inline-flex; /* Keep inline-flex for horizontal alignment */
+  align-items: center;
+  border: 2px solid #ccc; /* Light border for the input */
+  border-radius: 50px; /* Round border for the input container */
+  padding: 5px 15px;
+  flex: 1; /* Allow the search container to grow and shrink */
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 15px; /* Space between the search bar and navigation links */
+  background-color: #fff; /* White background for input */
+}
+.search-container .material-symbols-outlined {
+  font-size: 24px;
+  color: #000000; /* Icon color */
+  margin-right: 10px; /* Space between icon and input */
+}
+.search-container .search-bar {
+  border: none; /* Remove default border */
+  outline: none; /* Remove outline on focus */
+  padding: 10px;
+  width: 100%; /* Full width for the input */
+  font-size: 1rem;
+  border-radius: 50px; /* Rounded edges */
+}
+.search-container .search-bar::placeholder {
+  color: #aaa; /* Placeholder text color */
+}
+.search-container:hover {
+  border: solid 1px green;
+}
+
+* {
+  font-family: "Afacad Flux", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+/*SLIDER*/
+@media (max-width: 575px) { /* Adjust the max-width to your needs */
+  .sort-by-row {
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 100%;
+  }
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+/*MOUNTAINS WITH MAPS*/
+.mountain-column {
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-height: 100vh;
+  overflow-y: auto;
+}
+.mountain-column .mountain-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.mountain-column .mountain-container .mountain-pic {
+  width: 100%;
+  height: 250px;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.mountain-column .mountain-container .mountain-pic:hover {
+  transform: scale(1.1);
+}
+.mountain-column .about-mountain p {
+  margin: 0;
+}
+
+.map-container {
+  height: auto;
+  background-color: #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.map-container #map-iframe {
+  height: 100%;
+  border-radius: 8px;
+}
+
+.list-group-item {
+  border: none;
+  background-color: red;
+  height: 500px !important;
+}
+.list-group-item .mountains .about-mountain {
+  height: 150px;
+  overflow-y: auto;
+}
+.list-group-item .mountains .bookmark-icon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 24px;
+  color: #000000;
+  background-color: white;
+  padding: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.list-group-item .mountains .bookmark-icon:hover {
+  color: green;
+}
+
+/*FOOTER*/
+.footer1 {
+  background-color: rgb(47, 126, 47); /* Lighter green */
+}
+.footer1 .ftr-icon {
+  color: rgb(255, 255, 255);
+  font-size: 50px;
+}
+.footer1 .footer-title {
+  color: white;
+  position: relative;
+}
+.footer1 .footer1-des {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .footer-title {
+    font-size: 1.5rem;
+  }
+  .des {
+    text-wrap: wrap;
+  }
+  .social-icons a {
+    padding: 10px;
+    margin: 5px;
+  }
+}/*# sourceMappingURL=maps.css.map */

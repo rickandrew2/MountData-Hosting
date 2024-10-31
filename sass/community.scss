@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wdth,wght@95.1,318&display=swap');
+@import 'search.scss';
+@import 'navbar.scss';
+
+*{
+    font-family: "Afacad Flux", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+// styles.scss
+
+// Variables for fixed sizes
+$photo-width: 400px; // Adjust as necessary
+$photo-height: 300px; // Adjust as necessary
+
+// Main container styles
+
+
+.main-content {
+    height: auto; /* Automatically adjust height based on content */
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    padding: 20px; /* Inner padding for spacing */
+    margin: 20px; /* Outer margin for spacing between elements */
+    background-color: #ffffff; /* Background color */
+
+    @media (max-width: 576px){
+        margin-right: 10px;
+    }
+
+}
+
+.img-container {
+    img {
+        transition: transform 0.3s ease; // Use transition to apply smooth effect
+        transform: scale(1); // Set the default scale
+
+        &:hover {
+            transform: scale(1.1); // Scale up on hover
+        }
+    }
+}
+
+
+
+
+.like-container {
+    display: flex;  // Ensure content is aligned horizontally
+    align-items: center;  // Center items vertically
+    padding: 12px 16px;  // Adjust padding for a more spacious look
+    background-color: #fff;  // Set a white background for contrast
+    transition: transform 0.2s ease, background-color 0.3s ease;  // Smooth transitions
+
+    &:hover {
+
+    }
+
+    .icon {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        transition: transform 0.2s, color 0.2s;
+    
+        .heart {
+            fill: none;
+            stroke: #ff4d4d;
+            stroke-width: 2;
+        }
+    
+        .heart-filled {
+            fill: #ff4d4d;
+            display: none; // Initially hidden
+        }
+    
+        &.liked {
+            .heart {
+                display: none; // Hide unfilled heart when liked
+            }
+            .heart-filled {
+                display: inline; // Show filled heart when liked
+            }
+            animation: likeEffect 0.6s forwards; // Trigger animation on like
+        }
+    }
+    
+
+    .like-count {
+        font-size: 14px; // Font size for like count
+        color: #6c757d; // Subtle text color
+    }
+}
+
+// Keyframes for like effect animation
+@keyframes likeEffect {
+    0% {
+        transform: scale(1); // Original size
+    }
+    50% {
+        transform: scale(1.5); // Scale up
+        color: #ff4d4d; // Change color for effect
+    }
+    100% {
+        transform: scale(1); // Back to original size
+        color: #ff4d4d; // Keep the like color
+    }
+}
+
+
+.container {
+  .community-section {
+    // User image styles
+    .user-image {
+      width: $photo-width;
+      height: $photo-height;
+      object-fit: cover; // Ensures the image covers the area without distortion
+      border-radius: 10px; // Rounded corners
+      overflow: hidden; // Hides any overflow
+      position: relative; // Necessary for absolute positioning of the inner elements if needed
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; // Makes sure the image fits within the dimensions
+      }
+    }
+
+    // Carousel styles
+    .carousel-inner {
+      .carousel-item {
+        img {
+          width: $photo-width; // Fixed width for carousel images
+          height: $photo-height; // Fixed height for carousel images
+          object-fit: cover; // Ensures image fits within the dimensions
+        }
+      }
+    }
+  }
+}
+
+.second-column {
+    background-color: #ffffff; // White background
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    padding: 1.5rem; /* Inner padding for spacing */
+    background-color: #ffffff; /* Background color */
+
+    h3 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #3f8b22; // Green to match theme, more vivid
+        font-weight: 600;
+        font-size: 2rem;
+    }
+
+    .list-unstyled {
+        margin-top: 1.5rem;
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            color: #2c3e50; // Primary text color
+
+            .icon {
+                font-size: 30px;
+                margin-right: 12px;
+                color: #3f8b22; // Green to match theme, more vivid
+                flex-shrink: 0;
+            }
+
+            .tip-content {
+                text-align: justify;
+                line-height: 1.5;
+                font-size: 1.2rem;
+            }
+
+            strong {
+                font-weight: 600;
+                color: #333333; // Slightly darker for strong emphasis
+            }
+        }
+    }
+
+    hr {
+        margin: 2rem 0;
+        border-top: 2px solid #eaeaea; // Light gray for subtle contrast
+    }
+
+    p {
+        margin-top: 1.5rem;
+        text-align: center;
+        color: #4a4a4a; // Muted text color
+        font-size: 1.5rem;
+    }
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    border-radius: 50%; /* Circular buttons */
+    transition:  transform 0.3s; /* Transition for hover effect */
+    display: flex; /* Center the icon within the button */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.carousel { 
+    .carousel-container {
+        opacity: 0;
+
+        &:hover {
+            opacity: 1;
+
+        }
+        .carousel-control-prev,
+        .carousel-control-next {
+        
+            .material-symbols-outlined {
+                font-size: 30px; /* Adjust size of the icons (you can change this value) */
+                color: rgb(255, 255, 255); /* Color of the icons */
+                transition: color 0.3s; /* Transition for color change */ 
+                background-color: #B0B3B8;
+                border-radius: 50%;
+                padding: 0.1em;
+            }
+
+            }
+        }
+    }
+
+    .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .tag-badge {
+        color: #3f8b22; /* Text color */
+        background-color: rgba(63, 139, 34, 0.1); /* Light green background */
+        padding: 0.4rem 0.8rem; /* Padding for better size */
+        border: 1px solid #3f8b22; /* Border color */
+        transition: background-color 0.3s, transform 0.2s; /* Transition effects */
+    }
+    
+    .tag-badge:hover {
+        background-color: #3f8b22; /* Change background on hover */
+        color: #ffffff !important; /* Change text color on hover */
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+    
+    .badge.bg-secondary {
+        color: #ffffff; /* Text color for 'No tags' */
+        background-color: #6c757d; /* Dark gray background for 'No tags' */
+    }
+    
+
+    .search-container {
+        display: flex;
+        align-items: center;
+        position: relative; // Position relative for positioning of icon
+        margin: 20px 0; // Space around the search bar
+    
+        .search-input {
+            width: 100%; // Full width for responsiveness
+            padding: 10px 40px; // Add padding for aesthetics
+            border: 1px solid transparent; // Border styling
+            border-radius: 20px; // Rounded corners
+            font-size: 16px; // Font size
+            transition: border-color 0.3s ease; // Smooth transition
+    
+            &:focus {
+            
+                outline: none; // Remove outline
+            }
+        }
+    
+        .search-icon {
+            position: absolute; // Position the icon
+            left: 10px; // Space from left
+            font-size: 24px; // Icon size
+            color: #000000; // Icon color
+            pointer-events: none; // Prevent interaction
+        }
+    }
+    
+    // Responsive Styles
+    @media (max-width: 768px) {
+        .search-input {
+            padding: 10px 30px; // Adjust padding for smaller screens
+            font-size: 14px; // Smaller font size
+        }
+    }
+    
+    
+
+
+
+

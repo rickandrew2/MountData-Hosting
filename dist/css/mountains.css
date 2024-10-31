@@ -1,0 +1,252 @@
+@import url("https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wdth,wght@95.1,318&display=swap");
+* {
+  font-family: "Afacad Flux", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+/*NAVIGATION BAR*/
+.navbar-container {
+  position: absolute; /* Position nav over the header */
+  width: 100%;
+  z-index: 10; /* Ensure nav is above other elements */
+  background: transparent; /* Maintain transparent background */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow */
+  display: flex; /* Use flexbox for horizontal alignment */
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space between items */
+}
+.navbar-container .nav-item {
+  position: relative; /* Ensures the dropdown menu positions itself relative to this item */
+  margin: 10px; /* Adjusts spacing between nav items */
+}
+.navbar-container a {
+  color: rgb(0, 0, 0); /* Default link color */
+}
+.navbar-container a:hover {
+  color: green;
+}
+.navbar-container .nav-login {
+  border-radius: 20px; /* Rounded corners */
+  text-align: center; /* Centers text inside the button */
+}
+.navbar-container .nav-login a { /* Target the <a> tag inside .nav-login */
+  border-radius: 20px; /* Rounded corners */
+  color: white;
+  text-decoration: none; /* Remove underline */
+  background-color: green;
+}
+.navbar-container .nav-login a:hover {
+  background-color: rgb(0, 0, 0); /* Change background to green on hover */
+  color: rgb(255, 255, 255) !important; /* Change text color to white on hover */
+}
+.navbar-container .dropdown-menu {
+  position: absolute; /* Positions dropdown menu */
+  left: -50px; /* Moves the dropdown menu to the left */
+  z-index: 1000; /* Ensures the dropdown appears above other elements */
+  background-color: white; /* Sets a background color for the dropdown */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow */
+  padding: 10px; /* Adds padding around the dropdown */
+  width: 200px; /* Adjusts the width of the dropdown menu (increase as needed) */
+  min-width: 100%; /* Minimum width for the dropdown */
+}
+.navbar-container .dropdown-menu li .dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px; /* Adjusts padding for each dropdown item */
+}
+.navbar-container .dropdown-menu li .dropdown-item:hover {
+  background-color: #F0F0F0;
+}
+.navbar-container .dropdown-menu li .dropdown-item .dd-icon {
+  margin-right: 8px;
+  font-size: 23px; /* Adjust icon size */
+  color: #000000;
+  padding: 5px;
+  background-color: #E0E0E0; /* Light Gray */
+  border-radius: 10px;
+}
+.navbar-container .dropdown-menu li .dropdown-item .dd-text {
+  font-size: 17px; /* Increase the font size */
+  color: black;
+}
+
+.search-container {
+  display: inline-flex; /* Keep inline-flex for horizontal alignment */
+  align-items: center;
+  border: 2px solid #ccc; /* Light border for the input */
+  border-radius: 50px; /* Round border for the input container */
+  padding: 5px 15px;
+  flex: 1; /* Allow the search container to grow and shrink */
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 15px; /* Space between the search bar and navigation links */
+  background-color: #fff; /* White background for input */
+}
+.search-container .material-symbols-outlined {
+  font-size: 24px;
+  color: #000000; /* Icon color */
+  margin-right: 10px; /* Space between icon and input */
+}
+.search-container .search-bar {
+  border: none; /* Remove default border */
+  outline: none; /* Remove outline on focus */
+  padding: 10px;
+  width: 100%; /* Full width for the input */
+  font-size: 1rem;
+  border-radius: 50px; /* Rounded edges */
+}
+.search-container .search-bar::placeholder {
+  color: #aaa; /* Placeholder text color */
+}
+.search-container:hover {
+  box-shadow: 0px 6px 12px rgba(83, 142, 6, 0.15); /* Add shadow on hover */
+}
+
+.mountain-container {
+  border: solid 1px black;
+  width: 75%;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+.mountain-container .mountain-pic-header {
+  color: white;
+  height: 40vh;
+  width: 100%;
+  background-image: url("/images/mt-sungay.JPG") !important;
+  background-size: cover;
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+  margin: 0 !important;
+}
+.mountain-container .mountain-pic-header .mountain-name-wrapper {
+  padding-top: auto;
+}
+.mountain-container .mountain-pic-header .mountain-name-wrapper h3 {
+  color: black;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+.mountain-container .mountain-pic-header .mountain-name {
+  margin: 0; /* Reset the margin inside the heading if any */
+}
+.mountain-container .tab-buttons {
+  position: relative;
+  border-bottom: solid 1px gray;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+.mountain-container .tab-buttons > div {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+.mountain-container .tab-buttons > div:hover {
+  background-color: #e0e0e0;
+}
+.mountain-container .tab-buttons .active {
+  font-weight: bold;
+}
+.mountain-container .tab-buttons .underline {
+  content: "";
+  display: block;
+  width: 100%;
+  min-width: 100px;
+  max-width: 615px;
+  height: 1px;
+  background-color: #000;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: left 0.3s ease;
+}
+
+/* Lightbox style */
+.lightbox {
+  display: none; /* Initially hidden */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Hide overflowing elements */
+  background-color: rgba(0, 0, 0, 0.8); /* Black with transparency */
+}
+
+/* Blurred background image */
+.lightbox-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(20px); /* Blur the background image */
+  z-index: -1; /* Behind the lightbox content */
+}
+
+/* Lightbox content (full-screen image) */
+.lightbox-content {
+  margin: auto;
+  display: block;
+  width: 90%;
+  max-width: 1200px; /* Larger maximum size for full-screen image */
+  position: relative;
+  z-index: 10; /* Sit on top of the blurred background */
+}
+
+/* Close button (X) */
+.lightbox .close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 20; /* Sit on top of everything */
+}
+
+/* Zoom animation */
+.lightbox-content {
+  animation: zoom 0.6s;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+/* Responsive styles */
+@media (max-width: 768px) {
+  .mountain-pic-header {
+    padding: 1rem; /* Add padding for touch devices */
+  }
+  .description {
+    margin: 1rem; /* Reduce margin on smaller screens */
+  }
+  .tab-buttons .underline {
+    display: none; /* Hide underline for mobile */
+  }
+}
+@media (max-width: 576px) {
+  .length, .elevation, .bookmark {
+    text-align: center; /* Center text for small screens */
+    margin-bottom: 1rem; /* Add space between items */
+  }
+  .reviews-content, .photos-content {
+    margin: 1rem 0; /* Add margin for content */
+  }
+  .search-reviews input {
+    width: 90%; /* Reduce input width for small screens */
+  }
+}/*# sourceMappingURL=mountains.css.map */

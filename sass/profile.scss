@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wdth,wght@95.1,318&display=swap');
+@import 'search.scss';
+@import 'navbar.scss';
+
+* {
+    font-family: "Afacad Flux", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+}
+
+
+
+body {
+    background-color: #f0f0f0 !important; /* Light gray */
+    margin: 0;
+    padding: 0;
+}
+
+.profile-and-feed{
+
+    .profile-container, .feed-container {
+        margin: 0;
+        padding: 0;
+    }
+
+    .edit-profile {
+        height: 100%;
+        max-height: auto;
+        border-radius: 10px;
+
+        .profile-container {
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+
+            .pen-icon {
+                color: black;
+            }
+        } 
+    }
+
+    .feed-profile {
+        border-radius: 10px;
+        height: 50vh;
+        background-color: rgb(255, 255, 255);
+
+        @media(max-width: 768px){
+            margin-top: 1em !important;
+        }
+    }  
+    
+    .edit-profile-container {
+        background: white;
+        max-width: 600px;
+        width: 100%;
+        height: auto;
+        margin: 0 auto; /* Centers the container horizontally */
+        border-radius: 10px;
+    
+    }
+}
+
+.tooltip-container {
+    position: relative; /* Position relative to the icon */
+    display: inline-block; /* Allow positioning of the tooltip */
+}
+
+.pen-icon {
+    border-radius: 0; /* No border radius initially */
+    background-color: transparent; /* No background color initially */
+    padding: 10px; /* Add padding to the icon on hover */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s, border-radius 0.3s; /* Smooth transition for hover effects */
+}
+
+/* Add styles on hover */
+.pen-icon:hover {
+    border-radius: 50%; /* Make the icon circular on hover */
+    background-color: rgb(208, 208, 208); /* Background color of the icon on hover */
+}
+
+.tooltip-text {
+    visibility: hidden; /* Hide the tooltip by default */
+    width: 100px; /* Set a fixed width for the tooltip */
+    background-color: rgb(28, 163, 30); /* Background color of the tooltip */
+    color: #fff; /* Text color */
+    text-align: center; /* Center the text */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px; /* Padding inside the tooltip */
+    position: absolute; /* Position it relative to the container */
+    z-index: 1; /* Place it above other elements */
+    bottom: 125%; /* Position it above the icon */
+    left: 50%; /* Center it horizontally */
+    margin-left: -50%; /* Adjust left margin */
+    opacity: 0; /* Hide the tooltip */
+    transition: opacity 0.3s; /* Fade in effect */
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible; /* Show the tooltip on hover */
+    opacity: 1; /* Fade in */
+}
+
+.profile-pic {
+    transition: filter 0.3s; /* Smooth transition for the filter effect */
+}
+
+.profile-pic:hover {
+    filter: brightness(0.8); /* Darken the image on hover */
+    cursor: pointer;
+}
+
+                                                         /*FOOTER*/
+.footer1{
+    background-color: rgb(47, 126, 47); /* Lighter green */
+
+    .ftr-icon{
+        color: rgb(255, 255, 255);
+        font-size: 50px;
+    }
+
+    .footer-title {
+        color: white;
+        position: relative; // Set position to relative for positioning the pseudo-element
+    }
+    .footer1-des{
+        color: white;
+    }
+}
+
+.swal-title {
+    color: #2c3e50; /* Dark color for good contrast */
+    font-size: 24px; /* Increase font size for better readability */
+}
+
+.swal-content {
+    color: #34495e; /* Slightly lighter color for content */
+    font-size: 16px; /* Comfortable reading size */
+}
+
+.swal-confirm-button {
+    background-color: #2ecc71; /* Green button for a fresh look */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px; /* Increase padding for better touch targets */
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.swal-confirm-button:hover {
+    background-color: #27ae60; /* Darker green on hover */
+}

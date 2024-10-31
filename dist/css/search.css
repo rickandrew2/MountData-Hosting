@@ -1,0 +1,59 @@
+.search-results {
+  position: absolute; /* Keep it absolute for positioning */
+  background-color: white;
+  width: 100%; /* Full width of the search bar */
+  max-width: 25em;
+  max-height: 300px; /* Limit height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  z-index: 10; /* Ensure it stays above other elements */
+  box-shadow: 0 2px 4px rgb(0, 0, 0); /* Shadow */
+  border-radius: 5px; /* Rounded corners */
+  top: 80%; /* Position below the search bar */
+  left: 7em; /* Align to the left */
+}
+@media (max-width: 768px) {
+  .search-results { /* Adjust for smaller screens */
+    max-width: 90%; /* Use a larger percentage for small screens */
+    left: 5%; /* Center the search results */
+  }
+}
+.search-results .result-item {
+  display: flex; /* Ensure flexbox layout */
+  padding: 15px; /* Padding for each item */
+  border-bottom: 1px solid #eee; /* Bottom border for separation */
+  transition: background-color 0.3s, transform 0.3s; /* Transition for hover effects */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px;
+}
+.search-results .result-item:last-child {
+  border-bottom: none; /* Remove border for last item */
+}
+.search-results .result-item:hover {
+  background-color: #f5f5f5; /* Light gray background on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+}
+.search-results .result-item .material-symbols-outlined {
+  align-self: center;
+  font-size: 24px; /* Icon size */
+  color: #666; /* Icon color */
+  margin-right: 10px; /* Space between icon and text */
+  background-color: lightgray;
+  max-height: 50px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.search-results .result-item .mountain-name {
+  align-self: center;
+  font-weight: bold; /* Bold name */
+  margin: 0 10px; /* Margin for spacing */
+  flex: 1; /* Allow this to grow and take available space */
+}
+.search-results .result-item .location,
+.search-results .result-item .elevation {
+  margin: 5px;
+  text-align: center;
+  margin: 0; /* Reset margin */
+  font-size: 0.9em; /* Smaller font size for location and elevation */
+  color: #555; /* Darker text color for better readability */
+}/*# sourceMappingURL=search.css.map */
