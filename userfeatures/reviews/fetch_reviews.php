@@ -23,15 +23,19 @@ function fetchRatings($conn, $mountain_id) {
         'totalReviews' => $totalReviews,
         'totalRatingSum' => $totalRatingSum
     ];
-}
+}   
 
-// Function to display ratings
+// Function to display ratings// Function to display ratings
+
 function displayRatings($ratings) {
-    foreach (array_reverse($ratings['counts']) as $rating => $count) {
+    for ($rating = 1; $rating <= 5; $rating++) {
+        $count = $ratings['counts'][$rating]; // Get the count for the current rating
         $stars = str_repeat('<i class="fas fa-star" style="color: #32CD32"></i>', $rating);
-        echo '<h6>' . $stars . ' (' . $count . ')</h6>';
+        echo '<h6>' . $stars . ' (' . $count . ')</h6>'; // Display the stars and count
     }
 }
+
+
 
 // Function to calculate average rating
 function calculateAverageRating($ratings) {
@@ -139,7 +143,12 @@ function displayReviewPhotos($reviewPhoto) {
 
 // Function to display no reviews message
 function displayNoReviewsMessage() {
-    echo '<h5>No reviews yet.</h5>';
+    echo '
+    <div class="no-reviews mt-5" style="text-align: center">
+        <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">landscape_2_off</span>
+        <h3 class="mt-3">Write reviews</h3>
+        <p style="color: #8a8a8a;">Share your experience by leaving a review on any trail page. Your feedback helps others choose their next adventure!</p>
+    </div>';
 }
 
 // Function to display login prompt

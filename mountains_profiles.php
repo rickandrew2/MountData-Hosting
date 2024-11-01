@@ -95,7 +95,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="favorites.html"> <!-- Link to specific page -->
+                                <a class="dropdown-item" href="favorites.php"> <!-- Link to specific page -->
                                     <span class="dd-icon material-symbols-outlined">favorite</span>
                                     <span class="dd-text">Favorites</span>
                                 </a>
@@ -309,12 +309,12 @@
 
             <div class="photos-content row" id="photos" style="display: none;">
                 <div class="row">
-                    <div class="col-lg-9 m-0">
-                        <div class="photos-details">
+                    <div class="col-lg-9 ">
+                        <div class="photos-details mx-3">
                             <h4>Photos of This Trail</h4>
                             <h5>Photos help others preview the trail. Upload photos about this trail to inspire others.</h5>
                         </div>
-                        <div class="sort-by-container">
+                        <div class="sort-by-container m-3">
                             <label for="sortBy">Sort by:</label>
                             <select id="sortBy">
                                 <option value="all">All Trails</option>

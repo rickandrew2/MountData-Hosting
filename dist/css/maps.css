@@ -19,7 +19,6 @@
   }
 }
 .search-results .result-item {
-  display: flex; /* Ensure flexbox layout */
   padding: 15px; /* Padding for each item */
   border-bottom: 1px solid #eee; /* Bottom border for separation */
   transition: background-color 0.3s, transform 0.3s; /* Transition for hover effects */
@@ -312,27 +311,65 @@
 
 .list-group-item {
   border: none;
-  background-color: red;
   height: 500px !important;
+}
+.list-group-item .mountains {
+  position: relative; /* Ensure absolute positioning works inside .mountains */
 }
 .list-group-item .mountains .about-mountain {
   height: 150px;
   overflow-y: auto;
 }
-.list-group-item .mountains .bookmark-icon {
-  position: absolute;
-  top: 30px;
-  right: 30px;
+.list-group-item .mountains .icon-link {
+  position: absolute; /* Position link absolutely inside .mountains */
+  top: 20px;
+  right: 20px;
+  text-decoration: none; /* Remove underline */
+}
+.list-group-item .mountains .travel-icon {
   font-size: 24px;
   color: #000000;
-  background-color: white;
+  background-color: #ffffff;
   padding: 5px;
   border-radius: 20px;
   cursor: pointer;
   transition: color 0.3s;
 }
-.list-group-item .mountains .bookmark-icon:hover {
+.list-group-item .mountains .travel-icon:hover {
   color: green;
+}
+
+.mountain-link {
+  text-decoration: none;
+  display: block;
+  background-color: #8FBC8F;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.3s;
+  margin: 10px 0;
+}
+.mountain-link:hover {
+  transform: translateY(-2px);
+}
+
+.mountain-title {
+  text-align: center;
+  margin: 0;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.mountain-heading {
+  display: flex;
+  align-items: center; /* Aligns text and icon vertically centered */
+  justify-content: center; /* Centers heading */
+  text-align: center;
+}
+
+.icon-landscape {
+  margin-left: 8px; /* Adds space between text and icon */
+  font-size: 2em; /* Adjust size as needed */
+  color: #8FBC8F;
 }
 
 /*FOOTER*/

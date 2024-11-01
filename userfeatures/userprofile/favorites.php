@@ -186,12 +186,9 @@ include ('../../db_connection.php'); // Include the database connection
     
     <div class="row">
         <div class="col-md-3 mountain-column">
-            <h2 class="mountain-heading mb-3" style="text-align: center;">Mountains<span class="material-symbols-outlined icon-landscape">
-            landscape
-            </span>
-           </h2>
+            <h2 class="mb-3" style="text-align: center;">Mountains</h2>
             <ul id="mountainList" class="list-group">
-                <?php include 'fetch_mountains.php'; ?>
+                <?php include 'fetch_bookmarks.php'; ?>
             </ul>
         </div>
         <div class="col-md-9 map-container">
@@ -234,7 +231,8 @@ include ('../../db_connection.php'); // Include the database connection
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqm58SgYCVN-CdOxefv0BPG_PTJ75yINM&callback=initMap" async defer></script>
     
     <!--OWN JS-->
-    <script src="maps.js"></script>
+    <script src="../../systemfeatures/maps/maps.js"></script>
+    <script src="profiles.js"></script>
 
     <!--BOOTSTRAP JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -246,5 +244,6 @@ include ('../../db_connection.php'); // Include the database connection
    <script>
     const isLoggedIn = <?php echo json_encode($loginStatus); ?>; // Pass the PHP variable to JS
    </script>
+
   </body>
 </html>

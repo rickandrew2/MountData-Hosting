@@ -84,7 +84,7 @@ document.getElementById('writeReviewHeader').addEventListener('click', function(
 
               <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
                 <button type="button" id="cancelButton" class="swal2-cancel swal2-styled" style="background-color: #d33; color: white; padding: 10px 20px; border-radius: 5px;">Cancel</button>
-                <button type="submit" class="swal2-confirm swal2-styled" style="background-color: #3085d6; color: white; padding: 10px 20px; border-radius: 5px;">Submit Review</button>
+                <button type="submit" class="swal2-confirm swal2-styled" style="background-color: #28a745;; color: white; padding: 10px 20px; border-radius: 5px;">Submit Review</button>
               </div>
             </form>
             `,
@@ -96,7 +96,7 @@ document.getElementById('writeReviewHeader').addEventListener('click', function(
             star.addEventListener('click', () => {
                 document.querySelectorAll('#starRating span').forEach(s => s.style.color = 'gray');
                 for (let i = 0; i <= index; i++) {
-                    document.querySelectorAll('#starRating span')[i].style.color = '#b2e0b2';
+                    document.querySelectorAll('#starRating span')[i].style.color = '#28a745';
                 }
                 document.getElementById('ratingValue').value = index + 1;
             });
@@ -212,7 +212,7 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
 
               <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
                 <button type="button" id="cancelButton" class="swal2-cancel swal2-styled" style="background-color: #d33; color: white; padding: 10px 20px; border-radius: 5px;">Cancel</button>
-                <button type="submit" class="swal2-confirm swal2-styled" style="background-color: #3085d6; color: white; padding: 10px 20px; border-radius: 5px;">Submit Review</button>
+                <button type="submit" class="swal2-confirm swal2-styled" style="background-color:#28a745;; color: white; padding: 10px 20px; border-radius: 5px;">Submit Review</button>
               </div>
             </form>
         `,
@@ -222,7 +222,7 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
                     star.addEventListener('click', () => {
                         document.querySelectorAll('#starRating span').forEach(s => s.style.color = 'gray');
                         for (let i = 0; i <= index; i++) {
-                            document.querySelectorAll('#starRating span')[i].style.color = '#b2e0b2';
+                            document.querySelectorAll('#starRating span')[i].style.color = '#28a745';
                         }
                         document.getElementById('ratingValue').value = index + 1;
                     });

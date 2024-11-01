@@ -91,7 +91,7 @@ include 'check_login.php'; // This will check if the user is logged in
                           </a>
                       </li>
                       <li>
-                          <a class="dropdown-item" href="favorites.html">
+                          <a class="dropdown-item" href="userfeatures/userprofile/favorites.php">
                               <span class="dd-icon material-symbols-outlined">favorite</span>
                               <span class="dd-text">Favorites</span>
                           </a>

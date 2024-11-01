@@ -105,36 +105,74 @@
 }
 
 .list-group-item {
-    border: none; // Remove borders
-    background-color: red; // Background color for list items
+    border: none;
     height: 500px !important;
 
     .mountains {
+        position: relative; /* Ensure absolute positioning works inside .mountains */
+
         .about-mountain {
-            height: 150px; // Set a fixed height for the description area
-            overflow-y: auto; // Enable vertical scrolling
+            height: 150px;
+            overflow-y: auto;
         }
 
-        .bookmark-icon {
-            position: absolute; // Position it absolutely within the mountains div
-            top: 30px; // Distance from the top
-            right: 30px; // Distance from the right
-            font-size: 24px; // Adjust size as needed
-            color: #000000; // Change color to your preference
-            background-color: white;
-            padding: 5px;   
+        .icon-link {
+            position: absolute; /* Position link absolutely inside .mountains */
+            top: 20px;
+            right: 20px;
+            text-decoration: none; /* Remove underline */
+        }
+
+        .travel-icon {
+            font-size: 24px;
+            color: #000000;
+            background-color: #ffffff; // Light sea green
+            padding: 5px;
             border-radius: 20px;
-            cursor: pointer; // Change cursor to pointer for better UX
-            transition: color 0.3s; // Optional: add a transition for hover effect
+            cursor: pointer;
+            transition: color 0.3s;
 
             &:hover {
-                color: green; // Change color on hover
+                color: green;
             }
         }
     }
 }
 
 
+.mountain-link {
+    text-decoration: none; // Remove underline
+    display: block; // Make the link a block element
+    background-color: #8FBC8F; // Light sea green
+    border-radius: 8px; // Rounded corners
+    transition: background-color 0.3s, transform 0.3s; // Smooth transitions
+    margin: 10px 0; // Margin for spacing between items
+  
+    &:hover {
+      transform: translateY(-2px); // Slight lift effect on hover
+    }
+  }
+  
+  .mountain-title {
+    text-align: center;
+    margin: 0; // Remove default margin
+    color: white; // Dark text color
+    font-size: 1.5rem; // Increase font size
+    font-weight: bold; // Make text bold
+  }
+  
+  .mountain-heading {
+    display: flex;
+    align-items: center; /* Aligns text and icon vertically centered */
+    justify-content: center; /* Centers heading */
+    text-align: center;
+}
+
+.icon-landscape {
+    margin-left: 8px; /* Adds space between text and icon */
+    font-size: 2em; /* Adjust size as needed */
+    color: #8FBC8F; // Light sea green
+}
 
 
                                                          /*FOOTER*/

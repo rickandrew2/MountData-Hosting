@@ -12,10 +12,10 @@ if (isset($_GET['search'])) {
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             echo "<a href='" . $linkUrl . "?mountain_id=" . urlencode($row['mountain_id']) . "' class='result-item-a m-auto' style='text-decoration:none; color:inherit;'>";
-            echo "<div class='result-item d-flex justify-content-between'>";
+            echo "<div class='result-item'>";
             echo "<span class='material-symbols-outlined'>location_on</span>";
             echo "<p class='mountain-name'>" . htmlspecialchars($row['name']) . "</p>";
-            echo "<p class='location'>Location: " . htmlspecialchars($row['location']) . "</p>";
+            echo "<p class='location mx-2'>Location: " . htmlspecialchars($row['location']) . "</p>";
             echo "<p class='elevation'>Elevation: " . htmlspecialchars($row['elevation']) . " m</p>";
             echo "</div>";
             echo "</a>"; // Closing anchor tag

@@ -268,7 +268,6 @@
   color: black;
 }
 .search .search-results .result-item {
-  display: flex;
   padding: 15px;
   border-bottom: 1px solid #eee;
   transition: background-color 0.3s, transform 0.3s;

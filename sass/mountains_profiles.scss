@@ -693,12 +693,12 @@ $border-color: #ccc;
 
 .star:hover {
     transform: scale(1.3); /* Scale up on hover */
-    color: #b2e0b2; /* Change color on hover */
+    color: #28a745;; /* Change color on hover */
 }
 
 /* To keep selected stars highlighted */
 .star.selected {
-    color: #b2e0b2; /* Color for selected stars */
+    color: #28a745; /* Color for selected stars */
 }
 
 .weather-info {
