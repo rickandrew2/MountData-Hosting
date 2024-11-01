@@ -37,6 +37,113 @@ function closeLightbox() {
     document.getElementById('lightbox').style.display = 'none';
 }
 
+
+document.getElementById('writeReviewHeader').addEventListener('click', function() {
+    // Check if the user is logged in
+    if (!userId) {
+        // Show login prompt if not logged in
+        Swal.fire({
+            title: 'Login Required',
+            text: 'You need to log in to submit a review.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Login',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#28a745', // Green login button
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to login page (you can adjust the URL accordingly)
+                window.location.href = '/login.php';
+            }
+        });
+    } else {
+        // If user is logged in, show the review submission form
+        Swal.fire({
+            title: 'Submit Your Review',
+            html: `
+            <form id="reviewForm" style="text-align: left; padding: 10px;">
+              <div style="margin-bottom: 10px;">
+                <label for="rating" style="display: block; font-weight: bold;">Rating:</label>
+                <div id="starRating" style="font-size: 24px; color: gray; margin-bottom: 15px;">
+                    <div class="star-rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                </div>
+                <input type="hidden" id="ratingValue" name="ratingValue" value="5"> <!-- Default rating -->
+              </div>
+
+              <div style="margin-bottom: 15px;">
+                <label for="comment" style="display: block; font-weight: bold;">Comment (required):</label>
+                <textarea id="comment" name="comment" placeholder="Write your comment" required style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;"></textarea>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button type="button" id="cancelButton" class="swal2-cancel swal2-styled" style="background-color: #d33; color: white; padding: 10px 20px; border-radius: 5px;">Cancel</button>
+                <button type="submit" class="swal2-confirm swal2-styled" style="background-color: #3085d6; color: white; padding: 10px 20px; border-radius: 5px;">Submit Review</button>
+              </div>
+            </form>
+            `,
+            showConfirmButton: false, // Hide the default confirm button
+        });
+
+        // Initialize star rating functionality
+        document.querySelectorAll('#starRating span').forEach((star, index) => {
+            star.addEventListener('click', () => {
+                document.querySelectorAll('#starRating span').forEach(s => s.style.color = 'gray');
+                for (let i = 0; i <= index; i++) {
+                    document.querySelectorAll('#starRating span')[i].style.color = '#b2e0b2';
+                }
+                document.getElementById('ratingValue').value = index + 1;
+            });
+        });
+
+        // Cancel button functionality
+        document.getElementById('cancelButton').addEventListener('click', function() {
+            Swal.close();
+        });
+
+        // Handle form submission
+        document.getElementById('reviewForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            formData.append('user_id', userId); // Assuming userId is defined in your script
+            formData.append('mountain_id', mountainId); // Assuming mountainId is defined in your script
+
+            fetch('userfeatures/reviews/write_review.php', { // Update to your actual PHP file path
+                method: 'POST',
+                body: formData
+            }).then(response => response.text())
+            .then(data => {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Your review has been submitted.',
+                    icon: 'success',
+                    confirmButtonText: 'Okay',
+                    confirmButtonColor: '#3085d6'
+                }).then(() => {
+                    Swal.close(); // Close the modal after submission
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'There was an issue uploading your review. Please try again later.',
+                    icon: 'error',
+                    confirmButtonText: 'Okay',
+                    confirmButtonColor: '#d33' // Red color for the button
+                });
+            });
+        });
+    }
+});
+
 document.getElementById('uploadBtn').addEventListener('click', function() {
     // Check if the user is logged in
     if (!userId) {

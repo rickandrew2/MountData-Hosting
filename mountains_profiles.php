@@ -146,147 +146,102 @@ include 'db_connection.php'; // Ensure this file contains your database connecti
  
 <div class="col-lg-9 mountain-container mt-5" style="min-height: 100vh; padding-bottom: 10vh; margin-bottom: 50px;">
 <?php
-        
-        include_once 'check_login.php'; // Use include_once to prevent redeclaration
-        
+    include_once 'check_login.php'; // Ensure login is checked
+    include 'fetch_mountains_data.php'; // Include the new data-fetching file
 
     // Check if the mountain_id is provided in the URL
     if (isset($_GET['mountain_id']) && is_numeric($_GET['mountain_id'])) {
         $mountain_id = intval($_GET['mountain_id']); // Get the mountain ID from the URL and sanitize it
         echo "<script>var mountainId = $mountain_id;</script>";
 
-         // Prepare and execute the query to fetch data for the specific mountain
-                $sql = "SELECT `mountain_id`, `name`, `location`, `elevation`, `mountain_image`, `difficulty_level`, `description`, `latitude`, `longitude`, `contact_number`
-                FROM `mountains` WHERE `mountain_id` = ?";
-            $stmt = $conn->prepare($sql);
-            if ($stmt) {
-            $stmt->bind_param("i", $mountain_id); // Bind the mountain ID parameter
-            $stmt->execute();
-            $result = $stmt->get_result();
+        // Fetch mountain profile data
+        $profileData = getMountainProfile($conn, $mountain_id);
 
-            // Check if the mountain exists
-            if ($result->num_rows > 0) {
-                // Fetch the mountain data
-                $row = $result->fetch_assoc();
-                $name = htmlspecialchars($row['name']); // Escape output data for security
-                $location = htmlspecialchars($row['location']);
-                $elevation = htmlspecialchars($row['elevation']);
-                $mountain_image = htmlspecialchars($row['mountain_image']);
-                $difficulty_level = htmlspecialchars($row['difficulty_level']);
-                $description = htmlspecialchars($row['description']);
-                $latitude = htmlspecialchars($row['latitude']);
-                $longitude = htmlspecialchars($row['longitude']);
-                $contact_numbers = htmlspecialchars($row['contact_number']); // Fetch contact number
+        if ($profileData) {
+            // Separate data for easy access
+            $mountainData = $profileData['mountainData'];
+            $ratingsData = $profileData['ratingsData'];
 
-                // Split the contact numbers into an array
-                $contact_numbers_array = explode(',', $contact_numbers);
+            // Extract mountain details
+            $name = htmlspecialchars($mountainData['name']);
+            $location = htmlspecialchars($mountainData['location']);
+            $elevation = htmlspecialchars($mountainData['elevation']);
+            $mountain_image = htmlspecialchars($mountainData['mountain_image']);
+            $difficulty_level = htmlspecialchars($mountainData['difficulty_level']);
+            $description = htmlspecialchars($mountainData['description']);
+            $latitude = htmlspecialchars($mountainData['latitude']);
+            $longitude = htmlspecialchars($mountainData['longitude']);
+            $contact_numbers_array = explode(',', htmlspecialchars($mountainData['contact_number']));
 
-                 // Set the document title dynamically
-                echo "<script>document.title = 'Mount $name';</script>";
-                echo "<script>
-                var mountainLatitude = $latitude;
-                var mountainLongitude = $longitude;
-                </script>";
+            // Extract ratings details
+            $averageRating = $ratingsData['averageRating'];
+            $totalReviews = $ratingsData['totalReviews'];
 
-                 // Fetch counts of ratings
-                $ratingsQuery = "SELECT rating, COUNT(*) as count FROM reviews WHERE mountain_id = ? GROUP BY rating";
-                $stmt = $conn->prepare($ratingsQuery);
-                $stmt->bind_param('i', $mountain_id);
-                $stmt->execute();
-                $ratingsResult = $stmt->get_result();
-                
-                $ratingCounts = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
-                $totalReviews = 0;
-                $totalRatingSum = 0;
+            // Set the document title dynamically
+            echo "<script>document.title = 'Mount $name';</script>";
+            echo "<script>var mountainLatitude = $latitude; var mountainLongitude = $longitude;</script>";
 
-                while ($row = $ratingsResult->fetch_assoc()) {
-                    $ratingCounts[$row['rating']] = $row['count'];
-                    $totalReviews += $row['count'];
-                    $totalRatingSum += $row['rating'] * $row['count'];
-                }
+            // Output HTML for the specific mountain
+            echo "
+            <div class='mountain-pic-header container m-0' style='position: relative; border-radius: 10px 10px 0 0; background-image: url(\"$mountain_image\"); background-size: cover; background-position: center; height: 300px;' onclick=\"openLightbox('$mountain_image')\">
+                <div class='mountain-content mb-3' style='position: absolute; bottom: 0; width: 100%; padding: 10px; color: white; border-radius: 0 0 10px 10px;'>
+                    <div class='mountain-name-wrapper'>
+                        <h3 class='mountain-name' style='align-self: flex-end; color: white;'>Mount $name</h3>
+                    </div>
+                    <div class='difficulty-n-rating d-flex'>
+                        <h4>" . htmlspecialchars($difficulty_level) . " - <i class='fas fa-star fs-6' style='color: #32CD32'></i> $averageRating ($totalReviews)</h4>
+                    </div>
+                    <h5 style='text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px;'>$location</h5>
+                </div>
+            </div>
 
-                // Calculate average rating
-                $averageRating = $totalReviews > 0 ? round($totalRatingSum / $totalReviews, 1) : 0;
+            <div class='d-flex justify-content-between mx-3'>
+                <div class='length mt-3 fs-3'>
+                    <p class='info-label' style='line-height: 1.2; margin-bottom: 0; color: gray'>Difficulty</p>
+                    <p class='info-value' style='line-height: 1.2; margin: 0; color: green;'>$difficulty_level</p>
+                </div>
+                <div class='elevation mt-3 fs-3'>
+                    <p class='info-label' style='line-height: 1.2; margin-bottom: 0; color: gray;'>Elevation</p>
+                    <p class='info-value' style='line-height: 1.2; margin: 0; color: green;'>$elevation m</p>
+                </div>
+                <div class='bookmark mt-3'>
+                    <button class='bookmark-button' data-mountain-id='$mountain_id' aria-label='Toggle bookmark' onclick='toggleBookmark(this)'>
+                        <span class='material-symbols-outlined'>bookmark_add</span>
+                    </button>
+                </div>
+            </div>
 
-                // Output HTML for the specific mountain
+            <div class='description m-3'>
+                <p>$description</p>
+            </div>
+            ";
+
+            // Display weather information for logged-in users
+            if ($loginStatus) {
                 echo "
-                <div class='mountain-pic-header container m-0' style='position: relative; border-radius: 10px 10px 0 0; background-image: url(\"$mountain_image\") !important; background-size: cover; background-position: center; height: 300px;' onclick=\"openLightbox('$mountain_image')\">
-                    <div class='mountain-content mb-3' style='position: absolute; bottom: 0; width: 100%; padding: 10px; color: white; border-radius: 0 0 10px 10px;'>
-                        <div class='mountain-name-wrapper'>
-                            <h3 class='mountain-name' style='align-self: flex-end; color: white;'>Mount $name</h3>
-                        </div>
-                        <div class='difficulty-n-rating d-flex'>
-                            <h4>
-                                " . htmlspecialchars($difficulty_level) . " - <i class='fas fa-star fs-6' style='color: #32CD32'></i> " . $averageRating . " (" . $totalReviews . ")
-                            </h4>
-                        </div>
-                        <h5 style='text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px;'>$location</h5>
-                    </div>
-                </div>
-
-                <div class='d-flex justify-content-between mx-3'>
-                    <div class='length mt-3 fs-3'>
-                        <p class='info-label' style='line-height: 1.2; margin-bottom: 0; color: gray'>Difficulty</p>
-                        <p class='info-value' style='line-height: 1.2; margin: 0; color: green;'>$difficulty_level</p> <!-- Replace with actual length if available -->
-                    </div>
-                    <div class='elevation mt-3 fs-3'>
-                        <p class='info-label' style='line-height: 1.2; margin-bottom: 0; color: gray;'>Elevation</p>
-                        <p class='info-value' style='line-height: 1.2; margin: 0; color: green;'>$elevation m</p>
-                    </div>
-                    <div class='bookmark mt-3'>
-                        <button class='bookmark-button' data-mountain-id='$mountain_id' aria-label='Toggle bookmark' onclick='toggleBookmark(this)'>
-                            <span class='material-symbols-outlined'>bookmark_add</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class='description m-3'>
-                    <p>
-                        $description
-                    </p>
-                </div>
-                               
+                <div class='weather-info'></div>
+                <div class='container forecast-info overflow-auto'></div>
                 ";
-
-
-                // Display weather information only for logged-in users
-                if ($loginStatus) {
-                    echo "
-                    <div class='weather-info'>
-                        <!-- Current weather information will be inserted here by JavaScript -->
-                    </div>
-                    <div class='container forecast-info overflow-auto'>
-                        <!-- 5-day forecast information will be inserted here by JavaScript -->
-                    </div>
-                    ";
-                } else {
-                    echo "<p class=mx-3>Please log in to view weather information.</p>";
-                }
-
-                // Display contact numbers
-                if (!empty($contact_numbers_array)) {
-                    echo "<div class='contact-numbers m-3'>";
-                    echo "<h5>Emergency Contact Numbers:</h5>";
-                    echo "<ul class='contact-list'>";
-                    foreach ($contact_numbers_array as $number) {
-                        echo "<li><i class='fa-solid fa-phone'></i>" . htmlspecialchars(trim($number)) . "</li>"; // Display each contact number with an icon
-                    }
-                    echo "</ul>";
-                    echo "</div>";
-                }
-     
             } else {
-                echo "<p>Mountain not found.</p>";
+                echo "<p class='mx-3'>Please log in to view weather information.</p>";
             }
-            // Close the statement
-            $stmt->close();
+
+            // Display contact numbers
+            if (!empty($contact_numbers_array)) {
+                echo "<div class='contact-numbers m-3'><h5>Emergency Contact Numbers:</h5><ul class='contact-list'>";
+                foreach ($contact_numbers_array as $number) {
+                    echo "<li><i class='fa-solid fa-phone'></i>" . htmlspecialchars(trim($number)) . "</li>";
+                }
+                echo "</ul></div>";
+            }
         } else {
-            echo "<p>Error preparing the SQL statement.</p>";
+            echo "<p>Mountain not found.</p>";
         }
     } else {
         echo "<p>No valid mountain ID provided.</p>";
     }
 ?>
+
 
     <div class="tab-buttons d-flex justify-content-around section" style="cursor: pointer;">
         <div class="reviews-btn active" onclick="showSection('reviews')">
