@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="dist/css/main.css" />
 
     <!-- Favicon -->
-    <link rel="icon" href="images/logomount.png" type="image/png" />
+    <link rel="icon" href="images/logomount.png" type="image/png"/>
 
     <!--SWEET ALERT CDN-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.all.min.js"></script>
