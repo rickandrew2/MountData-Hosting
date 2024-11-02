@@ -105,40 +105,6 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function openElevationModal() {
-    if (window.innerWidth <= 575) {
-        document.getElementById("elevationModal").style.display = "block";
-    } else {
-        toggleElevationDropdown();
-    }
-}
-
-function closeElevationModal() {
-    document.getElementById("elevationModal").style.display = "none";
-}
-
-function openDifficultyModal() {
-    if (window.innerWidth <= 575) {
-        document.getElementById("difficultyModal").style.display = "block";
-    } else {
-        toggleDifficultyDropdown();
-    }
-}
-
-function closeDifficultyModal() {
-    document.getElementById("difficultyModal").style.display = "none";
-}
-
-function toggleElevationDropdown() {
-    var dropdown = document.getElementById("elevationDropdown");
-    dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
-}
-
-function toggleDifficultyDropdown() {
-    var dropdown = document.getElementById("difficultyDropdown");
-    dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
-}
-
 
 function checkLogin() {
     if (isLoggedIn) {
@@ -167,9 +133,21 @@ function checkLogin() {
 }
 
 function toggleDropdown(id) {
+    // Get all dropdowns
+    const dropdowns = document.querySelectorAll('.dropdown-content');
+
+    // Close all dropdowns except the one clicked
+    dropdowns.forEach(dropdown => {
+        if (dropdown.id !== id) {
+            dropdown.style.display = 'none'; // Close other dropdowns
+        }
+    });
+
+    // Toggle the clicked dropdown
     const dropdown = document.getElementById(id);
     dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
 }
+
 
 function clearElevation() {
     document.getElementById('minElevation').value = '';
@@ -181,12 +159,22 @@ function clearDifficulty() {
     radios.forEach(radio => radio.checked = false);
 }
 
+function clearLocation() {
+    const checkboxes = document.querySelectorAll('input[name="location"]');
+    checkboxes.forEach(checkbox => checkbox.checked = false);
+}
+
 function filterMountains() {
     const minElevation = document.getElementById('minElevation').value || 0;
     const maxElevation = document.getElementById('maxElevation').value || 99999;
     const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value || '';
 
-    fetch(`fetch_mountains.php?minElevation=${minElevation}&maxElevation=${maxElevation}&difficulty=${difficulty}`)
+    // Get selected locations
+    const locationCheckboxes = document.querySelectorAll('input[name="location"]:checked');
+    const locations = Array.from(locationCheckboxes).map(checkbox => checkbox.value).join(',');
+
+    // Fetch with updated URL to include locations
+    fetch(`fetch_mountains.php?minElevation=${minElevation}&maxElevation=${maxElevation}&difficulty=${difficulty}&locations=${locations}`)
         .then(response => response.text())
         .then(data => {
             document.getElementById('mountainList').innerHTML = data;

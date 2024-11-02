@@ -125,7 +125,7 @@ include ('../../db_connection.php'); // Include the database connection
 <div class="container-fluid mt-3">
     <div class="row mt-2 mb-2">
         <div class="sort-by-row container-fluid d-flex position-relative">
-            <h5 class="mx-2 p- mt-2" style="flex-shrink: 0;">Sort by:</h5>
+            <h5 class="mx-2 p- mt-2" style="flex-shrink: 0;">Filter by:</h5>
 
             <!-- Elevation Dropdown -->
             <div class="dropdown-container mx-2 position-relative" style="flex-shrink: 0;">
@@ -166,8 +166,28 @@ include ('../../db_connection.php'); // Include the database connection
                     </div>
                 </div>
             </div>
+
+              <!-- Bookmark Date Dropdown -->
+            <div class="dropdown-container mx-2 position-relative" style="flex-shrink: 0;">
+                <h5 class="p-1 d-flex align-items-center justify-content-center" onclick="toggleDropdown('bookmarkDateDropdown')" style="border: solid 1px green; border-radius: 10px; cursor: pointer;">
+                    Bookmark Date <span class="material-symbols-outlined">keyboard_arrow_down</span>
+                </h5>
+                <div id="bookmarkDateDropdown" class="dropdown-content" style="display:none; position: absolute; top: 100%; left: 0; background-color: white; border: solid 1px green; padding: 10px; border-radius: 10px; z-index: 10; width: 300px;">
+                    <label class="d-block fs-5"><input type="radio" name="bookmarkDate" value="last7days"> Last 7 Days</label>
+                    <label class="d-block fs-5"><input type="radio" name="bookmarkDate" value="last30days"> Last 30 Days</label>
+                    <label class="d-block fs-5"><input type="radio" name="bookmarkDate" value="last90days"> Last 90 Days</label>
+                    <div class="border-top" style="border-top: solid black 1px; margin-top: 10px; padding-top: 10px;">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn" onclick="clearBookmarkDate()">Clear</button>
+                            <button class="btn btn-success" onclick="filterMountains()">See Trails</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    
     
     <div class="row" style="height: 75vh;">
         <div class="col-md-3 mountain-column" style="height: 100%;">
@@ -220,6 +240,7 @@ include ('../../db_connection.php'); // Include the database connection
     <!--OWN JS-->
     <script src="../../systemfeatures/maps/maps.js"></script>
     <script src="profiles.js"></script>
+    <script src="bookmarks.js"></script>
 
     <script src="../../systemfeatures/search/search.js"></script>
 

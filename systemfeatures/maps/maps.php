@@ -126,47 +126,70 @@ include ('../../db_connection.php'); // Include the database connection
         <div class="sort-by-row container-fluid d-flex position-relative">
             <h5 class="mx-2 p- mt-2" style="flex-shrink: 0;">Sort by:</h5>
 
-            <!-- Elevation Dropdown -->
-            <div class="dropdown-container mx-2 position-relative" style="flex-shrink: 0;">
-                <h5 class="p-1 d-flex align-items-center justify-content-center" style="border: solid 1px green; border-radius: 10px; cursor: pointer;" onclick="toggleDropdown('elevationDropdown')">
-                    Elevation <span class="material-symbols-outlined ms-2">keyboard_arrow_down</span>
-                </h5>
-                <div id="elevationDropdown" class="dropdown-content" style="display:none; position: absolute; top: 100%; left: 0; background-color: white; border: solid 1px green; padding: 10px; border-radius: 10px; z-index: 10; width: 300px;">
-                    <label for="minElevation">Min Elevation:</label>
-                    <input type="number" id="minElevation" class="form-control mb-2" placeholder="Min">
-                    
-                    <label for="maxElevation">Max Elevation:</label>
-                    <input type="number" id="maxElevation" class="form-control mb-3" placeholder="Max">
-                    
-                    <div class="border-top" style="border-top: solid black 1px; margin-top: 10px; padding-top: 10px;">
-                        <div class="d-flex justify-content-between">
-                            <button class="btn" onclick="clearElevation()">Clear</button>
-                            <button class="btn btn-success" onclick="filterMountains()">See Trails</button>
-                        </div>
+          <!-- Elevation Dropdown -->
+        <div class="dropdown-container mx-2 position-relative" style="flex-shrink: 0;">
+            <h5 class="p-1 d-flex align-items-center justify-content-center" style="border: solid 1px green; border-radius: 10px; cursor: pointer;" onclick="toggleDropdown('elevationDropdown')">
+                Elevation <span class="material-symbols-outlined ms-2">keyboard_arrow_down</span>
+            </h5>
+            <div id="elevationDropdown" class="dropdown-content" style="display:none; position: absolute; top: 100%; left: 0; background-color: white; border: solid 1px green; padding: 10px; border-radius: 10px; z-index: 10; width: 300px;">
+                <label for="minElevation">Min Elevation:</label>
+                <input type="number" id="minElevation" class="form-control mb-2" placeholder="Min">
+                
+                <label for="maxElevation">Max Elevation:</label>
+                <input type="number" id="maxElevation" class="form-control mb-3" placeholder="Max">
+                
+                <div class="border-top" style="border-top: solid black 1px; margin-top: 10px; padding-top: 10px;">
+                    <div class="d-flex justify-content-between">
+                        <button class="btn" onclick="clearElevation()">Clear</button>
+                        <button class="btn btn-success" onclick="filterMountains()">See Trails</button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Difficulty Level Dropdown -->
-            <div class="dropdown-container mx-2 position-relative" style="flex-shrink: 0;">
-                <h5 class="p-1 d-flex align-items-center justify-content-center" onclick="toggleDropdown('difficultyDropdown')" style="border: solid 1px green; border-radius: 10px; cursor: pointer;">
-                    Difficulty Level <span class="material-symbols-outlined">keyboard_arrow_down</span>
-                </h5>
-                <div id="difficultyDropdown" class="dropdown-content" style="display:none; position: absolute; top: 100%; left: 0; background-color: white; border: solid 1px green; padding: 10px; border-radius: 10px; z-index: 10; width: 300px;">
-                    <label class="d-block fs-5"><input type="radio" name="difficulty" value="easy"> Easy</label>
-                    <label class="d-block fs-5"><input type="radio" name="difficulty" value="moderate"> Moderate</label>
-                    <label class="d-block fs-5"><input type="radio" name="difficulty" value="challenging"> Challenging</label>
+        <!-- Difficulty Level Dropdown -->
+        <div class="dropdown-container mx-2 position-relative" style="flex-shrink: 0;">
+            <h5 class="p-1 d-flex align-items-center justify-content-center" onclick="toggleDropdown('difficultyDropdown')" style="border: solid 1px green; border-radius: 10px; cursor: pointer;">
+                Difficulty Level <span class="material-symbols-outlined">keyboard_arrow_down</span>
+            </h5>
+            <div id="difficultyDropdown" class="dropdown-content" style="display:none; position: absolute; top: 100%; left: 0; background-color: white; border: solid 1px green; padding: 10px; border-radius: 10px; z-index: 10; width: 300px;">
+                <label class="d-block fs-5"><input type="radio" name="difficulty" value="easy"> Easy</label>
+                <label class="d-block fs-5"><input type="radio" name="difficulty" value="moderate"> Moderate</label>
+                <label class="d-block fs-5"><input type="radio" name="difficulty" value="challenging"> Challenging</label>
 
-                    <div class="border-top" style="border-top: solid black 1px; margin-top: 10px; padding-top: 10px;">
-                        <div class="d-flex justify-content-between">
-                            <button class="btn" onclick="clearDifficulty()">Clear</button>
-                            <button class="btn btn-success" onclick="filterMountains()">See Trails</button>
-                        </div>
+                <div class="border-top" style="border-top: solid black 1px; margin-top: 10px; padding-top: 10px;">
+                    <div class="d-flex justify-content-between">
+                        <button class="btn" onclick="clearDifficulty()">Clear</button>
+                        <button class="btn btn-success" onclick="filterMountains()">See Trails</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location Dropdown -->
+        <div class="dropdown-container mx-2 position-relative" style="flex-shrink: 0;">
+            <h5 class="p-1 d-flex align-items-center justify-content-center" onclick="toggleDropdown('locationDropdown')" style="border: solid 1px green; border-radius: 10px; cursor: pointer;">
+                Location <span class="material-symbols-outlined">keyboard_arrow_down</span>
+            </h5>
+            <div id="locationDropdown" class="dropdown-content" style="display:none; position: absolute; top: 100%; left: 0; background-color: white; border: solid 1px green; padding: 10px; border-radius: 10px; z-index: 10; width: 300px;">
+                <label class="d-block fs-5"><input type="checkbox" name="location" value="Batangas"> Batangas</label>
+                <label class="d-block fs-5"><input type="checkbox" name="location" value="Cavite"> Cavite</label>
+                <label class="d-block fs-5"><input type="checkbox" name="location" value="Laguna"> Laguna</label>
+                <label class="d-block fs-5"><input type="checkbox" name="location" value="Rizal"> Rizal</label>
+                <label class="d-block fs-5"><input type="checkbox" name="location" value="Quezon"> Quezon</label>
+
+                <div class="border-top" style="border-top: solid black 1px; margin-top: 10px; padding-top: 10px;">
+                    <div class="d-flex justify-content-between">
+                        <button class="btn" onclick="clearLocation()">Clear</button>
+                        <button class="btn btn-success" onclick="filterMountains()">See Trails</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+
     
     <div class="row">
         <div class="col-md-3 mountain-column">
