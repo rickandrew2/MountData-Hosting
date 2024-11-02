@@ -77,27 +77,12 @@ include 'check_login.php'; // This will check if the user is logged in
                   </ul>
               </li>
 
-              <!-- Second Dropdown Link -->
-              <li class="nav-item dropdown hideOnMobile">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Saved
-                  </a>
-                  <!-- Dropdown for Saved -->
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                      <li>
-                          <a class="dropdown-item" href="bookmarks.html">
-                              <span class="dd-icon material-symbols-outlined">bookmarks</span>
-                              <span class="dd-text">Bookmarks</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a class="dropdown-item" href="userfeatures/userprofile/favorites.php">
-                              <span class="dd-icon material-symbols-outlined">favorite</span>
-                              <span class="dd-text">Favorites</span>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
+            <!-- Bookmark Link without Dropdown -->
+            <li class="nav-item hideOnMobile">
+                <a class="nav-link" href="userfeatures/bookmarks/bookmarks.php" id="navbarDropdown2" role="button" aria-expanded="false">
+                    Bookmarks
+                </a>
+            </li>
 
               <!-- Profile Picture or Login Link -->
               <li class="nav-item nav-login hideOnMobile">
@@ -344,7 +329,7 @@ include 'check_login.php'; // This will check if the user is logged in
         <div class="row d-flex align-items-center">
           <div class="col-4 text-center">
               <div class="img-container">
-                  <img src="/images/icon2.jpg" alt="Icon" class="align-self-center img-fluid" />
+                  <img src="/images/nathanpic.jpg" alt="Icon" class="align-self-center img-fluid" />
               </div>
               <p class="mt-2 member-name">Macalinao, Nathaniel H.</p>
           </div>

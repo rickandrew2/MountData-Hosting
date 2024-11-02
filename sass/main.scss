@@ -791,27 +791,26 @@ $primary-green: green;
 
 }
 
-
 .popup-class {
     border-radius: 15px; /* Rounded corners for the SweetAlert */
-  }
-  
-  .title-class {
+}
+
+.title-class {
     font-family: 'Arial', sans-serif;
     font-weight: bold;
-  }
-  
-  .confirm-button-class {
-    background-color: #38a169 !important;
+    text-align: center; /* Center the title */
+    width: 100%; /* Make sure it takes the full width */
+}
+
+.confirm-button-class {
+    background-color: #38a169 !important; /* Green button */
     border-radius: 5px;
     padding: 10px 20px;
     color: white;
     font-size: 16px;
     cursor: pointer;
-  }
-  
-  .confirm-button-class:hover {
+}
+
+.confirm-button-class:hover {
     background-color: #2f855a !important; /* Darker green on hover */
-  }
-  
-  
+}

@@ -87,21 +87,21 @@ const hikingTips = [
         
         // Display the tip using a customized SweetAlert
         Swal.fire({
-          title: '🌿 Quick Tip for Responsible Hiking 🌿',
-          text: randomTip,
-          icon: 'info',
-          background: '#f0fdf4', // Light green background
-          color: '#2f855a', // Dark green text
-          confirmButtonColor: '#38a169', // Green confirm button
-          confirmButtonText: 'Got it!',
-          padding: '2em',
-          customClass: {
-            popup: 'popup-class', // Add custom class for extra styling if needed
-            title: 'title-class', // Custom title class for styling
-            confirmButton: 'confirm-button-class'
-          },
-          buttonsStyling: false // Disable default styling to allow custom styles
-        });
+            title: '🌿 Quick Tip for Responsible Hiking 🌿',
+            text: randomTip,
+            icon: 'info',
+            background: 'white', // Light green background
+            color: '#2f855a', // Dark green text
+            confirmButtonColor: '#38a169', // Green confirm button
+            confirmButtonText: 'Got it!',
+            padding: '2em',
+            customClass: {
+                popup: 'popup-class', // Add custom class for extra styling if needed
+                title: 'title-class', // Custom title class for styling
+                confirmButton: 'confirm-button-class'
+            },
+            buttonsStyling: false // Disable default styling to allow custom styles
+        });            
       });
     });
   });

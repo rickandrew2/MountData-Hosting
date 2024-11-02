@@ -82,28 +82,12 @@ include ('../../db_connection.php'); // Include the database connection
                   </ul>
               </li>
 
-                 <!-- Second Dropdown Link -->
-              <li class="nav-item dropdown hideOnMobile">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Saved
-                  </a>
-                  <!-- Dropdown for Saved -->
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                      <li>
-                          <a class="dropdown-item" href="bookmarks.html"> <!-- Link to specific page -->
-                              <span class="dd-icon material-symbols-outlined">bookmarks</span>
-                              <span class="dd-text">Bookmarks</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a class="dropdown-item" href="favorites.html"> <!-- Link to specific page -->
-                              <span class="dd-icon material-symbols-outlined">favorite</span>
-                              <span class="dd-text">Favorites</span>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
-
+               <!-- Bookmark Link without Dropdown -->
+            <li class="nav-item hideOnMobile">
+                <a class="nav-link" href="../../userfeatures/userprofile/bookmarks.php" id="navbarDropdown2" role="button" aria-expanded="false">
+                    Bookmarks
+                </a>
+            </li>
 
                 <!-- Profile Picture or Login Link -->
               <li class="nav-item nav-login hideOnMobile">

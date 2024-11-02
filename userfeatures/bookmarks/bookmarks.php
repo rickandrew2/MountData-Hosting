@@ -74,7 +74,7 @@ include ('../../db_connection.php'); // Include the database connection
                           </a>
                       </li>
                       <li>
-                      <a class="dropdown-item" id="communityLink" href="#" onclick="checkLogin()">
+                      <a class="dropdown-item" id="communityLink" href="../../systemfeatures/community/community.php" onclick="checkLogin()">
                           <span class="dd-icon material-symbols-outlined">groups</span>
                           <span class="dd-text">Community</span>
                       </a>
@@ -82,27 +82,12 @@ include ('../../db_connection.php'); // Include the database connection
                   </ul>
               </li>
 
-                 <!-- Second Dropdown Link -->
-              <li class="nav-item dropdown hideOnMobile">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Saved
-                  </a>
-                  <!-- Dropdown for Saved -->
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                      <li>
-                          <a class="dropdown-item" href="bookmarks.html"> <!-- Link to specific page -->
-                              <span class="dd-icon material-symbols-outlined">bookmarks</span>
-                              <span class="dd-text">Bookmarks</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a class="dropdown-item" href="favorites.html"> <!-- Link to specific page -->
-                              <span class="dd-icon material-symbols-outlined">favorite</span>
-                              <span class="dd-text">Favorites</span>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
+             <!-- Bookmark Link without Dropdown -->
+             <li class="nav-item hideOnMobile">
+                <a class="nav-link" href="bookmarks.php" id="navbarDropdown2" role="button" aria-expanded="false">
+                    Bookmarks
+                </a>
+            </li>
 
 
                 <!-- Profile Picture or Login Link -->
@@ -184,11 +169,25 @@ include ('../../db_connection.php'); // Include the database connection
         </div>
     </div>
     
-    <div class="row">
-        <div class="col-md-3 mountain-column">
+    <div class="row" style="height: 75vh;">
+        <div class="col-md-3 mountain-column" style="height: 100%;">
             <h2 class="mb-3" style="text-align: center;">Mountains</h2>
             <ul id="mountainList" class="list-group">
-                <?php include 'fetch_bookmarks.php'; ?>
+            <?php
+                if (!$loginStatus) {
+                    // Check if user is logged in
+                    if (!isset($_SESSION['user_id'])) {
+                        echo '<div class="no-access mt-5" style="text-align: center;">
+                            <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">lock</span>
+                            <h3 class="mt-3">Access Denied</h3>
+                            <p style="color: #8a8a8a;">You need to be logged in to view this page. Please <a href="../../login.php">log in</a> to continue.</p>
+                        </div>';
+                    } else {
+                        include 'fetch_bookmarks.php';
+                    }
+                }
+                ?>
+
             </ul>
         </div>
         <div class="col-md-9 map-container">

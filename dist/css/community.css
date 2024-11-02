@@ -19,7 +19,6 @@
   }
 }
 .search-results .result-item {
-  display: flex; /* Ensure flexbox layout */
   padding: 15px; /* Padding for each item */
   border-bottom: 1px solid #eee; /* Bottom border for separation */
   transition: background-color 0.3s, transform 0.3s; /* Transition for hover effects */

@@ -95,6 +95,8 @@ body {
     margin-left: -50%; /* Adjust left margin */
     opacity: 0; /* Hide the tooltip */
     transition: opacity 0.3s; /* Fade in effect */
+
+ 
 }
 
 .tooltip-container:hover .tooltip-text {
@@ -152,3 +154,4 @@ body {
 .swal-confirm-button:hover {
     background-color: #27ae60; /* Darker green on hover */
 }
+

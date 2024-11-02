@@ -43,8 +43,8 @@ if ($loginStatus) {
         $elevation = htmlspecialchars($row['elevation']);
 ?>
 
-        <!-- Community section -->
-        <div class="community-section">
+        <!-- Feed Section -->
+        <div class="community-section" style="width: 100%; overflow-x: auto;">
             <div class="row align-items-center py-2">
                 <div class="col-auto">
                     <img src="<?= $profilePicture; ?>" alt="Profile Picture" class="rounded-circle" style="width: 50px; height: 50px;">

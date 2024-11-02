@@ -62,6 +62,7 @@ include('../../db_connection.php'); // Include the database connection
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
 
@@ -86,26 +87,11 @@ include('../../db_connection.php'); // Include the database connection
                         </ul>
                     </li>
 
-                    <!-- Second Dropdown Link -->
-                    <li class="nav-item dropdown hideOnMobile">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Saved
+                     <!-- Bookmark Link without Dropdown -->
+                    <li class="nav-item hideOnMobile">
+                        <a class="nav-link" href="../bookmarks/bookmarks.php" id="navbarDropdown2" role="button" aria-expanded="false">
+                            Bookmarks
                         </a>
-                        <!-- Dropdown for Saved -->
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                            <li>
-                                <a class="dropdown-item" href="bookmarks.html"> <!-- Link to specific page -->
-                                    <span class="dd-icon material-symbols-outlined">bookmarks</span>
-                                    <span class="dd-text">Bookmarks</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="favorites.html"> <!-- Link to specific page -->
-                                    <span class="dd-icon material-symbols-outlined">favorite</span>
-                                    <span class="dd-text">Favorites</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
 
 
@@ -207,12 +193,6 @@ include('../../db_connection.php'); // Include the database connection
                         <h6><?php echo $email; ?></h6>
                         <h6 style="color: #8a8a8a">Member since <?php echo $created_at; ?></h6>
                     </div>
-                    <div class="bookmark-container mt-4">
-                        <div class="bookmark-with-icon d-flex align-items-center">
-                            <span class="material-symbols-outlined fs-2">bookmark</span>
-                            <p class="ms-2 mb-0 fs-5">Lists</p>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -232,8 +212,9 @@ include('../../db_connection.php'); // Include the database connection
             <div class="row g-0">
                 <div class="row p-3">
                     <div class="d-flex" style="border-bottom: 1px solid black;">
-                        <h4>Edit Profile</h4>
-                        <span class="ms-auto">View Profile</span>
+                        <h4 class="fs-5">Edit Profile</h4>
+                        
+                        <span class="ms-auto material-symbols-outlined fs-2">landscape</span>
                     </div>
                     <div class="col-lg-3" style="background-color: rgb(255, 255, 255);">
                         <div class="p-3">

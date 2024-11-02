@@ -1,12 +1,11 @@
 <?php
-// Check if user is logged in
-include_once('../../check_login.php'); 
+// Start the session to access session variables
 
-// Include the database connection
+// Include the database connection and other dependencies
 include('../../db_connection.php'); 
 
 // Fetch bookmarked mountains for the logged-in user
-$userId = $_SESSION['user_id']; // Assuming user ID is stored in session
+$userId = $_SESSION['user_id'];
 $bookmarkedMountainsQuery = "SELECT `bookmark_id`, `mountain_id` FROM `bookmarks` WHERE `user_id` = ?";
 $stmt = $conn->prepare($bookmarkedMountainsQuery);
 $stmt->bind_param("i", $userId);
@@ -20,10 +19,10 @@ while ($row = $bookmarkedMountains->fetch_assoc()) {
 // If there are no bookmarked mountains, output a message
 if (empty($mountains)) {
     echo '<div class="no-bookmarks mt-5" style="text-align: center;">
-    <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">explore</span>
-    <h3 class="mt-3">No Bookmarks Yet</h3>
-    <p style="color: #8a8a8a;">You have not bookmarked any mountains. Explore and add some to your favorites!</p>
-  </div>';
+        <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">explore</span>
+        <h3 class="mt-3">No Bookmarks Yet</h3>
+        <p style="color: #8a8a8a;">You have not bookmarked any mountains. Explore and add some to your favorites!</p>
+    </div>';
     exit;
 }
 
@@ -50,15 +49,20 @@ if ($result->num_rows > 0) {
         echo "<li class='list-group-item'>";
         echo "<div class='mountains'>";
         echo "<div class='mountain-container'>";
-        
-        // Wrap the image in an anchor tag
-        echo "<a href='../../mountains_profiles.php?mountain_id=" . $row["mountain_id"] . "'>";
+
         echo "<img class='mountain-pic mt-2' src='../../" . $row["mountain_image"] . "' alt='" . $row["name"] . "' data-lat='" . $row["latitude"] . "' data-lng='" . $row["longitude"] . "'>";
-        echo "</a>"; // Close the anchor tag
-        
+ 
         echo "</div>";
-        echo "<span class='material-symbols-outlined bookmark-icon' id='bookmark-" . $row["mountain_id"] . "'>bookmark_border</span>";
-        echo "<h5 style='margin-top: 10px;'>" . "Mount " . $row["name"] . "</h5>";
+
+        // Add anchor around the travel-icon
+        echo "<a href='../../mountains_profiles.php?mountain_id=" . $row["mountain_id"] . "' class='icon-link'>";
+        echo "<span class='material-symbols-outlined travel-icon' id='bookmark-" . $row["mountain_id"] . "'>travel_explore</span>";
+        echo "</a>"; // Close anchor tag
+
+        echo "<a href='../../mountains_profiles.php?mountain_id=" . $row["mountain_id"] . "' class='mountain-link'>";
+        echo "<h5 class='mountain-title'>" . "Mount " . $row["name"] . "</h5>";
+        echo "</a>"; // Close anchor tag
+
         echo "<div class='about-mountain'>";
         echo "<p class='location'>" . $row["location"] . "</p>";
         echo "<p class='elevation'>Elevation: " . $row["elevation"] . "</p>";
