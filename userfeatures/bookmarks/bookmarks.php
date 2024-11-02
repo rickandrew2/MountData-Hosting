@@ -173,21 +173,9 @@ include ('../../db_connection.php'); // Include the database connection
         <div class="col-md-3 mountain-column" style="height: 100%;">
             <h2 class="mb-3" style="text-align: center;">Mountains</h2>
             <ul id="mountainList" class="list-group">
-            <?php
-                if (!$loginStatus) {
-                    // Check if user is logged in
-                    if (!isset($_SESSION['user_id'])) {
-                        echo '<div class="no-access mt-5" style="text-align: center;">
-                            <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">lock</span>
-                            <h3 class="mt-3">Access Denied</h3>
-                            <p style="color: #8a8a8a;">You need to be logged in to view this page. Please <a href="../../login.php">log in</a> to continue.</p>
-                        </div>';
-                    } else {
-                        include 'fetch_bookmarks.php';
-                    }
-                }
+                <?php
+                include 'fetch_bookmarks.php'; 
                 ?>
-
             </ul>
         </div>
         <div class="col-md-9 map-container">
@@ -232,6 +220,8 @@ include ('../../db_connection.php'); // Include the database connection
     <!--OWN JS-->
     <script src="../../systemfeatures/maps/maps.js"></script>
     <script src="profiles.js"></script>
+
+    <script src="../../systemfeatures/search/search.js"></script>
 
     <!--BOOTSTRAP JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

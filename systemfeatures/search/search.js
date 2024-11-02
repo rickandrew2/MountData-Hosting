@@ -10,6 +10,8 @@ $(document).ready(function() {
         url = '../search/search.php'; // For maps.php in systemfeatures/maps
     } else if (window.location.pathname.includes('/systemfeatures/community')) {
         url = '../search/search.php'; // For community.php
+    } else if (window.location.pathname.includes('/userfeatures/bookmarks')) {
+        url = '../../systemfeatures/search/search.php'; // For community.php
     } else {
         url = '../systemfeatures/search/search.php'; // Default path for other cases
     }
