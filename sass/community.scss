@@ -262,12 +262,19 @@ $photo-height: 300px; // Adjust as necessary
     }
     
 
-    .search-container {
+    .search-container-com {
         display: flex;
         align-items: center;
         position: relative; // Position relative for positioning of icon
         margin: 20px 0; // Space around the search bar
-    
+        border: 1px solid #ccc; /* Light border for the input */
+        border-radius: 50px; /* Round border for the input container */
+        padding: 5px 15px; 
+
+        &:hover {
+            border: solid 1px green;
+        }
+         
         .search-input {
             width: 100%; // Full width for responsiveness
             padding: 10px 40px; // Add padding for aesthetics
@@ -281,6 +288,7 @@ $photo-height: 300px; // Adjust as necessary
                 outline: none; // Remove outline
             }
         }
+
     
         .search-icon {
             position: absolute; // Position the icon
@@ -289,6 +297,7 @@ $photo-height: 300px; // Adjust as necessary
             color: #000000; // Icon color
             pointer-events: none; // Prevent interaction
         }
+
     }
     
     // Responsive Styles
