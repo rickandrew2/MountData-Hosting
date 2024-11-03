@@ -114,7 +114,7 @@ function displayReview($row) {
     if ($row['user_id'] == $currentUserId) {
         echo '<li><a class="dropdown-item" href="#" onclick="confirmDeletion(' . $row['review_id'] . '); return false;">Delete</a></li>';
     } else {
-        echo '<li class="dropdown-item" style="color: red;">&#x26A0; Report</li>';
+        echo '<li><a class="dropdown-item" style="color: red;" href="#" onclick="confirmReport(' . $row['review_id'] . ', ' . $currentUserId . '); return false;">&#x26A0; Report</a></li>';
     }
     
     echo '</ul></div></div></div>';

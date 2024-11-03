@@ -43,5 +43,5 @@ echo "<script>var userId = $user_id;</script>"; // Pass user_id to JavaScript
 
 <script>
     // Pass the image path to JavaScript
-    var userImagePath = "<?php echo $imagePath; ?>";
+
 </script>
