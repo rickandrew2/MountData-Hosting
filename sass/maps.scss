@@ -13,49 +13,35 @@
 
 
                                                                  /*SLIDER*/
-@media (max-width: 575px) { /* Adjust the max-width to your needs */
-    .sort-by-row {
-        overflow-x: auto;
-        white-space: nowrap;
-        width: 100%;
-    }
 
-    .modal {
+@media (max-width: 768px) { /* Adjust the max-width to your needs */
+    .filter-row{
         display: none;
-        position: fixed;
-        z-index: 999;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0,0.4);
     }
-    
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 100%;
-    }
-    
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    
 }
+
+@media (min-width: 769px) {
+    
+
+    .filters {
+        display: block !important; /* Show the filters button on larger screens */
+        justify-self: center;
+    }
+}
+
+.filters {
+    padding: 10px 20px; /* Increase padding for a larger button */
+    font-size: 1.1rem; /* Slightly larger text */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.filters:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+
                                                                  /*MOUNTAINS WITH MAPS*/
 
 .mountain-column {
@@ -173,6 +159,7 @@
     font-size: 2em; /* Adjust size as needed */
     color: #8FBC8F; // Light sea green
 }
+
 
 
                                                          /*FOOTER*/
