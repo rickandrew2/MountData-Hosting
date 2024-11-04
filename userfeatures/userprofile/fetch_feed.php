@@ -83,13 +83,16 @@ if ($loginStatus) {
                                 <span class="material-symbols-outlined">arrow_right_alt</span>
                             </button>
                         </div>
-                    <?php else: ?>
+                    <?php elseif (count($reviewPhotos) === 1): ?>
                         <div class="img-container" style="width: 100%; height: 500px; overflow: hidden;">
-                            <img src="<?= htmlspecialchars($baseReviewImagePath . trim($reviewPhotos[0])); ?>" class="d-block rounded" alt="Single Mountain Image" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="<?= htmlspecialchars($baseReviewImagePath . trim($reviewPhotos[0])); ?>" class="d-block rounded" alt="Mountain Image" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
+                    <?php else: ?>
+                        <div style="display: none;"></div> <!-- This will hide the section if no images are available -->
                     <?php endif; ?>
                 </div>
             </div>
+
 
             <div class="row mt-3">
                 <div class="col">

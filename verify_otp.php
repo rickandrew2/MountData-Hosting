@@ -200,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row justify-content-center align-items-center min-vh-100">
             <div class="col-md-8 d-flex justify-content-center">
                 <div class="form-container p-4 d-flex align-items-center">
-                    <div class="row w-100">
+                    <div class="row w-100 align-items-center">
                         <!-- Image Section -->
                         <div class="col-md-5 logo-container">
                             <img src="images/logomount-removebg-preview.png" alt="Verify OTP" class="img-fluid">
