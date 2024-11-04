@@ -381,7 +381,7 @@ function confirmDeletion(reviewId) {
         if (result.isConfirmed) {
             Swal.fire({
                 title: 'Deleted!',
-                text: 'The comment has been deleted successfully.',
+                text: 'The review has been deleted successfully.',
                 icon: 'success',
                 confirmButtonColor: '#28a745'
             }).then(() => {
@@ -464,9 +464,6 @@ function confirmReport(reviewId, userId) {
         }
     });
 }
-
-
-
 
 
 
