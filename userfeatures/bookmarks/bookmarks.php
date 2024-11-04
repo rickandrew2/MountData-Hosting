@@ -33,7 +33,7 @@ include ('../../db_connection.php'); // Include the database connection
         <!-- Favicon -->
         <link rel="icon" href="../../images/logomount.png" type="image/png" />
 
-    <title>Maps</title>
+    <title>Bookmarks</title>
     </head>
     
     
@@ -194,7 +194,7 @@ include ('../../db_connection.php'); // Include the database connection
             <h2 class="mb-3" style="text-align: center;">Mountains</h2>
             <ul id="mountainList" class="list-group">
                 <?php
-                include 'fetch_bookmarks.php'; 
+                include_once 'fetch_bookmarks.php'; 
                 ?>
             </ul>
         </div>
