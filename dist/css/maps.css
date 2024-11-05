@@ -293,6 +293,87 @@
   border-radius: 8px;
 }
 
+/* Floating Map Button Styles */
+.floating-map-button {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #28a745;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000;
+}
+.floating-map-button .material-symbols-outlined {
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+/* Hide on larger screens */
+@media (min-width: 768px) {
+  .floating-map-button {
+    display: none;
+  }
+}
+/* Modal Styles */
+.modal-map {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+.modal-map .modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 600px; /* Maximum width */
+  border-radius: 5px; /* Rounded corners */
+}
+.modal-map .modal-content .map-label {
+  text-align: center; /* Center the label */
+  font-size: 1.5rem; /* Font size for the label */
+  margin-bottom: 15px; /* Space below the label */
+  color: #333; /* Dark gray color for the label */
+  font-weight: 600; /* Bold font weight */
+}
+.modal-map .modal-content .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.modal-map .modal-content .close:hover,
+.modal-map .modal-content .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Hide the map container by default on smaller screens */
+@media (max-width: 768px) {
+  .map-container {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+}
 .list-group-item {
   border: none;
   height: 500px !important;
@@ -370,6 +451,11 @@
 }
 .footer1 .footer1-des {
   color: white;
+}
+@media (max-width: 768px) {
+  .footer1 .footer1-des {
+    text-align: center !important;
+  }
 }
 
 @media (max-width: 768px) {

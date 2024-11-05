@@ -246,26 +246,37 @@ include('../../db_connection.php'); // Include the database connection
 
 
     <div class="row">
-        <div class="col-md-3 mountain-column">
-            <h2 class="mountain-heading mb-3" style="text-align: center;">Mountains<span class="material-symbols-outlined icon-landscape">
-                    landscape
-                </span>
-            </h2>
-            <ul id="mountainList" class="list-group">
-                <?php include 'fetch_mountains.php'; ?>
-            </ul>
-        </div>
-        <div class="col-md-9 map-container">
-            <div id="map" style="width: 100%; height: 100%"></div>
-        </div>
+    <div class="col-md-3 mountain-column" id="mountainColumn">
+        <h2 class="mountain-heading mb-3" style="text-align: center;">Mountains
+            <span class="material-symbols-outlined icon-landscape"> landscape </span>
+        </h2>
+        <ul id="mountainList" class="list-group">
+            <?php include 'fetch_mountains.php'; ?>
+        </ul>
     </div>
+    <div class="col-md-9 map-container d-md-block" id="mapColumn">
+        <div id="map" style="width: 100%; height: 100%;"></div> <!-- Keep original map -->
     </div>
+</div>
 
-    <!-- Floating Map Icon -->
-    <div class="floating-map-icon" id="map-toggle" onclick="toggleMap()">
-        <span class="material-symbols-outlined">map</span>
-    </div>
+<!-- Floating Map Button (show map in modal) -->
+<div class="floating-map-button d-md-none" id="showMapButton" onclick="openMapModal()">
+    <span class="material-symbols-outlined">map</span> Map
+</div>
 
+<!-- Modal for the Map -->
+<div id="mapModal" class="modal-map">
+    <div class="modal-content">
+        <span class="close" onclick="closeMapModal()">&times;</span>
+        <!-- Include the same map div here for the modal -->
+        <div id="modalMap" style="width: 100%; height: 400px;"></div>
+    </div>
+</div>
+
+<!-- Floating Mountain Button (go back to mountain view) -->
+<div class="floating-map-button d-md-none" id="showMountainButton" style="display: none;" onclick="closeMapModal()">
+    <span class="material-symbols-outlined">landscape</span> Mountains
+</div>
 
 
     <!--FOOTER-->

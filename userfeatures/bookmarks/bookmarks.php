@@ -238,71 +238,87 @@ include('../../db_connection.php'); // Include the database connection
 
 
 
-        <div class="row" style="height: 75vh;">
-            <div class="col-md-3 mountain-column" style="height: 100%;">
-                <h2 class="mb-3" style="text-align: center;">Mountains</h2>
+        <div class="row">
+            <div class="col-md-3 mountain-column" id="mountainColumn">
+                <h2 class="mountain-heading mb-3" style="text-align: center;">Mountains
+                    <span class="material-symbols-outlined icon-landscape"> landscape </span>
+                </h2>
                 <ul id="mountainList" class="list-group">
-                    <?php
-                    include_once 'fetch_bookmarks.php';
-                    ?>
+                    <?php include 'fetch_bookmarks.php'; ?>
                 </ul>
             </div>
-            <div class="col-md-9 map-container">
-                <div id="map" style="width: 100%; height: 100%"></div>
+            <div class="col-md-9 map-container d-md-block" id="mapColumn">
+                <div id="map" style="width: 100%; height: 100%;"></div> <!-- Keep original map -->
             </div>
+        </div>
+
+        <!-- Floating Map Button (show map in modal) -->
+        <div class="floating-map-button d-md-none" id="showMapButton" onclick="openMapModal()">
+            <span class="material-symbols-outlined">map</span> Map
+        </div>
+
+        <!-- Modal for the Map -->
+        <div id="mapModal" class="modal-map">
+            <div class="modal-content">
+                <span class="close" onclick="closeMapModal()">&times;</span>
+                <!-- Placeholder for the message -->
+                <h3 class="map-label">Mountain Location Map</h3> 
+                <div id="modalMapMessage"></div>
+                <div id="modalMap" style="width: 100%; height: 400px;"></div>
+            </div>
+        </div>
+
+        <!-- Floating Mountain Button (go back to mountain view) -->
+        <div class="floating-map-button d-md-none" id="showMountainButton" style="display: none;" onclick="closeMapModal()">
+            <span class="material-symbols-outlined">landscape</span> Mountains
         </div>
     </div>
 
-    <!-- Floating Map Icon -->
-    <div class="floating-map-icon" id="map-toggle" onclick="toggleMap()">
-        <span class="material-symbols-outlined">map</span>
-    </div>
 
 
-
-    <!--FOOTER-->
-    <footer>
-        <div class="container-fluid footer1">
-            <div class="row p-5 text-center text-md-start">
-                <div class="col-12 col-md-4 mb-4">
-                    <span class="ftr-icon material-symbols-outlined">photo_camera</span>
-                    <h3 class="mt-3 fs-2 footer-title">Share Your Journey</h3>
-                    <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Connect with fellow adventurers and share your experiences. Tag us in your photos to inspire others!</h3>
-                </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <span class="ftr-icon material-symbols-outlined">landscape</span>
-                    <h3 class="mt-3 fs-2 footer-title">Adventure Awaits</h3>
-                    <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Every adventure brings a new experience. Discover breathtaking trails, hidden gems, and the beauty of nature with us.</h3>
-                </div>
-                <div class="col-12 col-md-4 mb-4">
-                    <span class="ftr-icon material-symbols-outlined">explore</span>
-                    <h3 class="mt-3 fs-2 footer-title">Explore Responsibly</h3>
-                    <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;"> We believe in responsible exploration. Follow our guidelines to leave minimal impact and preserve the beauty of nature.</h3>
+        <!--FOOTER-->
+        <footer>
+            <div class="container-fluid footer1">
+                <div class="row p-5 text-center text-md-start">
+                    <div class="col-12 col-md-4 mb-4">
+                        <span class="ftr-icon material-symbols-outlined">photo_camera</span>
+                        <h3 class="mt-3 fs-2 footer-title">Share Your Journey</h3>
+                        <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Connect with fellow adventurers and share your experiences. Tag us in your photos to inspire others!</h3>
+                    </div>
+                    <div class="col-12 col-md-4 mb-4">
+                        <span class="ftr-icon material-symbols-outlined">landscape</span>
+                        <h3 class="mt-3 fs-2 footer-title">Adventure Awaits</h3>
+                        <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Every adventure brings a new experience. Discover breathtaking trails, hidden gems, and the beauty of nature with us.</h3>
+                    </div>
+                    <div class="col-12 col-md-4 mb-4">
+                        <span class="ftr-icon material-symbols-outlined">explore</span>
+                        <h3 class="mt-3 fs-2 footer-title">Explore Responsibly</h3>
+                        <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;"> We believe in responsible exploration. Follow our guidelines to leave minimal impact and preserve the beauty of nature.</h3>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    <!-- Google Maps JavaScript API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqm58SgYCVN-CdOxefv0BPG_PTJ75yINM&callback=initMap" async defer></script>
+        <!-- Google Maps JavaScript API -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqm58SgYCVN-CdOxefv0BPG_PTJ75yINM&callback=initMap" async defer></script>
 
-    <!--OWN JS-->
-    <script src="../../systemfeatures/maps/maps.js"></script>
-    <script src="profiles.js"></script>
-    <script src="bookmarks.js"></script>
+        <!--OWN JS-->
+        <script src="profiles.js"></script>
+        <script src="bookmarks.js"></script>
 
-    <script src="../../systemfeatures/search/search.js"></script>
+        <script src="../../systemfeatures/search/search.js"></script>
 
-    <!--BOOTSTRAP JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!--BOOTSTRAP JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <!--JQUERY-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../../systemfeatures/search/search.js" defer></script>
+        <!--JQUERY-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="../../systemfeatures/search/search.js" defer></script>
 
-    <script>
-        const isLoggedIn = <?php echo json_encode($loginStatus); ?>; // Pass the PHP variable to JS
-    </script>
+        <script>
+            const isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>; // true or false based on session
+            initModalMap(isLoggedIn);
+        </script>
 
 </body>
 

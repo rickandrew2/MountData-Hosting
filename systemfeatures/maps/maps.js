@@ -1,9 +1,8 @@
-// Initialize and add the map
-let map; // Declare map variable globally
+let map; // Main map variable
+let modalMap; // Modal map variable
 
 function initMap() {
-    // Default location to center the map
-    console.log("Map is initializing..."); // Debug line
+    // Initialize the main map
     const defaultLocation = { lat: -34.397, lng: 150.644 };
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 8,
@@ -13,96 +12,84 @@ function initMap() {
     // Add click event listeners to mountain images
     const mountainImages = document.querySelectorAll('.mountain-pic');
     mountainImages.forEach((image) => {
-        image.addEventListener('click', () => {
-            const lat = parseFloat(image.getAttribute('data-lat'));
-            const lng = parseFloat(image.getAttribute('data-lng'));
-            const location = { lat: lat, lng: lng };
-
-            // Center the map on the selected mountain
-            map.setCenter(location);
-            map.setZoom(10); // Optional: adjust zoom level
-
-            // Add a marker for the selected mountain
-            new google.maps.Marker({
-                position: location,
-                map: map,
-                title: image.alt, // Use the mountain name as the title
-            });
-        });
+        image.addEventListener('click', () => handleMountainClick(image));
     });
 }
 
-
-
-let mapVisible = false; // State to track if the map is visible
-
-// Function to toggle map visibility
-function toggleMap() {
-    const mapContainer = document.getElementById("map-container");
-    const mapToggleIcon = document.querySelector(".floating-map-icon span");
-
-    // Ensure the elements exist
-    if (!mapContainer || !mapToggleIcon) {
-        console.error("Map container or toggle icon not found");
-        return; // Stop execution if elements are not found
-    }
-
-    if (!mapVisible) {
-        console.log("Showing map");
-        mapContainer.style.display = "block"; // Show the map
-        mapToggleIcon.innerHTML = "landscape"; // Change to mountain icon
-        mapVisible = true;
-    } else {
-        console.log("Hiding map");
-        mapContainer.style.display = "none"; // Hide the map
-        mapToggleIcon.innerHTML = "map"; // Change back to map icon
-        mapVisible = false;
+function initModalMap() {
+    // Initialize the modal map if it hasn't been initialized yet
+    if (!modalMap) {
+        const modalDefaultLocation = { lat: -34.397, lng: 150.644 };
+        modalMap = new google.maps.Map(document.getElementById("modalMap"), {
+            zoom: 8,
+            center: modalDefaultLocation,
+        });
     }
 }
 
-// Ensure map is hidden on smaller screens when resizing
-window.addEventListener('resize', function () {
-    const mapContainer = document.getElementById("map-container");
-    const mapToggleIcon = document.querySelector(".floating-map-icon");
+function handleMountainClick(image) {
+    const lat = parseFloat(image.getAttribute('data-lat'));
+    const lng = parseFloat(image.getAttribute('data-lng'));
+    const location = { lat: lat, lng: lng };
 
-    // Ensure the elements exist
-    if (!mapContainer || !mapToggleIcon) {
-        console.error("Map container or toggle icon not found during resize");
-        return; // Stop execution if elements are not found
+    // Center the main map on the selected mountain
+    map.setCenter(location);
+    map.setZoom(10); // Adjust zoom level for main map
+
+    // Add a marker for the selected mountain on the main map
+    new google.maps.Marker({
+        position: location,
+        map: map,
+        title: image.alt, // Use the mountain name as the title
+    });
+
+    // Check if the screen size is less than 768px before initializing/updating the modal map
+    if (window.innerWidth < 768) {
+        initModalMap(); // Initialize modal map if on small screen
+        modalMap.setCenter(location); // Center the modal map on the selected mountain
+        modalMap.setZoom(10); // Adjust zoom level for modal map
+
+        // Add a marker for the selected mountain on the modal map
+        new google.maps.Marker({
+            position: location,
+            map: modalMap, // Add marker to the modal map
+            title: image.alt, // Use the mountain name as the title
+        });
+
+        // Open the modal
+        openMapModal();
     }
+}
 
-    if (window.innerWidth > 768) {
-        console.log("Larger screen, show map");
-        mapContainer.style.display = "block"; // Always show the map on larger screens
-        mapToggleIcon.style.display = "none"; // Hide the toggle button
-    } else {
-        console.log("Smaller screen, hide map");
-        mapContainer.style.display = mapVisible ? "block" : "none"; // Toggle based on visibility
-        mapToggleIcon.style.display = "flex"; // Show the toggle button
+function openMapModal() {
+    document.getElementById('mapModal').style.display = 'block'; // Show the modal
+}
+
+function closeMapModal() {
+    document.getElementById('mapModal').style.display = 'none'; // Hide the modal
+}
+
+
+
+// Close the modal if the user clicks anywhere outside of the modal
+window.onclick = function(event) {
+    const modal = document.getElementById('mapModal');
+    if (event.target === modal) {
+        closeMapModal();
     }
-});
+}
 
-// Initial check to hide the map if the screen is small
-window.addEventListener('DOMContentLoaded', function () {
-    const mapContainer = document.getElementById("map-container");
-    const mapToggleIcon = document.querySelector(".floating-map-icon");
+function showMountain() {
+    document.getElementById('mountainColumn').style.display = 'block'; // Show the mountain column
+    document.getElementById('mapColumn').style.display = 'none'; // Hide the map column
+    document.getElementById('showMapButton').style.display = 'block'; // Show the map button
+    document.getElementById('showMountainButton').style.display = 'none'; // Hide the mountain button
+}
 
-    // Ensure the elements exist
-    if (!mapContainer || !mapToggleIcon) {
-        console.error("Map container or toggle icon not found during initial load");
-        return; // Stop execution if elements are not found
-    }
 
-    if (window.innerWidth <= 575) {
-        console.log("Initial load on smaller screen, hide map");
-        mapContainer.style.display = "none"; // Hide the map
-        mapToggleIcon.style.display = "flex"; // Show the toggle icon
-    } else {
-        console.log("Initial load on larger screen, show map");
-        mapContainer.style.display = "block"; // Show the map
-        mapToggleIcon.style.display = "none"; // Hide the toggle icon
-    }
-});
+
+
+
 
 
 
@@ -178,5 +165,11 @@ function filterMountains() {
         .then(response => response.text())
         .then(data => {
             document.getElementById('mountainList').innerHTML = data;
+
+            // Reattach click event listeners to the new mountain images
+            const mountainImages = document.querySelectorAll('.mountain-pic');
+            mountainImages.forEach((image) => {
+                image.addEventListener('click', () => handleMountainClick(image));
+            });
         });
 }
