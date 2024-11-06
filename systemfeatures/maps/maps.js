@@ -2,12 +2,46 @@ let map; // Main map variable
 let modalMap; // Modal map variable
 
 function initMap() {
-    // Initialize the main map
+    // Initialize the main map with custom styles
     const defaultLocation = { lat: -34.397, lng: 150.644 };
-    map = new google.maps.Map(document.getElementById("map"), {
+    const mapOptions = {
         zoom: 8,
         center: defaultLocation,
-    });
+        styles: [
+            {
+                featureType: 'water',
+                elementType: 'geometry',
+                stylers: [{ color: '#b3e5fc' }] // Light blue for water
+            },
+            {
+                featureType: 'landscape',
+                elementType: 'geometry',
+                stylers: [{ color: '#d7f9d7' }] // Light green for landscape
+            },
+            {
+                featureType: 'road',
+                elementType: 'geometry',
+                stylers: [{ color: '#e0e0e0' }] // Light gray for roads
+            },
+            {
+                featureType: 'road',
+                elementType: 'labels',
+                stylers: [{ visibility: 'on' }] // Show road labels
+            },
+            {
+                featureType: 'poi',
+                elementType: 'geometry',
+                stylers: [{ visibility: 'off' }] // Hide points of interest
+            },
+            {
+                featureType: 'administrative',
+                elementType: 'geometry',
+                stylers: [{ visibility: 'off' }] // Hide administrative areas
+            }
+        ]
+    };
+
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
     // Add click event listeners to mountain images
     const mountainImages = document.querySelectorAll('.mountain-pic');
@@ -20,13 +54,46 @@ function initModalMap() {
     // Initialize the modal map if it hasn't been initialized yet
     if (!modalMap) {
         const modalDefaultLocation = { lat: -34.397, lng: 150.644 };
-        modalMap = new google.maps.Map(document.getElementById("modalMap"), {
+        const modalMapOptions = {
             zoom: 8,
             center: modalDefaultLocation,
-        });
+            styles: [
+                {
+                    featureType: 'water',
+                    elementType: 'geometry',
+                    stylers: [{ color: '#b3e5fc' }] // Light blue for water
+                },
+                {
+                    featureType: 'landscape',
+                    elementType: 'geometry',
+                    stylers: [{ color: '#d7f9d7' }] // Light green for landscape
+                },
+                {
+                    featureType: 'road',
+                    elementType: 'geometry',
+                    stylers: [{ color: '#e0e0e0' }] // Light gray for roads
+                },
+                {
+                    featureType: 'road',
+                    elementType: 'labels',
+                    stylers: [{ visibility: 'on' }] // Show road labels
+                },
+                {
+                    featureType: 'poi',
+                    elementType: 'geometry',
+                    stylers: [{ visibility: 'off' }] // Hide points of interest
+                },
+                {
+                    featureType: 'administrative',
+                    elementType: 'geometry',
+                    stylers: [{ visibility: 'off' }] // Hide administrative areas
+                }
+            ]
+        };
+
+        modalMap = new google.maps.Map(document.getElementById("modalMap"), modalMapOptions);
     }
 }
-
 function handleMountainClick(image) {
     const lat = parseFloat(image.getAttribute('data-lat'));
     const lng = parseFloat(image.getAttribute('data-lng'));
@@ -36,11 +103,14 @@ function handleMountainClick(image) {
     map.setCenter(location);
     map.setZoom(10); // Adjust zoom level for main map
 
+  
+
     // Add a marker for the selected mountain on the main map
     new google.maps.Marker({
         position: location,
         map: map,
         title: image.alt, // Use the mountain name as the title
+       
     });
 
     // Check if the screen size is less than 768px before initializing/updating the modal map
@@ -54,6 +124,7 @@ function handleMountainClick(image) {
             position: location,
             map: modalMap, // Add marker to the modal map
             title: image.alt, // Use the mountain name as the title
+           
         });
 
         // Open the modal
@@ -69,8 +140,6 @@ function closeMapModal() {
     document.getElementById('mapModal').style.display = 'none'; // Hide the modal
 }
 
-
-
 // Close the modal if the user clicks anywhere outside of the modal
 window.onclick = function(event) {
     const modal = document.getElementById('mapModal');
@@ -78,6 +147,7 @@ window.onclick = function(event) {
         closeMapModal();
     }
 }
+
 
 function showMountain() {
     document.getElementById('mountainColumn').style.display = 'block'; // Show the mountain column

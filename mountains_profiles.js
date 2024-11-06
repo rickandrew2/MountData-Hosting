@@ -489,6 +489,15 @@ function closeModal() {
     document.getElementById("photoModal").style.display = "none"; // Hide photoModal
 }
 
+// Close the modal if the user clicks anywhere outside of the modal content
+window.onclick = function(event) {
+    const modalWrapper = document.getElementById("modalWrapper");
+    const photoModal = document.getElementById("photoModal");
+    if (event.target === modalWrapper) {
+        closeModal();
+    }
+};
+
 // Function to check for bookmarks in local storage
 function checkBookmarks() {
     const bookmarkedMountains = JSON.parse(localStorage.getItem('bookmarkedMountains')) || [];

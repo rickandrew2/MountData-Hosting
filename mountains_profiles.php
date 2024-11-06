@@ -81,7 +81,7 @@
                         </ul>
                     </li>
 
-                     <!-- Bookmark Link without Dropdown -->
+                    <!-- Bookmark Link without Dropdown -->
                     <li class="nav-item hideOnMobile">
                         <a class="nav-link" href="userfeatures/bookmarks/bookmarks.php" id="navbarDropdown2" role="button" aria-expanded="false">
                             Bookmarks
@@ -294,7 +294,7 @@
 
             <div class="photos-content row" id="photos" style="display: none;">
                 <div class="row">
-                    <div class="col-lg-9 ">
+                    <div class="col-lg-9">
                         <div class="photos-details mx-3">
                             <h4>Photos of This Trail</h4>
                             <h5>Photos help others preview the trail. Upload photos about this trail to inspire others.</h5>
@@ -308,15 +308,20 @@
                             </select>
                         </div>
                     </div>
-                    <div class="upload-photos col-lg-3" style="text-align: center;">
-                        <h5 class="upload-photos-btn mt-sm-4 mt-lg-0" id="uploadBtn">Upload photos</h5>
+                    <!-- Upload photos button with responsive margins -->
+                    <div class="upload-photos col-12 col-md-12 col-lg-3" style="text-align: center;">
+                        <h5 class="upload-photos-btn mt-4 mt-lg-0 mx-3" id="uploadBtn">Upload photos</h5>
                     </div>
                 </div>
-
-                <?php include 'userfeatures/reviews/fetch_upload_photos.php'; ?>
+                <div class="container">
+                    <hr>
+                </div>
+                <div>
+                    <?php include 'userfeatures/reviews/fetch_upload_photos.php'; ?>
                 </div>
             </div>
-  
+
+
 
             <!--FOOTER-->
             <footer>

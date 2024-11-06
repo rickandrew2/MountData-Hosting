@@ -1,5 +1,3 @@
-
-
 <?php
 // fetch_upload_photos.php
 if ($loginStatus) { // Assuming $loginStatus is true if logged in
@@ -16,27 +14,27 @@ if ($loginStatus) { // Assuming $loginStatus is true if logged in
     $stmt->bind_param('i', $mountain_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    ?>
+?>
 
     <div class="container photos py-5">
-        <div class="row">
+        <div class="row mx-0">
             <?php if ($result->num_rows > 0): ?>
-                <div class="col-12 mb-4 text-center" style="border-top: #8a8a8a solid 1px">
+                <div class="col-12 mb-4 text-center">
                     <h2 class="mt-5">Trail Photos</h2>
                     <p>Click on a photo to view it full-screen.</p>
                 </div>
                 <div class="row g-4 justify-content-center">
                     <?php while ($row = $result->fetch_assoc()): ?>
-                        <?php 
+                        <?php
                         // Split the review_photo by commas to get an array of photo paths
-                        $photos = explode(',', $row['review_photo']); 
+                        $photos = explode(',', $row['review_photo']);
                         ?>
                         <?php foreach ($photos as $photo): ?>
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mx-2">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                                 <div class="photo-item">
-                                    <img src="userfeatures/reviews/<?php echo htmlspecialchars(trim($photo)); ?>" 
-                                        alt="Uploaded photo" 
-                                        class="img-fluid rounded shadow-sm"
+                                    <img src="userfeatures/reviews/<?php echo htmlspecialchars(trim($photo)); ?>"
+                                        alt="Uploaded photo"
+                                        class="img-fluid rounded shadow-sm w-100"
                                         onclick="openModal('<?php echo htmlspecialchars(trim($photo)); ?>', '<?php echo htmlspecialchars($row['username']); ?>', '<?php echo htmlspecialchars($row['review_date']); ?>', '<?php echo htmlspecialchars(trim(str_replace('../../', '', $row['image_path']))); ?>')">
                                 </div>
                             </div>
@@ -55,6 +53,7 @@ if ($loginStatus) { // Assuming $loginStatus is true if logged in
         </div>
     </div>
 
+
     <!-- Modal for Full-Screen Image View -->
     <div class="modalWrapper modal" id="modalWrapper" style="display: none;">
         <div id="photoModal">
@@ -62,13 +61,13 @@ if ($loginStatus) { // Assuming $loginStatus is true if logged in
             <img class="modal-content" id="modalImage">
             <div id="modalOverlay">
                 <img id="profilePic" class="rounded-circle" src="" alt="User Profile Picture">
-                <span id="username"></span> 
+                <span id="username"></span>
                 <span id="uploadDate"></span>
             </div>
         </div>
     </div>
 
-    <?php
+<?php
 } else {
     // User is not logged in
     echo '
