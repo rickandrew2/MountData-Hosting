@@ -182,4 +182,4 @@ function displayPagination($currentPage, $totalPages, $mountain_id) {
         echo '</div>
         </div>';
 }
-?>
+?> 

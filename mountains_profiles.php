@@ -244,7 +244,7 @@
                 <div class="row mb-3">
                     <div class="ratings col-lg-4 col-md-6">
                         <?php
-                        require 'userfeatures/reviews/fetch_reviews.php';
+                          require 'userfeatures/reviews/fetch_reviews.php';
                         // Fetch counts of ratings
                         $ratings = fetchRatings($conn, $mountain_id);
                         displayRatings($ratings);
@@ -263,9 +263,9 @@
 
                 <div class="search-reviews" style="display: flex; align-items: center; position: relative; width: 100%;">
                     <i class="fas fa-search" style="position: absolute; left: 10px; color: black"></i>
-                    <input type="text" placeholder="Search reviews..." class="search-bar" style="font-size: 1.2rem;">
+                    <input type="text" placeholder="Search reviews..." class="search-bar" id="search-input" style="font-size: 1.2rem;">
                     <div class="filter-icon" style="position: absolute; right: 10px;">
-                        <i class="fas fa-filter" style="color: black;"></i>
+                        <i class="fas fa-filter" id="filter-icon" style="color: black;"></i>
                     </div>
                 </div>
 
@@ -277,8 +277,12 @@
                 $totalPages = ceil($totalReviews / $reviewsPerPage);
                 $offset = ($currentPage - 1) * $reviewsPerPage;
 
+                $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
+                $ratingFilter = isset($_GET['rating']) ? (int)$_GET['rating'] : '';
+
+                $reviews = fetchReviews($conn, $mountain_id, $reviewsPerPage, $offset, $searchQuery, $ratingFilter);
+
                 if ($loginStatus) {
-                    $reviews = fetchReviews($conn, $mountain_id, $reviewsPerPage, $offset);
                     displayReviews($reviews);
                 } else {
                     displayLoginPrompt();
@@ -290,6 +294,8 @@
                 // Close connection
                 $conn->close();
                 ?>
+
+
             </div>
 
             <div class="photos-content row" id="photos" style="display: none;">

@@ -125,3 +125,38 @@ function confirmReport(reviewId, userId) {
     });
 }
 
+$(document).ready(function () {
+    // Handle like button click
+    $(".like-button").click(function () {
+        var reviewId = $(this).data("review-id");
+        var userId = $(this).data("user-id");
+        var hasLiked = $(this).data("likes") === 'true';
+
+        // Send AJAX request to like_handler.php
+        $.ajax({
+            url: "like_handler.php", // Adjust the path as needed
+            type: "POST",
+            data: {
+                review_id: reviewId
+            },
+            success: function (response) {
+                var data = JSON.parse(response);
+                
+                if (data.status === 'liked') {
+                    // Update the like button to filled state
+                    $(".like-button[data-review-id='" + reviewId + "'] .heart").hide();
+                    $(".like-button[data-review-id='" + reviewId + "'] .heart-filled").show();
+                    $(this).data("likes", 'true');
+                } else {
+                    // Update the like button to unfilled state
+                    $(".like-button[data-review-id='" + reviewId + "'] .heart").show();
+                    $(".like-button[data-review-id='" + reviewId + "'] .heart-filled").hide();
+                    $(this).data("likes", 'false');
+                }
+
+                // Update the like count on the page
+                $(".like-count[data-review-id='" + reviewId + "']").text(data.like_count);
+            }
+        });
+    });
+});
