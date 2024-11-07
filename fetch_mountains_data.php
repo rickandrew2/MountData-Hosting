@@ -37,6 +37,32 @@
     function getMountainProfile($conn, $mountain_id) {
         $mountainData = fetchMountainData($conn, $mountain_id);
         if ($mountainData) {
+            // Log the visit to mountain_log_history if user is logged in
+            if (isset($_SESSION['user_id'])) {
+                $user_id = $_SESSION['user_id'];
+                $last_visit_time = null; // Initialize the variable to avoid errors
+    
+                // Check if the last visit was over an hour ago
+                $stmt = $conn->prepare("SELECT visit_time FROM mountain_log_history WHERE user_id = ? AND mountain_id = ? ORDER BY visit_time DESC LIMIT 1");
+                $stmt->bind_param("ii", $user_id, $mountain_id);
+                $stmt->execute();
+                $stmt->bind_result($last_visit_time);
+                $stmt->fetch();
+                $stmt->close();
+    
+                // Only insert a new log entry if the last visit was over an hour ago
+                if (!$last_visit_time || strtotime($last_visit_time) < strtotime('-1 hour')) {
+                    $visit_time = date('Y-m-d H:i:s');
+                    $stmt = $conn->prepare("INSERT INTO mountain_log_history (user_id, mountain_id, visit_time) VALUES (?, ?, ?)");
+                    $stmt->bind_param("iis", $user_id, $mountain_id, $visit_time);
+    
+                    if (!$stmt->execute()) {
+                        error_log("Failed to insert log: " . $stmt->error); // Log any error if insert fails
+                    }
+                    $stmt->close();
+                }
+            }
+    
             $ratingsData = fetchRatingsData($conn, $mountain_id);
             return [
                 'mountainData' => $mountainData,
@@ -45,4 +71,5 @@
         }
         return null;
     }
+    
 ?>
