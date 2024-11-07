@@ -14,7 +14,7 @@ The website features interactive mapping, user reviews, photo uploads, and real-
 
 ### Customer Relations
 - **Contact Form**: Allows users to send inquiries or ask questions about specific trails.
-- **FAQ Section**: Helps users find answers to commonly asked questions.
+- **Emergency Contact Numbers**: Each mountain profile includes a dedicated contact number for emergencies.
 - **Feedback System**: Enables users to share their experiences with specific mountain destinations.
 
 ### Data Analytics
