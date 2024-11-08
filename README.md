@@ -71,8 +71,6 @@ The website features interactive mapping, user reviews, photo uploads, and real-
 - **Challenge**: Challenge: Integrating and managing third-party APIs like Google Maps and Weather API.
   - **Solution**: Implemented asynchronous API requests to fetch data without blocking the user interface. For Google Maps, used marker clustering to efficiently display numerous locations on the map. For the                   Weather API, integrated a caching mechanism to reduce the number of API calls and improve performance.
 
- 
-
 
 ---
 
