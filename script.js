@@ -133,3 +133,16 @@ const hikingTips = [
 }
 
 
+// Prevent zooming with the mouse wheel or pinch gesture on mobile
+document.addEventListener('wheel', function(event) {
+    if (event.ctrlKey) {  // Zooming is typically triggered with the ctrl key + mouse wheel
+        event.preventDefault();
+    }
+}, { passive: false });
+
+// Prevent zoom on mobile (pinch zoom)
+document.addEventListener('touchmove', function(event) {
+    if (event.scale !== 1) {
+        event.preventDefault(); // Prevent pinch zoom
+    }
+}, { passive: false });

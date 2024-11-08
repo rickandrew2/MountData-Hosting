@@ -4,7 +4,7 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <!-- My CSS -->
     <link rel="stylesheet" href="dist/css/mountains_profiles.css" />
@@ -326,6 +326,7 @@
                     <?php include 'userfeatures/reviews/fetch_upload_photos.php'; ?>
                 </div>
             </div>
+        </div>
 
 
 
