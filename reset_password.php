@@ -75,95 +75,90 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
-<!-- NAVIGATION BAR -->
+ <!-- NAVIGATION BAR -->
+ <?php
+    include 'check_login.php'; // This will check if the user is logged in
+    include 'db_connection.php'; // Ensure this file contains your database connection code
+    ?>
 
-<?php
-include 'check_login.php'; // This will check if the user is logged in
-include 'db_connection.php'; // Ensure this file contains your database connection code
-?>
+    <nav class="navbar navbar-expand-lg navbar-container fs-5">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <a class="navbar-brand" href="index.php">
+                    <img src="/images/logomount-removebg-preview.png" alt="Logo" width="100" height="50" class="d-inline-block align-text-top" />
+                </a>
+            </div>
+            <div class="search-container d-flex">
+                <span class="material-symbols-outlined">search</span>
+                <input type="text" placeholder="Search" class="search-bar" />
+            </div>
 
-<nav class="navbar navbar-expand-lg navbar-container fs-5">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-            <a class="navbar-brand" href="index.php">
-                <img src="/images/logomount-removebg-preview.png" alt="Logo" width="100" height="50" class="d-inline-block align-text-top" />
-            </a>
-        </div>
-        <div class="search-container d-flex">
-            <span class="material-symbols-outlined">search</span>
-            <input type="text" placeholder="Search" class="search-bar" />
-        </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-auto">
-                
-            <!-- First Dropdown Link -->
-            <li class="nav-item dropdown hideOnMobile">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Explore
-                  </a>
-                  <!-- Dropdown for Explore -->
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                      <li>
-                          <a class="dropdown-item" href="systemfeatures/maps/maps.php"> <!-- Link to specific page -->
-                              <span class="dd-icon material-symbols-outlined">nearby</span>
-                              <span class="dd-text">Maps</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a class="dropdown-item" href="community.html"> <!-- Link to specific page -->
-                              <span class="dd-icon material-symbols-outlined">groups</span>
-                              <span class="dd-text">Community</span>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
+            <div class="search-results mt-2"></div> <!-- This will hold the search results -->
 
-                 <!-- Second Dropdown Link -->
-              <li class="nav-item dropdown hideOnMobile">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Saved
-                  </a>
-                  <!-- Dropdown for Saved -->
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                      <li>
-                          <a class="dropdown-item" href="bookmarks.html"> <!-- Link to specific page -->
-                              <span class="dd-icon material-symbols-outlined">bookmarks</span>
-                              <span class="dd-text">Bookmarks</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a class="dropdown-item" href="favorites.html"> <!-- Link to specific page -->
-                              <span class="dd-icon material-symbols-outlined">favorite</span>
-                              <span class="dd-text">Favorites</span>
-                          </a>
-                      </li>
-                  </ul>
-              </li>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
 
-
-                <li class="nav-item nav-login hideOnMobile mx-5">
-                    <?php if ($loginStatus): ?>
-                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="<?php echo htmlspecialchars(getUserImagePath()); ?>" alt="Profile Picture" width="40" height="40" class="rounded-circle">
+                    <!-- First Dropdown Link -->
+                    <li class="nav-item dropdown hideOnMobile">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Explore
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <!-- Dropdown for Explore -->
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
                             <li>
-                                <a class="dropdown-item" href="profile.php">Settings</a>
+                                <a class="dropdown-item" href="systemfeatures/maps/maps.php"> <!-- Link to specific page -->
+                                    <span class="dd-icon material-symbols-outlined">nearby</span>
+                                    <span class="dd-text">Maps</span>
+                                </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="logout.php">Logout</a>
+                                <a class="dropdown-item" href="systemfeatures/community/community.php"> <!-- Link to specific page -->
+                                    <span class="dd-icon material-symbols-outlined">groups</span>
+                                    <span class="dd-text">Community</span>
+                                </a>
                             </li>
                         </ul>
-                    <?php else: ?>
-                        <a class="nav-link" href="login.php">Login</a>
-                    <?php endif; ?>
-                </li>
-            </ul>
+                    </li>
+
+                    <!-- Bookmark Link without Dropdown -->
+                    <li class="nav-item hideOnMobile">
+                        <a class="nav-link" href="userfeatures/bookmarks/bookmarks.php" id="navbarDropdown2" role="button" aria-expanded="false">
+                            Bookmarks
+                        </a>
+                    </li>
+
+
+                    <!-- Profile Picture or Login Link -->
+                    <li class="nav-item nav-login hideOnMobile">
+                        <?php if ($loginStatus): ?>
+                            <a class="nav-link dropdown-toggle profilecon" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="profilepic d-none" src="<?php echo htmlspecialchars(getUserImagePath()); ?>" alt="Profile Picture" width="40" height="40" class="rounded-circle">
+                                <span class="username"><?php echo htmlspecialchars(getUserName()); ?></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li>
+                                    <a class="dropdown-item dd-item-login dd-text" href="userfeatures/userprofile/profile.php">
+                                        <span class="dd-icon material-symbols-outlined">settings</span>
+                                        <span class="dd-text">Settings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item dd-item-login dd-text" href="logout.php">
+                                        <span class="dd-icon material-symbols-outlined">logout</span>
+                                        <span class="dd-text">Logout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        <?php else: ?>
+                            <a class="nav-link navlog" href="login.php">Login</a>
+                        <?php endif; ?>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
 

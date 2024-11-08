@@ -75,7 +75,7 @@ include('../../db_connection.php'); // Include the database connection
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" id="communityLink" href="../../systemfeatures/community/community.php" onclick="checkLogin()">
+                                <a class="dropdown-item" id="communityLink" href="#" onclick="checkLogin()">
                                     <span class="dd-icon material-symbols-outlined">groups</span>
                                     <span class="dd-text">Community</span>
                                 </a>
@@ -305,6 +305,7 @@ include('../../db_connection.php'); // Include the database connection
         <!--OWN JS-->
         <script src="profiles.js"></script>
         <script src="bookmarks.js"></script>
+        <script src="script.js"></script>
 
         <script src="../../systemfeatures/search/search.js"></script>
 

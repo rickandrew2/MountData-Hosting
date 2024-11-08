@@ -16,8 +16,8 @@ include('../../db_connection.php'); // Include the database connection
     <!-- My CSS -->
     <link rel="stylesheet" href="../../dist/css/profile.css" />
 
-     <!-- Favicon -->
-     <link rel="icon" href="../../images/logomount.png" type="image/png" />
+    <!-- Favicon -->
+    <link rel="icon" href="../../images/logomount.png" type="image/png" />
 
     <!--SWEET ALERT CDN-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.all.min.js"></script>
@@ -87,7 +87,7 @@ include('../../db_connection.php'); // Include the database connection
                         </ul>
                     </li>
 
-                     <!-- Bookmark Link without Dropdown -->
+                    <!-- Bookmark Link without Dropdown -->
                     <li class="nav-item hideOnMobile">
                         <a class="nav-link" href="../bookmarks/bookmarks.php" id="navbarDropdown2" role="button" aria-expanded="false">
                             Bookmarks
@@ -213,7 +213,7 @@ include('../../db_connection.php'); // Include the database connection
                 <div class="row p-3">
                     <div class="d-flex" style="border-bottom: 1px solid black;">
                         <h4 class="fs-5">Edit Profile</h4>
-                        
+
                         <span class="ms-auto material-symbols-outlined fs-2">landscape</span>
                     </div>
                     <div class="col-lg-3" style="background-color: rgb(255, 255, 255);">
@@ -248,7 +248,8 @@ include('../../db_connection.php'); // Include the database connection
                     </div>
                     <div class="col-lg-3 mt-3">
                         <h4>Account settings</h4>
-                        <div class="delete-with-icon d-flex">
+                        <!-- Add a class for the delete button styling -->
+                        <div class="delete-account-btn d-flex align-items-center" id="deleteAccountBtn">
                             <span class="material-symbols-outlined">delete</span>
                             <h5>Delete Account</h5>
                         </div>

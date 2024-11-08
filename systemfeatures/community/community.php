@@ -84,7 +84,7 @@ require '../../check_login.php';
 
                 <!-- Bookmark Link without Dropdown -->
             <li class="nav-item hideOnMobile">
-                <a class="nav-link" href="userfeatures/userprofile/bookmarks.php" id="navbarDropdown2" role="button" aria-expanded="false">
+                <a class="nav-link" href="../../userfeatures/bookmarks/bookmarks.php" id="navbarDropdown2" role="button" aria-expanded="false">
                     Bookmarks
                 </a>
             </li>

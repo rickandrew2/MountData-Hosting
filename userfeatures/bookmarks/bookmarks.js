@@ -161,3 +161,28 @@ function filterMountains() {
              });
         });
 }
+
+function checkLogin() {
+    if (isLoggedIn) {
+        // Redirect to community.php
+        window.location.href = '../../systemfeatures/community/community.php';
+    } else {
+        // Show SweetAlert
+        Swal.fire({
+            title: 'Access Denied!',
+            text: 'You need to log in to access the Community page.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: "green",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Login",
+            cancelButtonText: "Cancel",
+        }).then((result) => {
+            if (result.value) {
+                // Redirect to the login page
+                window.location.href = "login.php"; // Change to your login page
+            }
+        });
+        buttonsStyling: false // Disable default styling for buttons
+    }
+}

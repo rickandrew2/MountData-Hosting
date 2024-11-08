@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $recaptchaResponse = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : ''; // Ensure reCAPTCHA response is set
 
     // Verify Google reCAPTCHA
-    $secretKey = '6LdUD18qAAAAAKdXud_mVA-MpUUwPu6stuY9ihXg'; // Replace with your secret key
+    $secretKey = '6LfbrV4qAAAAAF72PNEOVbKvMXa7YRDr9EVyrGn9'; // Replace with your secret key
     $recaptchaURL = "https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$recaptchaResponse}";
 
     // Make the reCAPTCHA request and handle potential errors
