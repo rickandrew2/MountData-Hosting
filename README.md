@@ -63,7 +63,13 @@ The website features interactive mapping, user reviews, photo uploads, and real-
   - **Solution**: Optimized database queries and used pagination for reviews and feedback to ensure smooth navigation.
 
 - **Challenge**: Making the design responsive across multiple device sizes.
-  - **Solution**: Used SCSS for flexible grid layouts and media queries to ensure the website adapts seamlessly to mobile, tablet, and desktop devices.
+  - **Solution**:  Utilized SCSS for flexible grid layouts and media queries, as well as Bootstrap's built-in responsive utilities, to ensure seamless adaptation to mobile, tablet, and desktop devices.
+
+- **Challenge**: Challenge: Integrating and managing third-party APIs like Google Maps and Weather API.
+  - **Solution**: Implemented asynchronous API requests to fetch data without blocking the user interface. For Google Maps, used marker clustering to efficiently display numerous locations on the map. For the                   Weather API, integrated a caching mechanism to reduce the number of API calls and improve performance.
+
+ 
+
 
 ---
 
