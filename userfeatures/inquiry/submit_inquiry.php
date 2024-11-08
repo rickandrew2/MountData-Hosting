@@ -1,4 +1,6 @@
 <?php
+include('../../check_login.php');
+
 // Database connection
 $servername = "localhost";  
 $username = "root";        
@@ -17,7 +19,8 @@ $name = htmlspecialchars(trim($_POST['name']));
 $email = htmlspecialchars(trim($_POST['email']));
 $subject = htmlspecialchars(trim($_POST['subject']));
 $message = htmlspecialchars(trim($_POST['message']));
-$user_id = 1; // Assuming you get the user_id from session or another method
+// Get user_id only if user is logged in
+$user_id = isLoggedIn() ? $_SESSION['user_id'] : null;
 $status = 'pending'; // Default status
 
 // Prepare the SQL insert statement
