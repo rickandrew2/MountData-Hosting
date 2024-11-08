@@ -35,7 +35,10 @@ The website features interactive mapping, user reviews, photo uploads, and real-
 - **PHP**: Used for server-side logic and handling dynamic content.
 - **HTML**: The core structure of the web pages.
 - **SCSS**: For CSS styling and advanced design features.
+- **JavaScript**: Implements interactive features, handles events, and adds dynamic content changes to enhance user experience.
 - **AJAX & jQuery**: For dynamic content loading, form submissions, and enhancing interactivity without refreshing the page.
+- **Bootstrap**: Provides a responsive grid system and pre-designed components to ensure consistent design across various devices.
+- **SweetAlert (Swal Fire)**: Enhances user interaction by providing custom, visually appealing alert dialogs for feedback and notifications.
 
 ---
 
