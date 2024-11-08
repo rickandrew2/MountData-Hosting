@@ -48,7 +48,7 @@ The website features interactive mapping, user reviews, photo uploads, and real-
 
 ## Completed Features
 - **Homepage**: Introduction to the platform, SDG 15 focus, and featured destinations.
-- **Customer Relations**: Functional contact form, FAQ section, and feedback system.
+- **Customer Relations**: Functional contact form, FAQ section, and feedback/review system.
 - **Data Analytics**: Basic visitor engagement tracking for views, likes, and share reviews.
 - **Account Management**: User registration, login, and profile setup.
 - **Content and Design**: Responsive design with content related to the SDG and mountain destinations.
