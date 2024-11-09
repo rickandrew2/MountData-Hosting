@@ -14,8 +14,9 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
+    // Sanitize input
+    $name = htmlspecialchars(trim($_POST['name']));
+    $email = htmlspecialchars(trim($_POST['email']));
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
@@ -25,6 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Server-side email validation for Gmail
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !preg_match('/@gmail\.com$/', $email)) {
         $_SESSION['register_error'] = "Please enter a valid Gmail address.";
+        header('Location: register.php');
+        exit;
+    }
+
+    // Server-side password validation
+    if (!preg_match('/^(?=.*[A-Z])(?=.*[!@#$%^&*?])[A-Za-z\d!@#$%^&*?]{5,}$/', $password)) {
+        $_SESSION['register_error'] = "Password must be at least 5 characters long, with at least one uppercase letter and one symbol.";
         header('Location: register.php');
         exit;
     }

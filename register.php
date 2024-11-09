@@ -54,6 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->setFrom('tourismwebiste@gmail.com', 'Tourism Website');
                 $mail->addAddress($email);
 
+                $mail->SMTPOptions = [
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                    ]
+                ];
+
+
                 $mail->isHTML(true);
                 $mail->Subject = 'Registration Confirmation';
 
@@ -324,9 +333,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Password</label>
                                         <div class="input-group">
-                                            <input type="password" name="password" id="password" class="form-control custom-input" placeholder="Password" required>
+                                            <input type="password" name="password" id="password" class="form-control custom-input" 
+                                                placeholder="Min 5 chars, 1 uppercase & 1 symbol" 
+                                                pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*?])[A-Za-z\d!@#$%^&*?]{5,}$"
+                                                title="Password must be at least 5 characters and contain at least one uppercase letter and one symbol"
+                                                required>
                                             <button type="button" class="btn btn-outline-secondary" style="height: 100%;" onclick="togglePasswordVisibility('password')">👁</button>
                                         </div>
+                                        <small class="text-muted">Password must be at least 5 characters with 1 uppercase letter and 1 symbol</small>
                                     </div>
                                     <div class="mb-3">
                                         <label for="confirm_password" class="form-label">Confirm Password</label>
@@ -335,12 +349,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <button type="button" class="btn btn-outline-secondary" style="height: 100%;" onclick="togglePasswordVisibility('confirm_password')">👁</button>
                                         </div>
                                     </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input form-check-input-sm" id="terms" name="terms" required style="width: 15px; height: 15px;">
+                                        <label class="form-check-label mx-2" for="terms">
+                                            I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
+                                        </label>
+                                    </div>
                                     <button type="submit" class="btn btn-success w-100">Register</button>
                                 </form>
                                 <p class="mt-3 text-center"><a href="login.php">Already have an account? Log in</a></p>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add your terms and conditions content here -->
+                    <p>By using our service, you agree to follow these terms and conditions...</p>
+                    <!-- Add more terms content as needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add your privacy policy content here -->
+                    <p>Your privacy is important to us. This policy explains how we collect and use your data...</p>
+                    <!-- Add more privacy policy content as needed -->
                 </div>
             </div>
         </div>
