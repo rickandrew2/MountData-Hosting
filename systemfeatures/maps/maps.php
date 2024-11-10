@@ -322,4 +322,5 @@ include('../../db_connection.php'); // Include the database connection
     </script>
 </body>
 
-</html>
+</html> 
+

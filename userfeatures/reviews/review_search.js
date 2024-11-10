@@ -71,24 +71,25 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>`;
     }
 
-    // Function to generate HTML for review photos
-    function generatePhotoHTML(photos) {
-        const photoArray = photos.split(',');
-        const photoClass = photoArray.length > 1 ? 'review-photos d-flex' : 'review-photos';
-        
-        return `
-            <div class="${photoClass} mt-3">
+   // Function to generate HTML for review photos
+function generatePhotoHTML(photos) {
+    const photoArray = photos.split(',');
+    
+    return `
+        <div class="review-photos-container mt-2" style="overflow-x: auto; white-space: nowrap;">
+            <div class="d-flex">
                 ${photoArray.map(photo => `
-                    <div class="review-photo-container" style="margin: 0 10px;">
+                    <div class="review-photo-wrapper me-2" style="display: inline-block;">
                         <img src="userfeatures/reviews/${photo.trim()}" 
                              alt="Review Photo" 
-                             class="rounded review-photo"
-                             style="width: 450px; height: 450px; object-fit: contain; cursor: pointer; transition: transform 0.2s;"
+                             class="review-photo img-fluid rounded" 
+                             style="cursor: pointer; transition: transform 0.2s; height: 100%; width: 100%; max-height: 200px; max-width: 250px;"
                              onclick="viewFullImage('userfeatures/reviews/${photo.trim()}')">
                     </div>
                 `).join('')}
-            </div>`;
-    }
+            </div>
+        </div>`;
+}
 
     // Search input handler
     searchInput.addEventListener('input', debounce(function(e) {
@@ -135,20 +136,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Add this function outside the DOMContentLoaded event listener
 function viewFullImage(imageSrc) {
-    Swal.fire({
-        imageUrl: imageSrc,
-        imageAlt: 'Review Photo',
-        width: '600px',
-        height: '600px',
-        padding: '0',
-        showConfirmButton: false,
-        showCloseButton: true,
-        background: 'transparent',
-        backdrop: `rgba(0,0,0,0.8)`,
-        imageWidth: '550px',
-        imageHeight: '550px',
-        customClass: {
-            closeButton: 'swal-close-button'
+    const popup = document.getElementById('imagePopup');
+    const popupImage = document.getElementById('imagePopupContent');
+    const closeButton = document.querySelector('.image-popup-close');
+
+    popupImage.src = imageSrc;
+    popup.classList.add('active');
+
+    closeButton.onclick = function() {
+        popup.classList.remove('active');
+    };
+
+    window.onclick = function(event) {
+        if (event.target === popup) {
+            popup.classList.remove('active');
         }
-    });
-} 
+    };
+}
+

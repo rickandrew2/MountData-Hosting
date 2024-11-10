@@ -107,14 +107,14 @@ function displayReview($row) {
     echo '<h6>' . $formattedDate . '</h6>';
     echo '</div>';
     echo '<div class="dropdown ms-auto mt-2">';
-    echo '<button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; background: none; padding: 0; font-size: 1.5rem;">';
+    echo '<button class="btn btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; background: none; padding: 0; font-size: clamp(1rem, 2vw, 1.5rem);">';
     echo '&#x2026;</button>'; // Three-dot icon
-    echo '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+    echo '<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">';
     
     if ($row['user_id'] == $currentUserId) {
-        echo '<li><a class="dropdown-item" href="#" onclick="confirmDeletion(' . $row['review_id'] . '); return false;">Delete</a></li>';
+        echo '<li><a class="dropdown-item small" href="#" onclick="confirmDeletion(' . $row['review_id'] . '); return false;">Delete</a></li>';
     } else {
-        echo '<li><a class="dropdown-item" style="color: red;" href="#" onclick="confirmReport(' . $row['review_id'] . ', ' . $currentUserId . '); return false;">&#x26A0; Report</a></li>';
+        echo '<li><a class="dropdown-item small" style="color: red;" href="#" onclick="confirmReport(' . $row['review_id'] . ', ' . $currentUserId . '); return false;">&#x26A0; Report</a></li>';
     }
     
     echo '</ul></div></div></div>';
@@ -132,17 +132,18 @@ function displayReview($row) {
 // Function to display review photos
 function displayReviewPhotos($reviewPhoto) {
     $photos = explode(',', $reviewPhoto);
-    $photoClass = count($photos) > 1 ? 'review-photos d-flex flex-wrap' : 'review-photos';
-
-    echo '<div class="' . $photoClass . ' mt-2">';
+    
+    echo '<div class="review-photos-container mt-2">'; // Added container for scrolling
+    echo '<div class="review-photos d-flex">';  // Removed flex-wrap to allow horizontal scrolling
     foreach ($photos as $photo) {
-        echo '<div class="review-photo-wrapper">';
+        echo '<div class="review-photo-wrapper me-2">';  // Added margin-end for spacing
         echo '<img src="userfeatures/reviews/' . htmlspecialchars(trim($photo)) . '" 
               alt="Review Photo" 
-              class="img-fluid rounded review-photo"
+              class="review-photo"
               onclick="viewFullImage(\'userfeatures/reviews/' . htmlspecialchars(trim($photo)) . '\')">';
         echo '</div>';
     }
+    echo '</div>';
     echo '</div>';
 }
 

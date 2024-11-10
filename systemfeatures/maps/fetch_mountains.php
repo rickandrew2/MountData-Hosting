@@ -4,26 +4,49 @@ include '../../db_connection.php';
 $minElevation = isset($_GET['minElevation']) ? (int)$_GET['minElevation'] : 0;
 $maxElevation = isset($_GET['maxElevation']) ? (int)$_GET['maxElevation'] : 99999;
 $difficulty = isset($_GET['difficulty']) ? $_GET['difficulty'] : '';
-$locations = isset($_GET['locations']) ? $_GET['locations'] : '';
+$locations = isset($_GET['locations']) ? (is_array($_GET['locations']) ? $_GET['locations'] : explode(',', $_GET['locations'])) : [];
 
-// Build the SQL query
+// Build the base SQL query
 $sql = "SELECT mountain_id, name, location, elevation, mountain_image, difficulty_level, description, latitude, longitude 
         FROM mountains 
-        WHERE elevation BETWEEN $minElevation AND $maxElevation";
+        WHERE elevation BETWEEN ? AND ?";
 
+$params = [$minElevation, $maxElevation];
+
+// Add difficulty filter if specified
 if (!empty($difficulty)) {
-    $sql .= " AND difficulty_level = '$difficulty'";
+    $sql .= " AND difficulty_level = ?";
+    $params[] = $difficulty;
 }
 
+// If the locations array is not empty, process it
 if (!empty($locations)) {
-    $locationsArray = explode(',', $locations);
-    $locationsList = implode("','", array_map('addslashes', $locationsArray)); // Escape values
-    $sql .= " AND location IN ('$locationsList')";
+    $locationConditions = [];
+
+    // Create the LIKE conditions for each location
+    foreach ($locations as $location) {
+        $locationConditions[] = "location LIKE ?";
+        $params[] = '%' . trim($location) . '%'; // Add wildcards for partial matching
+    }
+
+    // Append to the SQL query
+    if (!empty($locationConditions)) {
+        $sql .= " AND (" . implode(" OR ", $locationConditions) . ")";
+    }
 }
 
-$linkUrl = '../../mountains_profiles.php'; // Correct path to reach mountains_profiles.php
 
-$result = $conn->query($sql);
+// Prepare the SQL statement
+$stmt = $conn->prepare($sql);
+
+// Bind the parameters dynamically
+$stmt->bind_param(str_repeat('s', count($params)), ...$params);
+
+// Execute the query
+$stmt->execute();
+$result = $stmt->get_result();
+
+$linkUrl = '../../mountains_profiles.php';
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -38,11 +61,11 @@ if ($result->num_rows > 0) {
         // Add anchor around the travel-icon
         echo "<a href='../../mountains_profiles.php?mountain_id=" . $row["mountain_id"] . "' class='icon-link'>";
         echo "<span class='material-symbols-outlined travel-icon' id='bookmark-" . $row["mountain_id"] . "'>travel_explore</span>";
-        echo "</a>"; // Close anchor tag
+        echo "</a>";
 
         echo "<a href='../../mountains_profiles.php?mountain_id=" . $row["mountain_id"] . "' class='mountain-link'>";
         echo "<h5 class='mountain-title'>" . "Mount " . $row["name"] . "</h5>";
-        echo "</a>"; // Close anchor tag
+        echo "</a>";
         
         echo "<div class='about-mountain'>";
         echo "<p class='location'>" . $row["location"] . "</p>";
@@ -51,7 +74,7 @@ if ($result->num_rows > 0) {
         echo "<p class='description' style='text-align: justify;'>" . $row["description"] . "</p>";
         echo "</div></div></li>";
     }
-}   else {
+} else {
     echo '<div class="no-bookmarks mt-5" style="text-align: center;">
         <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">explore</span>
         <h3 class="mt-3">No Mountains Found</h3>
@@ -59,6 +82,6 @@ if ($result->num_rows > 0) {
     </div>';
 }
 
+$stmt->close();
 $conn->close();
-
 ?>

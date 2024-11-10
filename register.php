@@ -68,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 // Styled HTML email body with updated verification link
                 $mail->Body = "<html>
+                
 <head>
     <style>
         body {
@@ -178,12 +179,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!--SWEET ALERT CDN-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.all.min.js"></script>
-     
-     <!--SweetAlert CSS-->
-     <link href=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.min.css" rel="stylesheet">
 
-     <!-- Favicon -->
-    <link rel="icon" href="images/logomount.png" type="image/png"/>
+    <!--SweetAlert CSS-->
+    <link href=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/logomount.png" type="image/png" />
 
     <script>
         function togglePasswordVisibility(id) {
@@ -333,8 +334,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Password</label>
                                         <div class="input-group">
-                                            <input type="password" name="password" id="password" class="form-control custom-input" 
-                                                placeholder="Min 5 chars, 1 uppercase & 1 symbol" 
+                                            <input type="password" name="password" id="password" class="form-control custom-input"
+                                                placeholder="Min 5 chars, 1 uppercase & 1 symbol"
                                                 pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*?])[A-Za-z\d!@#$%^&*?]{5,}$"
                                                 title="Password must be at least 5 characters and contain at least one uppercase letter and one symbol"
                                                 required>
@@ -428,8 +429,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="script.js"></script>
 
     <script>
-         // Pass PHP variable to JavaScript
-         const isLoggedIn = <?php echo json_encode($loginStatus); ?>;
+        // Pass PHP variable to JavaScript
+        const isLoggedIn = <?php echo json_encode($loginStatus); ?>;
     </script>
 </body>
 

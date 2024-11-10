@@ -594,3 +594,5 @@ document.addEventListener('touchmove', function(event) {
         event.preventDefault(); // Prevent pinch zoom
     }
 }, { passive: false });
+
+

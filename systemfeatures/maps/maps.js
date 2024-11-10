@@ -226,12 +226,15 @@ function filterMountains() {
     const maxElevation = document.getElementById('maxElevation').value || 99999;
     const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value || '';
 
-    // Get selected locations
+    // Get selected locations as an array
     const locationCheckboxes = document.querySelectorAll('input[name="location"]:checked');
-    const locations = Array.from(locationCheckboxes).map(checkbox => checkbox.value).join(',');
+    const locations = Array.from(locationCheckboxes).map(checkbox => checkbox.value);
 
-    // Fetch with updated URL to include locations
-    fetch(`fetch_mountains.php?minElevation=${minElevation}&maxElevation=${maxElevation}&difficulty=${difficulty}&locations=${locations}`)
+    // Convert locations array to URL parameters
+    const locationParams = locations.map(loc => `locations[]=${encodeURIComponent(loc)}`).join('&');
+
+    // Fetch with updated URL to include locations array
+    fetch(`fetch_mountains.php?minElevation=${minElevation}&maxElevation=${maxElevation}&difficulty=${difficulty}&${locationParams}`)
         .then(response => response.text())
         .then(data => {
             document.getElementById('mountainList').innerHTML = data;

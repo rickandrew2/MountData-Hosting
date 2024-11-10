@@ -17,7 +17,7 @@
 
     <!--SweetAlert CSS-->
     <link href=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.min.css" rel="stylesheet">
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
 
@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <title></title>
+
 
 </head>
 
@@ -244,7 +245,7 @@
                 <div class="row mb-3">
                     <div class="ratings col-lg-4 col-md-6">
                         <?php
-                          require 'userfeatures/reviews/fetch_reviews.php';
+                        require 'userfeatures/reviews/fetch_reviews.php';
                         // Fetch counts of ratings
                         $ratings = fetchRatings($conn, $mountain_id);
                         displayRatings($ratings);
@@ -295,7 +296,11 @@
                 $conn->close();
                 ?>
 
+            </div>
 
+            <div id="imagePopup" class="image-popup">
+                <span class="image-popup-close">&times;</span>
+                <img class="image-popup-content" id="imagePopupContent">
             </div>
 
             <div class="photos-content row" id="photos" style="display: none;">
@@ -305,12 +310,12 @@
                             <h4>Photos of This Trail</h4>
                             <h5>Photos help others preview the trail. Upload photos about this trail to inspire others.</h5>
                         </div>
-                        <div class="sort-by-container m-3">
-                            <label for="sortBy">Sort by:</label>
-                            <select id="sortBy">
-                                <option value="all">All Trails</option>
-                                <option value="popular">Most Popular</option>
-                                <option value="recent">Most Recent</option>
+                        <div class="sort-by-container m-3" style="display: flex; align-items: center; gap: 10px;">
+                            <label for="sortBy" style="font-weight: 500; color: #333;">Sort by:</label>
+                            <select id="sortBy" onchange="fetchSortedPhotos()" style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; background-color: white; font-size: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <option value="7days">Last 7 Days</option>
+                                <option value="30days">Last 30 Days</option>
+                                <option value="180days">Last 180 Days</option>
                             </select>
                         </div>
                     </div>
@@ -330,46 +335,56 @@
 
 
 
-            <!--FOOTER-->
-            <footer>
-                <div class="container-fluid footer1">
-                    <div class="row p-5 text-center text-md-start">
-                        <div class="col-12 col-md-4 mb-4">
-                            <span class="ftr-icon material-symbols-outlined">photo_camera</span>
-                            <h3 class="mt-3 fs-2 footer-title">Share Your Journey</h3>
-                            <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Connect with fellow adventurers and share your experiences. Tag us in your photos to inspire others!</h3>
-                        </div>
-                        <div class="col-12 col-md-4 mb-4">
-                            <span class="ftr-icon material-symbols-outlined">landscape</span>
-                            <h3 class="mt-3 fs-2 footer-title">Adventure Awaits</h3>
-                            <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Every adventure brings a new experience. Discover breathtaking trails, hidden gems, and the beauty of nature with us.</h3>
-                        </div>
-                        <div class="col-12 col-md-4 mb-4">
-                            <span class="ftr-icon material-symbols-outlined">explore</span>
-                            <h3 class="mt-3 fs-2 footer-title">Explore Responsibly</h3>
-                            <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;"> We believe in responsible exploration. Follow our guidelines to leave minimal impact and preserve the beauty of nature.</h3>
-                        </div>
+        <!--FOOTER-->
+        <footer>
+            <div class="container-fluid footer1">
+                <div class="row p-5 text-center text-md-start">
+                    <div class="col-12 col-md-4 mb-4">
+                        <span class="ftr-icon material-symbols-outlined">photo_camera</span>
+                        <h3 class="mt-3 fs-2 footer-title">Share Your Journey</h3>
+                        <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Connect with fellow adventurers and share your experiences. Tag us in your photos to inspire others!</h3>
+                    </div>
+                    <div class="col-12 col-md-4 mb-4">
+                        <span class="ftr-icon material-symbols-outlined">landscape</span>
+                        <h3 class="mt-3 fs-2 footer-title">Adventure Awaits</h3>
+                        <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Every adventure brings a new experience. Discover breathtaking trails, hidden gems, and the beauty of nature with us.</h3>
+                    </div>
+                    <div class="col-12 col-md-4 mb-4">
+                        <span class="ftr-icon material-symbols-outlined">explore</span>
+                        <h3 class="mt-3 fs-2 footer-title">Explore Responsibly</h3>
+                        <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;"> We believe in responsible exploration. Follow our guidelines to leave minimal impact and preserve the beauty of nature.</h3>
                     </div>
                 </div>
-            </footer>
+            </div>
+        </footer>
 
 
-            <!-- Optional JavaScript; choose one of the two! -->
-            <script src="mountains_profiles.js"></script>
-            <!-- Option 1: Bootstrap Bundle with Popper -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- Optional JavaScript; choose one of the two! -->
+        <script src="mountains_profiles.js"></script>
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-            <!--JQUERY-->
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!--JQUERY-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            <script src="systemfeatures/search/search.js" defer></script>
-            <script src="weather.js"></script>
-            <script src="script.js"></script>
-            <script>
-                const isLoggedIn = <?php echo json_encode($loginStatus); ?>; // Pass the PHP variable to JS
-                
-            </script>
-            <script src="userfeatures/reviews/review_search.js"></script>
+        <script src="systemfeatures/search/search.js" defer></script>
+        <script src="weather.js"></script>
+        <script src="script.js"></script>
+        <script>
+            function fetchSortedPhotos() {
+                const sortBy = document.getElementById('sortBy').value;
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', `userfeatures/reviews/fetch_upload_photos.php?sortBy=${sortBy}&mountain_id=<?php echo $mountain_id; ?>`, true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        document.getElementById('photos').innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send();
+            }
+            const isLoggedIn = <?php echo json_encode($loginStatus); ?>; // Pass the PHP variable to JS
+        </script>
+        <script src="userfeatures/reviews/review_search.js"></script>
 
 </body>
 
