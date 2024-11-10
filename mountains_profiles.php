@@ -264,8 +264,8 @@
                 <div class="search-reviews" style="display: flex; align-items: center; position: relative; width: 100%;">
                     <i class="fas fa-search" style="position: absolute; left: 10px; color: black"></i>
                     <input type="text" placeholder="Search reviews..." class="search-bar" id="search-input" style="font-size: 1.2rem;">
-                    <div class="filter-icon" style="position: absolute; right: 10px;">
-                        <i class="fas fa-filter" id="filter-icon" style="color: black;"></i>
+                    <div class="filter-icon" style="position: absolute; right: 10px; padding: 10px; cursor: pointer;">
+                        <i class="fas fa-filter" style="color: black;"></i>
                     </div>
                 </div>
 
@@ -369,6 +369,7 @@
                 const isLoggedIn = <?php echo json_encode($loginStatus); ?>; // Pass the PHP variable to JS
                 
             </script>
+            <script src="userfeatures/reviews/review_search.js"></script>
 
 </body>
 

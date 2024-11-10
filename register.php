@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($result->num_rows > 0) {
             // Email already exists
-            $error = "This email is already taken. Please use another email.";
+            $error = "That email is already taken. Please use another email.";
         } else {
             // Generate OTP
             $otp = rand(100000, 999999);

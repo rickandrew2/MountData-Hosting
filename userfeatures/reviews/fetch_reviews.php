@@ -132,11 +132,16 @@ function displayReview($row) {
 // Function to display review photos
 function displayReviewPhotos($reviewPhoto) {
     $photos = explode(',', $reviewPhoto);
-    $photoClass = count($photos) > 1 ? 'review-photos d-flex' : 'review-photos';
+    $photoClass = count($photos) > 1 ? 'review-photos d-flex flex-wrap' : 'review-photos';
 
     echo '<div class="' . $photoClass . ' mt-2">';
     foreach ($photos as $photo) {
-        echo '<img src="userfeatures/reviews/' . htmlspecialchars(trim($photo)) . '" alt="Review Photo" class="img-fluid rounded review-photo">';
+        echo '<div class="review-photo-wrapper">';
+        echo '<img src="userfeatures/reviews/' . htmlspecialchars(trim($photo)) . '" 
+              alt="Review Photo" 
+              class="img-fluid rounded review-photo"
+              onclick="viewFullImage(\'userfeatures/reviews/' . htmlspecialchars(trim($photo)) . '\')">';
+        echo '</div>';
     }
     echo '</div>';
 }
