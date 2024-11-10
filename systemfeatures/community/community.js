@@ -154,8 +154,10 @@ $(document).ready(function () {
                     $(this).data("likes", 'false');
                 }
 
-                // Update the like count on the page
-                $(".like-count[data-review-id='" + reviewId + "']").text(data.like_count);
+                // Update the like count on the page with "like" or "likes"
+                $(".like-count[data-review-id='" + reviewId + "']").text(
+                    `${data.like_count} ${data.like_count <= 1 ? 'like' : 'likes'}`
+                );
             }
         });
     });

@@ -171,14 +171,13 @@ if ($result->num_rows > 0) {
 <?php
     endwhile;
 } else {
-    echo '<div class="no-results mt-5" style="text-align: center">
-        <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">search_off</span>
+    echo '<div class="no-results mt-5" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 500px; text-align: center;">
+        <span class="material-symbols-outlined" style="font-size: 5rem;">search_off</span>
         <h3 class="mt-3">No Results Found</h3>
         <p style="color: #8a8a8a;">We couldn’t find any reviews that match your search. Please try different keywords or check back later!</p>
         <p style="color: #8a8a8a;">In the meantime, try looking for other community reviews on different trails!</p>
         <span class="material-symbols-outlined" style="font-size: 2rem; color: #8a8a8a;">arrow_downward</span>
       </div>';
-
 }
 
 
