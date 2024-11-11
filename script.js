@@ -92,7 +92,7 @@ const hikingTips = [
             icon: 'info',
             background: 'white', // Light green background
             color: '#2f855a', // Dark green text
-            confirmButtonColor: '#38a169', // Green confirm button
+            confirmButtonColor: '#90EE90', // Light green confirm button
             confirmButtonText: 'Got it!',
             padding: '2em',
             customClass: {

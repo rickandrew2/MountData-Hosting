@@ -803,7 +803,7 @@ $primary-green: green;
 }
 
 .confirm-button-class {
-    background-color: #38a169 !important; /* Green button */
+    background-color: #198754 !important; /* Bootstrap success green */
     border-radius: 5px;
     padding: 10px 20px;
     color: white;
@@ -812,5 +812,5 @@ $primary-green: green;
 }
 
 .confirm-button-class:hover {
-    background-color: #2f855a !important; /* Darker green on hover */
+    background-color: #157347 !important; /* Bootstrap success hover green */
 }

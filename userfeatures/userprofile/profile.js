@@ -137,3 +137,51 @@ function uploadImage(event) {
     }
 }
 
+document.getElementById('deleteAccountBtn').addEventListener('click', function() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This action cannot be undone. All your data will be permanently deleted.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete my account',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Make AJAX call to delete account
+            $.ajax({
+                url: 'delete_account.php',
+                type: 'POST',
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: 'Account Deleted',
+                            text: 'Your account has been successfully deleted.',
+                            icon: 'success',
+                            confirmButtonColor: '#3085d6'
+                        }).then(() => {
+                            window.location.href = '../../login.php';
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message || 'Failed to delete account. Please try again.',
+                            icon: 'error',
+                            confirmButtonColor: '#3085d6'
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Something went wrong. Please try again.',
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6'
+                    });
+                }
+            });
+        }
+    });
+});
+
