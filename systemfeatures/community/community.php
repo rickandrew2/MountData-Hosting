@@ -66,9 +66,9 @@ require '../../check_login.php';
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Explore
                   </a>
                   <!-- Dropdown for Explore -->
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                  <ul class="dropdown-menu" aria-labelledby="   navbarDropdown1">
                       <li>
-                          <a class="dropdown-item" href="maps.php"> <!-- Link to specific page -->
+                          <a class="dropdown-item" href="../maps/maps.php"> <!-- Link to specific page -->
                               <span class="dd-icon material-symbols-outlined">nearby</span>
                               <span class="dd-text">Maps</span>
                           </a>

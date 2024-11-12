@@ -3,6 +3,12 @@
 include_once('../../check_login.php'); // This will check if the user is logged in
 include('../../db_connection.php'); // Include the database connection
 
+// Ensure user is logged in and session variables are set
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../../login.php");
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +106,7 @@ include('../../db_connection.php'); // Include the database connection
                         <?php if ($loginStatus): ?>
                             <a class="nav-link dropdown-toggle profilecon" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="profilepic d-none" src="<?php echo htmlspecialchars(getUserImagePath()); ?>" alt="Profile Picture" width="40" height="40" class="rounded-circle">
-                                <span class="username"><?php echo htmlspecialchars(getUserName()); ?></span>
+                                <span class="username"><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                                 <li>
@@ -149,6 +155,7 @@ include('../../db_connection.php'); // Include the database connection
         if ($user) {
             // Extract user data
             $username = htmlspecialchars($user['username']);
+            $_SESSION['username'] = $username; // Store username in session
             $email = htmlspecialchars($user['email']);
             $created_at = date('F j, Y', strtotime($user['created_at'])); // Format date
             $image_path = htmlspecialchars($user['image_path']);

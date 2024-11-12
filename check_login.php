@@ -20,9 +20,11 @@ function getUserImagePath() {
 // Function to get user's name
 function getUserName() {
     if (isLoggedIn()) {
-        return htmlspecialchars($_SESSION['username']); // Assuming user_name stores the user's name in the session
+        // Add debug output to check what's actually in the session
+        error_log("Session username: " . (isset($_SESSION['username']) ? $_SESSION['username'] : 'not set'));
+        return isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
     }
-    return 'Guest'; // Return a default name if not logged in
+    return 'Guest';
 }
 
 // Create a variable to store login status
@@ -37,7 +39,7 @@ echo "<script>var userId = $user_id;</script>"; // Pass user_id to JavaScript
 // echo "Login Status: " . ($loginStatus ? "Logged In" : "Not Logged In") . "<br>";
 // echo "User ID: " . ($loginStatus ? $_SESSION['user_id'] : "None") . "<br>";
 // echo "Image Path: " . (isset($_SESSION['image_path']) ? $_SESSION['image_path'] : "No image") . "<br>";
-// echo "User Name: " . (isset($_SESSION['username']) ? $_SESSION['user_name'] : "No name") . "<br>";
+// echo "User Name: " . (isset($_SESSION['username']) ? $_SESSION['username'] : "No name") . "<br>";
 
 ?>
 

@@ -45,6 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->setFrom('tourismwebiste@gmail.com', 'Tourism Website');
             $mail->addAddress($email);
 
+            $mail->SMTPOptions = [
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                ]
+            ];
+
             $mail->isHTML(true);
             $mail->Subject = 'Your OTP for Password Reset';
             $mail->Body = "<p>Your OTP for password reset is: <strong>$otp</strong></p>

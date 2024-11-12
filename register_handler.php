@@ -48,7 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Set the image path to a variable
-    $image_path = '	/images/profile_images/user-icon.png';
+    $image_path = '/images/profile_images/user-icon.png';
+
+    // Check if the image file exists
+    if (!file_exists($image_path) || empty($image_path)) {
+        // Set a default image if the file does not exist
+        $image_path = '/images/profile_images/default-user-icon.png';
+    }
 
     // Store the data in the database
     $stmt = $conn->prepare("INSERT INTO users (username, email, password, image_path) VALUES (?, ?, ?, ?)");
@@ -57,11 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->execute()) {
         // Fetch the last inserted ID for the user
         $user_id = $conn->insert_id;
-    
+
         // Set session variables, including image_path
         $_SESSION['user_id'] = $user_id;
         $_SESSION['image_path'] = $image_path; // Store image path in session
-    
+
         $_SESSION['register_success'] = "Registration successful! You can now log in.";
         header('Location: login.php');
         exit; // Ensure you exit after redirection
@@ -77,4 +83,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 $conn->close();
-?>
