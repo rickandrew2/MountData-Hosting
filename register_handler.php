@@ -15,13 +15,26 @@ if ($conn->connect_error) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitize input
-    $name = htmlspecialchars(trim($_POST['name']));
+    $username = htmlspecialchars(trim($_POST['name']));
     $email = htmlspecialchars(trim($_POST['email']));
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
     // Debugging line
-    var_dump($name, $email, $password, $confirm_password); // Check received data
+    var_dump($username, $email, $password, $confirm_password); // Check received data
+
+    // First, check if email already exists
+    $check_email = $conn->prepare("SELECT email FROM users WHERE email = ?");
+    $check_email->bind_param('s', $email);
+    $check_email->execute();
+    $result = $check_email->get_result();
+    
+    if ($result->num_rows > 0) {
+        $_SESSION['register_error'] = "Email already exists. Please use a different email.";
+        header('Location: register.php');
+        exit;
+    }
+    $check_email->close();
 
     // Server-side email validation for Gmail
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !preg_match('/@gmail\.com$/', $email)) {
@@ -47,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Hash the password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Set the image path to a variable
+    // Set default image path
     $image_path = '/images/profile_images/user-icon.png';
 
     // Check if the image file exists
@@ -57,26 +70,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Store the data in the database
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password, image_path) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param('ssss', $name, $email, $hashed_password, $image_path);
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password, image_path, created_at) VALUES (?, ?, ?, ?, NOW())");
+    $stmt->bind_param('ssss', $username, $email, $hashed_password, $image_path);
 
     if ($stmt->execute()) {
-        // Fetch the last inserted ID for the user
         $user_id = $conn->insert_id;
 
-        // Set session variables, including image_path
+        // Set session variables
         $_SESSION['user_id'] = $user_id;
-        $_SESSION['image_path'] = $image_path; // Store image path in session
+        $_SESSION['username'] = $username;
+        $_SESSION['email'] = $email;
+        $_SESSION['image_path'] = $image_path;
+
+        // Debug information
+        error_log("User registered successfully - ID: $user_id, Username: $username");
 
         $_SESSION['register_success'] = "Registration successful! You can now log in.";
         header('Location: login.php');
-        exit; // Ensure you exit after redirection
+        exit;
     } else {
-        // Debugging output
-        echo "Error: " . $stmt->error;
+        error_log("Registration failed: " . $stmt->error);
         $_SESSION['register_error'] = "Registration failed. Please try again.";
         header('Location: register.php');
-        exit; // Ensure you exit after redirection
+        exit;
     }
 
     $stmt->close();

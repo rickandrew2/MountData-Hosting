@@ -9,6 +9,9 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+//debug mode flag at the top
+$debug = false; // Set to false in production
+
 ?>
 
 <!DOCTYPE html>
@@ -137,13 +140,17 @@ if (!isset($_SESSION['user_id'])) {
     // Check if the user is logged in
     if ($loginStatus) {
         $user_id = $_SESSION['user_id']; // Get the user ID from the session
+        
+        if ($debug) {
+            echo "Current user_id: " . $user_id . "<br>";
+        }
 
         // Query to fetch user data
         $query = "SELECT `username`, `email`, `created_at`, `image_path` FROM `users` WHERE `user_id` = ?";
 
         // Prepare statement
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $user_id); // Bind the user ID as an integer
+        $stmt->bind_param("i", $user_id);
 
         // Execute the statement
         $stmt->execute();
@@ -157,24 +164,48 @@ if (!isset($_SESSION['user_id'])) {
             $username = htmlspecialchars($user['username']);
             $_SESSION['username'] = $username; // Store username in session
             $email = htmlspecialchars($user['email']);
-            $created_at = date('F j, Y', strtotime($user['created_at'])); // Format date
+            $created_at = date('F j, Y', strtotime($user['created_at']));
             $image_path = htmlspecialchars($user['image_path']);
+
+            if ($debug) {
+                error_log("Username from database: " . $username);
+                error_log("Session username: " . $_SESSION['username']);
+                echo "<div style='background: #f0f0f0; padding: 10px; margin: 10px; border: 1px solid #ccc;'>";
+                echo "Debug Information:<br>";
+                echo "Username from database: " . $username . "<br>";
+                echo "Email: " . $email . "<br>";
+                echo "Created at: " . $created_at . "<br>";
+                echo "Image path: " . $image_path . "<br>";
+                echo "Session username: " . $_SESSION['username'] . "<br>";
+                echo "</div>";
+            }
         } else {
+            if ($debug) {
+                echo "<div style='background: #ffe0e0; padding: 10px; margin: 10px; border: 1px solid #ffcccc;'>";
+                echo "Error: User not found in database for ID: " . $user_id . "<br>";
+                echo "SQL Query: " . $query . "<br>";
+                echo "</div>";
+            }
             // Handle case when user not found
             $username = "Guest";
             $email = "Not available";
             $created_at = "N/A";
-            $image_path = "images/default.jpg"; // Default image
+            $image_path = "images/default.jpg";
         }
 
         // Close the statement
         $stmt->close();
     } else {
+        if ($debug) {
+            echo "<div style='background: #ffe0e0; padding: 10px; margin: 10px; border: 1px solid #ffcccc;'>";
+            echo "User not logged in<br>";
+            echo "</div>";
+        }
         // Handle case when not logged in
         $username = "Guest";
         $email = "Not available";
         $created_at = "N/A";
-        $image_path = "images/default.jpg"; // Default image
+        $image_path = "images/default.jpg";
     }
 
     // Close the database connection
@@ -220,7 +251,6 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="row p-3">
                     <div class="d-flex" style="border-bottom: 1px solid black;">
                         <h4 class="fs-5">Edit Profile</h4>
-
                         <span class="ms-auto material-symbols-outlined fs-2">landscape</span>
                     </div>
                     <div class="col-lg-3" style="background-color: rgb(255, 255, 255);">
@@ -233,11 +263,13 @@ if (!isset($_SESSION['user_id'])) {
                         <form method="POST" action="edit_profile.php">
                             <div class="mb-3">
                                 <label for="editName" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="editName" name="editName" value="<?php echo htmlspecialchars($username); ?>">
+                                <input type="text" class="form-control" id="editName" name="editName" 
+                                    value="<?php echo isset($user['username']) ? htmlspecialchars($user['username']) : ''; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="editEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="editEmail" name="editEmail" value="<?php echo htmlspecialchars($email); ?>">
+                                <input type="email" class="form-control" id="editEmail" name="editEmail" 
+                                    value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="editPassword" class="form-label">New Password</label>
@@ -245,13 +277,12 @@ if (!isset($_SESSION['user_id'])) {
                             </div>
 
                             <!-- Hidden inputs to store original username and email -->
-                            <input type="hidden" name="originalUsername" value="<?php echo htmlspecialchars($username); ?>">
-                            <input type="hidden" name="originalEmail" value="<?php echo htmlspecialchars($email); ?>">
+                            <input type="hidden" name="originalUsername" value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>">
+                            <input type="hidden" name="originalEmail" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
 
                             <button type="submit" class="btn" style="background-color: green; color: white;">Save Changes</button>
                             <button type="button" class="btn btn-secondary ms-2" id="cancelEdit">Cancel</button>
                         </form>
-
                     </div>
                     <div class="col-lg-3 mt-3">
                         <h4>Account settings</h4>
