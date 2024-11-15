@@ -215,7 +215,7 @@
 
                 // Display contact numbers
                 if (!empty($contact_numbers_array)) {
-                    echo "<div class='contact-numbers m-3'><h5>Emergency Contact Numbers:</h5><ul class='contact-list'>";
+                    echo "<div class='contact-numbers m-3'><h5><i class='fa-solid fa-phone'></i> Emergency Contact Numbers:</h5><ul class='contact-list'>";
                     foreach ($contact_numbers_array as $number) {
                         echo "<li><i class='fa-solid fa-phone'></i>" . htmlspecialchars(trim($number)) . "</li>";
                     }

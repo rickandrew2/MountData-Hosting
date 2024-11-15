@@ -93,17 +93,50 @@
                 <img class="profilepic d-none" src="<?php echo htmlspecialchars(getUserImagePath()); ?>" alt="Profile Picture" width="40" height="40" class="rounded-circle">
                 <span class="username"><?php echo htmlspecialchars(getUserName()); ?></span>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+              <ul class="dropdown-menu profile-dropdown dropdown-menu-end" aria-labelledby="profileDropdown">
                 <li>
-                  <a class="dropdown-item dd-item-login dd-text" href="userfeatures/userprofile/profile.php">
-                    <span class="dd-icon material-symbols-outlined">settings</span>
-                    <span class="dd-text">Settings</span>
+                  <a class="dropdown-item" href="userfeatures/userprofile/profile.php">
+                    <span class="material-symbols-outlined">settings</span>
+                    Settings
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item dd-item-login dd-text" href="logout.php">
-                    <span class="dd-icon material-symbols-outlined">logout</span>
-                    <span class="dd-text">Logout</span>
+                  <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                    <span class="material-symbols-outlined">notifications</span>
+                    Notifications
+                    <?php
+                    // Get unread notification count from database
+                    include 'db_connection.php';
+                    $user_id = $_SESSION['user_id'];
+                    $sql = "SELECT COUNT(*) as unread_count 
+                            FROM notifications n
+                            LEFT JOIN reviews r ON n.review_id = r.review_id 
+                            LEFT JOIN likes l ON r.review_id = l.review_id 
+                            WHERE n.user_id = ? 
+                            AND n.is_read = 0
+                            AND (
+                                (n.notification_type = 'like' AND l.user_id != ?) 
+                                OR n.notification_type = 'admin'
+                            )";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("ii", $user_id, $user_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $row = $result->fetch_assoc();
+                    $unread_count = $row['unread_count'];
+                    
+                    // Only show badge if there are unread notifications
+                    if ($unread_count > 0) {
+                        echo "<span class='notification-count'>$unread_count</span>";
+                    }
+                    $conn->close();
+                    ?>
+                  </button>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="logout.php">
+                    <span class="material-symbols-outlined">logout</span>
+                    Logout
                   </a>
                 </li>
               </ul>
@@ -319,17 +352,17 @@
         <div class="col-12 col-md-4 mb-4">
           <span class="ftr-icon material-symbols-outlined">photo_camera</span>
           <h3 class="mt-3 fs-2 footer-title">Share Your Journey</h3>
-          <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Connect with fellow adventurers and share your experiences. Tag us in your photos to inspire others!</h3>
+          <h3 class="mt-3 fs-4 footer1-des" class="text-center text-md-justify">Connect with fellow adventurers and share your experiences. Tag us in your photos to inspire others!</h3>
         </div>
         <div class="col-12 col-md-4 mb-4">
           <span class="ftr-icon material-symbols-outlined">landscape</span>
           <h3 class="mt-3 fs-2 footer-title">Adventure Awaits</h3>
-          <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Every adventure brings a new experience. Discover breathtaking trails, hidden gems, and the beauty of nature with us.</h3>
+          <h3 class="mt-3 fs-4 footer1-des" class="text-center text-md-justify">Every adventure brings a new experience. Discover breathtaking trails, hidden gems, and the beauty of nature with us.</h3>
         </div>
         <div class="col-12 col-md-4 mb-4">
           <span class="ftr-icon material-symbols-outlined">explore</span>
           <h3 class="mt-3 fs-2 footer-title">Explore Responsibly</h3>
-          <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;"> We believe in responsible exploration. Follow our guidelines to leave minimal impact and preserve the beauty of nature.</h3>
+          <h3 class="mt-3 fs-4 footer1-des" class="text-center text-md-justify">We believe in responsible exploration. Follow our guidelines to leave minimal impact and preserve the beauty of nature.</h3>
         </div>
       </div>
     </div>
@@ -419,6 +452,67 @@
 
     const isLoggedIn = <?php echo json_encode($loginStatus); ?>; // Pass the PHP variable to JS
   </script>
+
+  <!-- Notifications Modal -->
+  <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="notificationsContent">
+            <!-- Notifications will be loaded here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  $(document).ready(function() {
+    // Function to load notifications
+    function loadNotifications() {
+      $.ajax({
+        url: 'get_notifications.php',
+        method: 'GET',
+        success: function(data) {
+          $('#notificationsContent').html(data);
+          
+          // Update notification count via AJAX
+          $.ajax({
+            url: 'get_unread_count.php',
+            method: 'GET',
+            success: function(count) {
+              if (count > 0) {
+                $('.notification-count').text(count).show();
+              } else {
+                $('.notification-count').hide();
+              }
+            }
+          });
+        }
+      });
+    }
+
+    // Load notifications when modal is opened
+    $('#notificationsModal').on('show.bs.modal', function () {
+      loadNotifications();
+      
+      // Mark notifications as read when modal is opened
+      $.ajax({
+        url: 'mark_notifications_read.php',
+        method: 'POST',
+        success: function() {
+          // Hide the notification count badge after marking as read
+          $('.notification-count').hide();
+        }
+      });
+    });
+  });
+  </script>
+
 </body>
 
 </html>

@@ -1,0 +1,181 @@
+// Variables
+$success-color: #28a745;
+$danger-color: #dc3545;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-500: #adb5bd;
+$gray-700: #495057;
+$transition: all 0.2s ease-in-out;
+$border-radius: 8px;
+$hover-transition: transform 0.2s ease, box-shadow 0.2s ease;
+$notification-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+$hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+// Notification badge
+.notification-count {
+    background-color: $danger-color;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    margin-left: 6px;
+}
+
+// Modal styling
+#notificationsModal {
+    .modal-content {
+        border-radius: $border-radius;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    .modal-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid $gray-200;
+
+        .modal-title {
+            font-weight: 600;
+            color: $gray-700;
+        }
+    }
+
+    .modal-body {
+        padding: 0;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+}
+
+// Notification items
+.notification-item {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid $gray-200;
+    transition: $transition;
+    position: relative;
+    cursor: pointer;
+    box-shadow: $notification-shadow;
+    margin: 0.5rem 1rem;
+    border-radius: $border-radius;
+    border: 1px solid $gray-200;
+    border-bottom: none;
+    transition: $hover-transition;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: $hover-shadow;
+        background-color: white;
+    }
+
+    &.unread {
+        background-color: rgba($success-color, 0.05);
+        border-left: 3px solid $success-color;
+        position: relative;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: $success-color;
+        }
+    }
+
+    &.admin-notification {
+        background-color: rgba($danger-color, 0.05);
+        border-left: 3px solid $danger-color;
+
+        .notification-icon {
+            color: $danger-color;
+        }
+    }
+
+    .notification-content {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        position: relative;
+
+        .notification-icon {
+            color: $success-color;
+            background-color: $gray-100;
+            padding: 8px;
+            border-radius: 50%;
+            font-size: 1.25rem;
+            transition: transform 0.2s ease;
+            
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+
+        .notification-text {
+            flex: 1;
+            
+            strong {
+                color: $gray-700;
+                font-weight: 600;
+                display: block;
+                margin-bottom: 0.25rem;
+            }
+
+            .review-text {
+                color: $gray-500;
+                font-size: 0.9rem;
+                margin-top: 0.5rem;
+                padding: 0.5rem;
+                background-color: $gray-100;
+                border-radius: $border-radius;
+            }
+        }
+    }
+
+    .notification-time {
+        font-size: 0.8rem;
+        color: $gray-500;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 0;
+    }
+}
+
+// Scrollbar styling
+.modal-body {
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $gray-100;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $gray-500;
+        border-radius: 3px;
+        
+        &:hover {
+            background: $gray-700;
+        }
+    }
+}
+
+// Add animation for new notifications
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notification-item.new {
+    animation: slideIn 0.3s ease forwards;
+} 
