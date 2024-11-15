@@ -260,7 +260,7 @@ include('../../db_connection.php'); // Include the database connection
     </div>
 
     <!-- Floating Map Button (show map in modal) -->
-    <div class="floating-map-button d-md-none" id="showMapButton" onclick="openMapModal()">
+    <div class="floating-map-button d-md-none mb-3" id="showMapButton" onclick="openMapModal()">
         <span class="material-symbols-outlined">map</span> Map
     </div>
 

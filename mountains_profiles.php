@@ -328,7 +328,7 @@
                     <hr>
                 </div>
                 <div>
-                    <?php include 'userfeatures/reviews/fetch_upload_photos.php'; ?>
+                    <?php include 'fetch_upload_photos.php'; ?>
                 </div>
             </div>
         </div>

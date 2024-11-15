@@ -1,6 +1,9 @@
 <?php
-// fetch_upload_photos.php
-if ($loginStatus) { // Assuming $loginStatus is true if logged in
+// Include check_login.php at the top of the file
+include_once 'check_login.php';
+
+
+if ($loginStatus) {
     include 'db_connection.php'; // Include your database connection file
 
     // Fetch photos for the specific mountain_id from the database

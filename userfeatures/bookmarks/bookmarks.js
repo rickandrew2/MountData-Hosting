@@ -17,23 +17,6 @@ function initMap() {
 }
 
 function initModalMap(isLoggedIn) {
-    // Check if the user is logged in
-    if (!isLoggedIn) {
-        // Display message for users who need to log in
-        const messageContainer = document.getElementById("modalMapMessage");
-        messageContainer.innerHTML = `
-            <div class="no-bookmarks mt-5" style="text-align: center;">
-                <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">login</span>
-                <h3 class="mt-3">Please Log In</h3>
-                <p style="color: #8a8a8a;">You need to log in to view the map of your bookmarked mountains. Please log in to access your favorites!</p>
-            </div>`;
-
-        // Hide the modal map since the user is not logged in
-        document.getElementById("modalMap").style.display = "none";
-
-        return; // Exit the function since the user is not logged in
-    }
-
     // Initialize the modal map if it hasn't been initialized yet
     if (!modalMap) {
         const modalDefaultLocation = { lat: -34.397, lng: 150.644 };
@@ -41,6 +24,25 @@ function initModalMap(isLoggedIn) {
             zoom: 8,
             center: modalDefaultLocation,
         });
+    }
+
+    // Update visibility of elements based on login status
+    const messageContainer = document.getElementById("modalMapMessage");
+    const modalMapElement = document.getElementById("modalMap");
+
+    if (!isLoggedIn) {
+        // Display message for users who need to log in
+        messageContainer.innerHTML = `
+            <div class="no-bookmarks mt-5" style="text-align: center;">
+                <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">login</span>
+                <h3 class="mt-3">Please Log In</h3>
+                <p style="color: #8a8a8a;">You need to log in to view the map of your bookmarked mountains. Please log in to access your favorites!</p>
+            </div>`;
+        modalMapElement.style.display = "none";
+    } else {
+        // Clear any login messages and show the map for logged-in users
+        messageContainer.innerHTML = '';
+        modalMapElement.style.display = "block";
     }
 }
 
@@ -63,7 +65,7 @@ function handleMountainClick(image) {
 
     // Check if the screen size is less than 768px before initializing/updating the modal map
     if (window.innerWidth < 768) {
-        initModalMap(); // Initialize modal map if on small screen
+        initModalMap(true); // Pass true since we know the user is logged in at this point
         modalMap.setCenter(location); // Center the modal map on the selected mountain
         modalMap.setZoom(10); // Adjust zoom level for modal map
 
@@ -186,3 +188,25 @@ function checkLogin() {
         buttonsStyling: false // Disable default styling for buttons
     }
 }
+
+// Add this to your existing JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    const searchToggle = document.querySelector('.mobile-search-toggle');
+    const searchContainer = document.querySelector('.search-container');
+    const navbar = document.querySelector('.navbar-container');
+
+    if (searchToggle) {
+        searchToggle.addEventListener('click', function() {
+            searchContainer.classList.toggle('active');
+            navbar.classList.toggle('mobile-search-active');
+        });
+    }
+
+    // Close search when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchContainer.contains(e.target) && !searchToggle.contains(e.target)) {
+            searchContainer.classList.remove('active');
+            navbar.classList.remove('mobile-search-active');
+        }
+    });
+});

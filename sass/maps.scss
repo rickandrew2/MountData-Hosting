@@ -94,7 +94,7 @@
 
 /* Floating Map Button Styles */
 .floating-map-button {
-    position: fixed;
+    position: sticky;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -110,6 +110,8 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     z-index: 1000;
+    margin: 0 auto; // Center horizontally
+    width: fit-content; // Only take up as much width as needed
 
     .material-symbols-outlined {
         font-size: 20px;
@@ -121,6 +123,13 @@
 @media (min-width: 768px) {
     .floating-map-button {
         display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .floating-map-button {
+        position: sticky;
+        bottom: 50px; // Consistent bottom spacing
     }
 }
 
