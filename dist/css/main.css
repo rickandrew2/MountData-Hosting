@@ -73,6 +73,8 @@
   display: flex;
   gap: 1rem;
   align-items: flex-start;
+  position: relative;
+  padding-bottom: 20px;
 }
 .notification-item .notification-content .notification-icon {
   color: #28a745;
@@ -105,8 +107,9 @@
 .notification-item .notification-time {
   font-size: 0.8rem;
   color: #adb5bd;
-  margin-top: 0.5rem;
-  margin-left: 2.5rem;
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
 }
 
 .modal-body::-webkit-scrollbar {

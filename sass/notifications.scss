@@ -99,6 +99,7 @@ $hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         gap: 1rem;
         align-items: flex-start;
         position: relative;
+        padding-bottom: 20px;
 
         .notification-icon {
             color: $success-color;
@@ -138,9 +139,8 @@ $hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         font-size: 0.8rem;
         color: $gray-500;
         position: absolute;
-        bottom: 0;
-        right: 0;
-        margin: 0;
+        bottom: 5px;
+        right: 10px;
     }
 }
 
