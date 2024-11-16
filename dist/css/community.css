@@ -71,7 +71,7 @@
   margin: 10px;
 }
 .navbar-container a {
-  color: rgb(0, 0, 0);
+  color: #404040;
 }
 .navbar-container a:hover {
   color: green;
@@ -107,34 +107,57 @@
   left: -50px;
   z-index: 1000;
   background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  padding: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px;
   max-width: 100%;
-  min-width: 50px;
+  min-width: 200px;
+  border: none;
+  border-radius: 8px;
+  animation: dropdownFade 0.2s ease;
 }
 .dropdown-menu li .dropdown-item {
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: black;
+  color: #2c2c2c;
+  padding: 10px 15px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 .dropdown-menu li .dropdown-item:hover {
-  background-color: #F0F0F0;
+  background-color: rgba(0, 128, 0, 0.1);
+  color: green;
+  transform: translateX(5px);
+}
+.dropdown-menu li .dropdown-item:hover .dd-icon {
+  background-color: rgba(0, 128, 0, 0.2);
+  color: green;
 }
 .dropdown-menu li .dropdown-item .dd-icon {
-  margin-right: 8px;
-  font-size: 23px;
-  color: #000000;
-  padding: 5px;
-  background-color: #E0E0E0;
-  border-radius: 10px;
+  margin-right: 12px;
+  font-size: 20px;
+  color: #404040;
+  padding: 8px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 .dropdown-menu li .dropdown-item .dd-text {
-  font-size: 17px;
-  font-weight: 400;
-  color: rgb(0, 0, 0);
+  font-size: 15px;
+  font-weight: 500;
+  color: inherit;
 }
 
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* Media Queries for Responsive Display */
 /* Hide profile picture on small screens */
 @media (max-width: 991px) {
@@ -158,11 +181,11 @@
   }
   .nav-login .username { /* Also, ensure this targets the correct element */
     display: inline !important; /* Show the username */
-    color: black; /* Change color if necessary */
+    color: #404040;
   }
   .nav-login a { /* Target the <a> tag inside .nav-login */
     border-radius: 20px; /* Rounded corners */
-    color: rgb(0, 0, 0);
+    color: #404040;
     text-decoration: none; /* Remove underline */
   }
   .nav-login a:active {
@@ -205,7 +228,7 @@
 }
 .search-container .material-symbols-outlined {
   font-size: 24px;
-  color: #000000; /* Icon color */
+  color: #404040;
   margin-right: 10px; /* Space between icon and input */
 }
 .search-container .search-bar {
@@ -362,6 +385,67 @@
 }
 .notification-item.new {
   animation: slideIn 0.3s ease forwards;
+}
+
+.profilecon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.profile-notification-count {
+  position: absolute;
+  top: 0px;
+  left: 70%;
+  transform: translateX(-50%);
+  background-color: #ff3b30;
+  color: white;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 9px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 2px solid #fff;
+  z-index: 2;
+  animation: bounce 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateX(-50%) scale(0.8);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.2);
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+.profile-image-container {
+  position: relative;
+  display: inline-block;
+}
+.profile-image-container .profilepic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav-link.dropdown-toggle.profilecon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-toggle.profilecon::after {
+  display: none !important;
 }
 
 * {

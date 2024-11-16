@@ -93,59 +93,44 @@ require '../../check_login.php';
                     <!-- Profile Picture or Login Link -->
                     <li class="nav-item nav-login hideOnMobile">
                         <?php if ($loginStatus): ?>
-                            <a class="nav-link dropdown-toggle profilecon" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link profilecon" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="profilepic d-none" src="<?php echo htmlspecialchars(getUserImagePath()); ?>" alt="Profile Picture" width="40" height="40" class="rounded-circle">
                                 <span class="username"><?php echo htmlspecialchars(getUserName()); ?></span>
+                                <?php
+                                include '../../get_notification_count.php';
+                                $unread_count = getUnreadNotificationCount($_SESSION['user_id']);
+                                if ($unread_count > 0) {
+                                    echo "<span class='profile-notification-count'>$unread_count</span>";
+                                }
+                                ?>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <ul class="dropdown-menu profile-dropdown dropdown-menu-end" aria-labelledby="profileDropdown">
                                 <li>
-                                    <a class="dropdown-item dd-item-login dd-text" href="../../userfeatures/userprofile/profile.php">
-                                        <span class="dd-icon material-symbols-outlined">settings</span>
-                                        <span class="dd-text">Settings</span>
+                                    <a class="dropdown-item" href="userfeatures/userprofile/profile.php">
+                                        <span class="material-symbols-outlined">settings</span>
+                                        Settings
                                     </a>
                                 </li>
                                 <li>
-                                    <button class="dropdown-item " data-bs-toggle="modal" data-bs-target="#notificationsModal">
-                                        <span class="dd-icon material-symbols-outlined">notifications</span>
-                                        <span class="dd-text">Notifications</span>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                                        <span class="material-symbols-outlined">notifications</span>
+                                        Notifications
                                         <?php
-                                        // Get unread notification count from database
-                                        include '../../db_connection.php';
-                                        $user_id = $_SESSION['user_id'];
-                                        $sql = "SELECT COUNT(*) as unread_count 
-                            FROM notifications n
-                            LEFT JOIN reviews r ON n.review_id = r.review_id 
-                            LEFT JOIN likes l ON r.review_id = l.review_id 
-                            WHERE n.user_id = ? 
-                            AND n.is_read = 0
-                            AND (
-                                (n.notification_type = 'like' AND l.user_id != ?) 
-                                OR n.notification_type = 'admin'
-                            )";
-                                        $stmt = $conn->prepare($sql);
-                                        $stmt->bind_param("ii", $user_id, $user_id);
-                                        $stmt->execute();
-                                        $result = $stmt->get_result();
-                                        $row = $result->fetch_assoc();
-                                        $unread_count = $row['unread_count'];
-
-                                        // Only show badge if there are unread notifications
                                         if ($unread_count > 0) {
                                             echo "<span class='notification-count'>$unread_count</span>";
                                         }
-
                                         ?>
                                     </button>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item dd-item-login dd-text" href="../../logout.php">
-                                        <span class="dd-icon material-symbols-outlined">logout</span>
-                                        <span class="dd-text">Logout</span>
+                                    <a class="dropdown-item" href="logout.php">
+                                        <span class="material-symbols-outlined">logout</span>
+                                        Logout
                                     </a>
                                 </li>
                             </ul>
                         <?php else: ?>
-                            <a class="nav-link navlog" href="../../login.php">Login</a>
+                            <a class="nav-link navlog" href="login.php">Login</a>
                         <?php endif; ?>
                     </li>
                 </ul>
@@ -288,6 +273,21 @@ require '../../check_login.php';
                 });
             }
 
+            // Function to update notification counts
+            function updateNotificationCounts() {
+                $.ajax({
+                    url: '../../get_unread_count.php',
+                    method: 'GET',
+                    success: function(count) {
+                        if (count > 0) {
+                            $('.notification-count, .profile-notification-count').text(count).show();
+                        } else {
+                            $('.notification-count, .profile-notification-count').hide();
+                        }
+                    }
+                });
+            }
+
             // Load notifications when modal is opened
             $('#notificationsModal').on('show.bs.modal', function() {
                 loadNotifications();
@@ -297,13 +297,17 @@ require '../../check_login.php';
                     url: '../../mark_notifications_read.php',
                     method: 'POST',
                     success: function() {
-                        // Hide the notification count badge after marking as read
-                        $('.notification-count').hide();
+                        // Hide both notification count badges after marking as read
+                        $('.notification-count, .profile-notification-count').hide();
                     }
                 });
             });
+
+            // Update notification counts periodically (every 30 seconds)
+            setInterval(updateNotificationCounts, 30000);
         });
     </script>
+
 
 
 </body>

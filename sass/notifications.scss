@@ -178,4 +178,123 @@ $hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
 .notification-item.new {
     animation: slideIn 0.3s ease forwards;
+}
+
+// Add this to your existing notification styles
+.profilecon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding-top: 8px;
+}
+
+.profile-notification-count {
+    position: absolute;
+    top: 0px;
+    left: 70%;
+    transform: translateX(-50%);
+    background-color: #ff3b30;
+    color: white;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 6px;
+    border-radius: 9px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border: 2px solid #fff;
+    z-index: 2;
+    
+    animation: bounce 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes bounce {
+    0% { transform: translateX(-50%) scale(0.8); }
+    50% { transform: translateX(-50%) scale(1.2); }
+    100% { transform: translateX(-50%) scale(1); }
+}
+
+.profile-image-container {
+    position: relative;
+    display: inline-block;
+    
+    .profilepic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+// Make sure the dropdown toggle has proper positioning
+.nav-link.dropdown-toggle.profilecon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+// Add this to your existing styles
+.dropdown-toggle.profilecon::after {
+    display: none !important;
+}
+
+.chat-messages {
+    .message {
+        &.bot {
+            background: #F5F5F5;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            
+            // Improved formatting for bulleted lists
+            ul {
+                margin: 12px 0;
+                padding-left: 0;
+                list-style: none;
+                
+                li {
+                    padding: 8px 0 8px 25px;
+                    position: relative;
+                    border-bottom: 1px solid rgba(0,0,0,0.05);
+                    
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                    
+                    &::before {
+                        content: "•";
+                        color: #4CAF50;
+                        position: absolute;
+                        left: 8px;
+                        font-size: 1.2em;
+                    }
+                }
+            }
+
+            // Section headers within bot messages
+            .section-header {
+                color: #2E7D32;
+                font-weight: 600;
+                margin: 15px 0 8px 0;
+                padding-bottom: 5px;
+                border-bottom: 2px solid #E8F5E9;
+            }
+
+            // Category headers
+            .category {
+                font-weight: 500;
+                color: #1B5E20;
+                margin: 12px 0 8px 0;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                
+                .emoji {
+                    font-size: 1.2em;
+                }
+            }
+        }
+    }
 } 
