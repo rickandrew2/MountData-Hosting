@@ -507,13 +507,21 @@ if (!$bestMatch) {
 
 // Default response if no good match is found
 if (!$bestMatch) {
-    $bestMatch = "I'm not quite sure about that. Could you try rephrasing your question? You can ask about:
-    - Creating an account
-    - Using the map
-    - Finding trails
-    - Safety information
-    - Weather conditions
-    - General information about MountData";
+    $bestMatch = "<div class='chat-section'>
+        <div class='chat-section-title'>I'm not quite sure about that. 🤔</div>
+        <div class='chat-section'>
+            <div class='chat-section-title'>You can ask me about:</div>
+            <ul class='chat-list'>
+                <li>Creating an account</li>
+                <li>Using the interactive map</li>
+                <li>Finding trails and mountains</li>
+                <li>Safety guidelines and tips</li>
+                <li>Weather conditions and forecasts</li>
+                <li>General information about MountData</li>
+            </ul>
+        </div>
+        <div class='chat-tip'>Please try rephrasing your question, and I'll do my best to help! 😊</div>
+    </div>";
 }
 
 echo json_encode(['response' => $bestMatch]); 
