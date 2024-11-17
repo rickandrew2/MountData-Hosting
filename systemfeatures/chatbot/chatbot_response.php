@@ -210,7 +210,7 @@ $responses = [
         'keywords' => [
             'hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening',
             'help', 'start', 'begin', 'assistance', 'support', 'guide me',
-            'bye', 'goodbye', 'thanks', 'thank you', 'see you', 'later'
+            'bye', 'goodbye', 'see you', 'later'
         ],
         'response' => "<div class='chat-section'>
             <div class='chat-section-title'>Hello! 👋 I'm your MountData assistant.</div>
