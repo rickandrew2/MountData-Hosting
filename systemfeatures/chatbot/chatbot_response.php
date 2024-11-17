@@ -513,7 +513,7 @@ if (!$bestMatch) {
             <div class='chat-section-title'>You can ask me about:</div>
             <ul class='chat-list'>
                 <li>Creating an account</li>
-                <li>Using the interactive map</li>
+                <li>Using the interactive map</li>  
                 <li>Finding trails and mountains</li>
                 <li>Safety guidelines and tips</li>
                 <li>Weather conditions and forecasts</li>

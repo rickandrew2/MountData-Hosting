@@ -93,26 +93,44 @@ include('../../db_connection.php'); // Include the database connection
                     <!-- Profile Picture or Login Link -->
                     <li class="nav-item nav-login hideOnMobile">
                         <?php if ($loginStatus): ?>
-                            <a class="nav-link dropdown-toggle profilecon" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link profilecon" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="profilepic d-none" src="<?php echo htmlspecialchars(getUserImagePath()); ?>" alt="Profile Picture" width="40" height="40" class="rounded-circle">
                                 <span class="username"><?php echo htmlspecialchars(getUserName()); ?></span>
+                                <?php
+                                include '../../get_notification_count.php';
+                                $unread_count = getUnreadNotificationCount($_SESSION['user_id']);
+                                if ($unread_count > 0) {
+                                    echo "<span class='profile-notification-count'>$unread_count</span>";
+                                }
+                                ?>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <ul class="dropdown-menu profile-dropdown dropdown-menu-end" aria-labelledby="profileDropdown">
                                 <li>
-                                    <a class="dropdown-item dd-item-login dd-text" href="../../userfeatures/userprofile/profile.php">
-                                        <span class="dd-icon material-symbols-outlined">settings</span>
-                                        <span class="dd-text">Settings</span>
+                                    <a class="dropdown-item" href="../../userfeatures/userprofile/profile.php">
+                                        <span class="material-symbols-outlined">settings</span>
+                                        Settings
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item dd-item-login dd-text" href="../../logout.php">
-                                        <span class="dd-icon material-symbols-outlined">logout</span>
-                                        <span class="dd-text">Logout</span>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                                        <span class="material-symbols-outlined">notifications</span>
+                                        Notifications
+                                        <?php
+                                        if ($unread_count > 0) {
+                                            echo "<span class='notification-count'>$unread_count</span>";
+                                        }
+                                        ?>
+                                    </button>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="logout.php">
+                                        <span class="material-symbols-outlined">logout</span>
+                                        Logout
                                     </a>
                                 </li>
                             </ul>
                         <?php else: ?>
-                            <a class="nav-link navlog" href="../../login.php">Login</a>
+                            <a class="nav-link navlog" href="login.php">Login</a>
                         <?php endif; ?>
                     </li>
                 </ul>
@@ -320,7 +338,27 @@ include('../../db_connection.php'); // Include the database connection
     <script>
         const isLoggedIn = <?php echo json_encode($loginStatus); ?>; // Pass the PHP variable to JS
     </script>
+
+    <script src="../../assets/js/notification.js"></script>
+
+    <!--NOTIFICATIONS-->
+    <!-- Notifications Modal -->
+    <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="notificationsContent">
+                        <!-- Notifications will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
-</html> 
-
+</html>

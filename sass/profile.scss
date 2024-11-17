@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wdth,wght@95.1,318&display=swap');
 @import 'search.scss';
 @import 'navbar.scss';
+@import 'notifications.scss';
 
 * {
     font-family: "Afacad Flux", sans-serif;
@@ -29,6 +30,7 @@ body {
         height: 100%;
         max-height: auto;
         border-radius: 10px;
+        position: relative;
 
         .profile-container {
             background-color: rgb(255, 255, 255);
@@ -52,12 +54,197 @@ body {
     
     .edit-profile-container {
         background: white;
-        max-width: 600px;
-        width: 100%;
-        height: auto;
-        margin: 0 auto; /* Centers the container horizontally */
-        border-radius: 10px;
-    
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin: 2rem auto;
+
+        // Header section
+        .d-flex {
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #eaeaea !important;
+
+            h4 {
+                font-weight: 600;
+                color: #2f7e2f;  // Using your green theme
+            }
+
+            .material-symbols-outlined {
+                color: #2f7e2f;
+            }
+        }
+
+        // Profile picture section
+        .col-lg-3 {
+            .p-3 {
+                display: flex;
+                justify-content: center;
+                position: relative;
+                
+                img {
+                    border: 3px solid #2f7e2f;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                }
+
+                &::after {
+                    content: "photo_camera";
+                    font-family: 'Material Symbols Outlined';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 2rem;
+                    color: white;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    padding: 1rem;
+                    border-radius: 50%;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    pointer-events: none;
+                    width: 100px;
+                    height: 100px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                &:hover {
+                    cursor: pointer;
+
+                    img {
+                        filter: brightness(0.7);
+                    }
+
+                    &::after {
+                        opacity: 1;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    &::after {
+                        width: 80px;
+                        height: 80px;
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+        }
+
+        // Form section
+        form {
+            .form-label {
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-control {
+                border: 2px solid #eaeaea;
+                border-radius: 8px;
+                padding: 0.75rem;
+                transition: all 0.3s ease;
+
+                &:focus {
+                    border-color: #2f7e2f;
+                    box-shadow: 0 0 0 0.2rem rgba(47, 126, 47, 0.15);
+                }
+            }
+
+            // Button container
+            .button-group {
+                display: flex;
+                gap: 10px;
+                width: 100%;
+                margin-top: 20px;
+
+                @media (max-width: 768px) {
+                    flex-direction: column;
+                    gap: 8px;
+                }
+            }
+
+            // Buttons
+            .btn {
+                padding: 0.75rem 1.5rem;
+                border-radius: 8px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                flex: 1;  // Make buttons take equal width
+
+                &[type="submit"] {
+                    background-color: #2f7e2f !important;
+                    border: none;
+
+                    &:hover {
+                        background-color: darken(#2f7e2f, 10%) !important;
+                        transform: translateY(-1px);
+                    }
+                }
+
+                &.btn-secondary {
+                    background-color: #6c757d;
+                    border: none;
+
+                    &:hover {
+                        background-color: darken(#6c757d, 10%);
+                        transform: translateY(-1px);
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    width: 100%;
+                    margin: 0;
+                }
+            }
+        }
+
+        // Account settings section
+        .account-settings {
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            text-align: center;
+            
+            h4 {
+                color: #333;
+                font-weight: 600;
+                margin-bottom: 1.5rem;
+                text-align: left;
+                border-bottom: 2px solid #2f7e2f;
+                padding-bottom: 0.5rem;
+            }
+
+            .delete-account-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                width: 100%;
+                padding: 12px 20px;
+                background-color: transparent;
+                border: 2px solid #dc3545;
+                color: #dc3545;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                
+                span.material-symbols-outlined {
+                    font-size: 20px;
+                }
+                
+                .btn-text {
+                    font-size: 1rem;
+                    font-weight: 500;
+                }
+                
+                &:hover {
+                    background-color: #dc3545;
+                    color: white;
+                }
+            }
+        }
     }
 }
 
@@ -113,46 +300,6 @@ body {
     cursor: pointer;
 }
 
-/* Styling the Delete Account button */
-.delete-account-btn {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #FF4B5C;  // Red color to signify delete
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-top: 10px;
-  
-    // Add some space between the icon and the text
-    span {
-      margin-right: 10px;
-      font-size: 24px;  // Icon size
-    }
-  
-    // Hover effect
-    &:hover {
-      background-color: #D44B59;  // Slightly darker red
-      transform: scale(1.05);  // Slight enlarge on hover
-    }
-  
-    // Focus effect (in case the button is focused)
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 5px 2px rgba(255, 75, 92, 0.7);  // Shadow for focus
-    }
-  
-    // Active (when clicked) effect
-    &:active {
-      background-color: #C03A4E;  // Even darker red when clicked
-      transform: scale(0.98);  // Slight shrink on click
-    }
-  }
-  
-
                                                          /*FOOTER*/
 .footer1{
     background-color: rgb(47, 126, 47); /* Lighter green */
@@ -193,5 +340,378 @@ body {
 
 .swal-confirm-button:hover {
     background-color: #27ae60; /* Darker green on hover */
+}
+
+.account-settings-container {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    
+    .settings-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+    }
+}
+
+// Add responsive styles
+@media (max-width: 991px) {
+    .account-settings-container {
+        margin-top: 20px;
+    }
+}
+
+.account-settings {
+    text-align: center;  // Center all content
+    
+    h4 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #2f7e2f;  // Matches your footer green color
+        width: fit-content;  // Makes border only as wide as the text
+        margin-left: auto;    // Center the heading with its border
+        margin-right: auto;
+        text-align: center;  // Explicitly center the text
+    }
+
+    .delete-account-btn {
+        margin: 0 auto;  // Center the button
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+// If you have a specific class for the Account Settings title
+.settings-title {
+    text-align: center !important;
+    width: 100%;
+    display: block;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #2f7e2f;
+    padding-bottom: 0.5rem;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .edit-profile-container {
+        padding: 20px;  // Consistent padding
+        margin: 15px;   // Consistent margin
+        width: auto;    // Let it fill the available space
+        
+        // Form section
+        form {
+            .form-control {
+                margin: 8px 0;  // Consistent vertical spacing
+                width: 100%;    // Full width
+            }
+            
+            .form-label {
+                margin-bottom: 5px;  // Consistent label spacing
+                display: block;      // Full width labels
+            }
+            
+            // Buttons container
+            .btn {
+                width: 100%;        // Full width buttons
+                margin: 8px 0;      // Consistent button spacing
+                padding: 12px 20px; // Consistent padding
+            }
+        }
+
+        // Account Settings section
+        .account-settings {
+            margin-top: 20px;
+            padding: 15px;
+            
+            h4 {
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            
+            .delete-account-btn {
+                width: 100%;        // Full width delete button
+                margin: 10px 0;     // Consistent margin
+                padding: 12px 20px; // Consistent padding
+            }
+        }
+    }
+}
+
+// Additional mobile adjustments
+@media (max-width: 768px) {
+    .profile-and-feed {
+        padding: 10px;  // Consistent outer padding
+        
+        .edit-profile-container {
+            margin: 10px;  // Consistent container margin
+            
+            .row {
+                margin: 0;  // Remove row margins
+                
+                > [class*='col-'] {
+                    padding: 0;  // Remove column padding
+                }
+            }
+        }
+    }
+}
+
+.profile-and-feed {
+    // Make container more flexible
+    padding: 15px;
+    
+    @media (max-width: 768px) {
+        padding: 10px;
+    }
+
+    .edit-profile {
+        // Adjust profile section for mobile
+        @media (max-width: 768px) {
+            margin-bottom: 20px;
+            
+            .profile-container {
+                padding: 20px !important;
+                text-align: center;
+                position: relative;
+                
+                // Profile picture and edit button container
+                .profile-pic-with-edit {
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 15px;
+                    padding-top: 10px;
+                    
+                    .profile-pic {
+                        width: 100px !important;
+                        height: 100px !important;
+                        border: 3px solid #2f7e2f;
+                        border-radius: 50%;
+                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                    }
+                    
+                    .tooltip-container {
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        margin-right: -30px;
+                        
+                        .pen-icon {
+                            background-color: #f0f0f0;
+                            border-radius: 50%;
+                            padding: 8px;
+                            
+                            &:hover {
+                                background-color: #e0e0e0;
+                            }
+                        }
+                    }
+                }
+                
+                // Profile info section
+                .profile-info {
+                    margin-top: 20px;
+                    padding: 0 20px;
+                    
+                    h1 {
+                        font-size: 1.8rem;
+                        margin-bottom: 10px;
+                        color: #333;
+                    }
+                    
+                    h6 {
+                        font-size: 1rem;
+                        margin-bottom: 8px;
+                        
+                        &:last-child {
+                            font-size: 0.9rem;
+                            color: #666;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .feed-profile {
+        // Improve feed container responsiveness
+        height: auto;
+        min-height: 50vh;
+        
+        @media (max-width: 768px) {
+            margin-top: 20px !important;
+            padding: 10px !important;
+        }
+    }
+
+    .edit-profile-container {
+        // Better mobile layout for edit profile
+        @media (max-width: 768px) {
+            margin: 10px;
+            padding: 15px;
+            width: calc(100% - 20px);
+            
+            .row {
+                margin: 0;
+                
+                > div {
+                    padding: 10px;
+                }
+            }
+            
+            form {
+                .btn {
+                    width: 100%;
+                    margin: 5px 0;
+                }
+            }
+        }
+
+        // Improve layout for tablets
+        @media (min-width: 769px) and (max-width: 1024px) {
+            margin: 20px auto;
+            width: 90%;
+        }
+    }
+}
+
+// Improve tooltip responsiveness
+.tooltip-container {
+    @media (max-width: 768px) {
+        .tooltip-text {
+            display: none; // Hide tooltips on mobile
+        }
+    }
+}
+
+// Better account settings layout
+.account-settings {
+    @media (max-width: 768px) {
+        margin-top: 20px;
+        padding: 15px;
+        
+        h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .delete-account-btn {
+            padding: 10px;
+            font-size: 0.9rem;
+            
+            .material-symbols-outlined {
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+// Improve footer responsiveness
+.footer1 {
+    @media (max-width: 768px) {
+        .ftr-icon {
+            font-size: 40px;
+        }
+        
+        .footer-title {
+            font-size: 1.5rem;
+        }
+        
+        .footer1-des {
+            font-size: 1rem;
+        }
+    }
+}
+
+// Add flexbox layout for better spacing
+.profile-pic-with-edit {
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        
+        .tooltip-container {
+            margin-top: 10px;
+        }
+    }
+}
+
+// Improve form layout on different screen sizes
+form {
+    @media (max-width: 768px) {
+        .mb-3 {
+            margin-bottom: 15px !important;
+        }
+        
+        .form-control {
+            font-size: 16px; // Prevent zoom on iOS
+        }
+    }
+}
+
+// Add grid system improvements
+.row {
+    @media (max-width: 768px) {
+        margin: 0 -10px;
+        
+        > [class*='col-'] {
+            padding: 0 10px;
+        }
+    }
+}
+
+// Additional styles for better mobile layout
+@media (max-width: 768px) {
+    .profile-container {
+        border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        background: white;
+        
+        // Add a subtle border at the bottom
+        &::after {
+            content: '';
+            display: block;
+            width: 90%;
+            height: 1px;
+            background: #eaeaea;
+            margin: 15px auto 0;
+        }
+    }
+    
+    // Improve spacing between sections
+    .feed-profile {
+        margin-top: 20px !important;
+    }
+}
+
+.profile-pic-with-edit {
+    .profile-pic {
+        transition: all 0.3s ease; // Smooth transition for all effects
+        border: 3px solid transparent; // Initial transparent border
+        
+        &:hover {
+            filter: brightness(0.8);
+            cursor: pointer;
+            border-color: #2f7e2f; // Green border on hover
+            box-shadow: 0 2px 10px rgba(47, 126, 47, 0.3); // Subtle green shadow
+        }
+    }
+
+    .pen-icon {
+        border: 2px solid transparent; // Initial transparent border
+        transition: all 0.3s ease;
+        
+        &:hover {
+            border-radius: 50%;
+            background-color: rgb(208, 208, 208);
+            border-color: #2f7e2f; // Green border on hover
+            box-shadow: 0 2px 10px rgba(47, 126, 47, 0.3); // Subtle green shadow
+        }
+    }
 }
 

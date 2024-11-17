@@ -213,10 +213,10 @@ $debug = false; // Set to false in production
     ?>
 
     <!-- PROFILE -->
-    <div class="profile-and-feed container-lg" style="min-height: 100vh;">
-        <div class="row p-0" id="profileContainer">
+    <div class="profile-and-feed container-fluid px-3 px-md-5 mt-5">
+        <div class="row g-4" id="profileContainer">
             <!-- Left column: Profile Section -->
-            <div class="col-lg-4 col-md-5 col-sm-12 col-12 mt-5 edit-profile">
+            <div class="col-12 col-md-4 edit-profile">
                 <div class="profile-container p-3">
                     <div class="profile-pic-with-edit d-flex align-items-center">
                         <img src="<?php echo getUserImagePath(); ?>" alt="Profile Picture" class="profile-pic" style="width: 60px; height: 60px; border-radius: 50%; background-color: gray;" onclick="document.getElementById('fileInput').click();">
@@ -235,7 +235,7 @@ $debug = false; // Set to false in production
             </div>
 
             <!-- Right column: Content Section -->
-            <div class="col-lg-8 col-md-7 col-sm-12 col-12 mt-5 feed-profile" style="height: auto; padding: 15px; margin-bottom: 20px;">
+            <div class="col-12 col-md-8 feed-profile" style="height: auto; padding: 15px; margin-bottom: 20px;">
                 <div class="content feed-container p-3" style="border-bottom: 1px solid #8a8a8a;">
                     <h3 class="mt-3" style="text-align: center;">Feed</h3>
                 </div>
@@ -246,21 +246,23 @@ $debug = false; // Set to false in production
         </div>
 
         <!-- Edit Profile Container -->
-        <div class="edit-profile-container d-none" id="editProfileContainer" style="max-width: 800px; width: 100%; height: auto; margin-top: 50px;">
+        <div class="edit-profile-container d-none container-fluid px-3" id="editProfileContainer" style="max-width: 800px; width: 90%; height: auto; margin: 50px auto 0;">
             <div class="row g-0">
                 <div class="row p-3">
                     <div class="d-flex" style="border-bottom: 1px solid black;">
                         <h4 class="fs-5">Edit Profile</h4>
                         <span class="ms-auto material-symbols-outlined fs-2">landscape</span>
                     </div>
-                    <div class="col-lg-3" style="background-color: rgb(255, 255, 255);">
+                    <!-- Profile Image Column -->
+                    <div class="col-lg-3 col-md-12 text-center text-lg-start" style="background-color: rgb(255, 255, 255);">
                         <div class="p-3">
                             <img src="<?php echo getUserImagePath(); ?>" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%; background-color: gray;" onclick="document.getElementById('fileInput').click();">
                             <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="uploadImage(event)">
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-10 col-11 mt-3">
-                        <form method="POST" action="edit_profile.php">
+                    <!-- Form Column -->
+                    <div class="col-lg-6 col-md-12 mt-3 px-4">
+                        <form method="POST" action="edit_profile.php" class="w-100">
                             <div class="mb-3">
                                 <label for="editName" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="editName" name="editName" 
@@ -280,17 +282,20 @@ $debug = false; // Set to false in production
                             <input type="hidden" name="originalUsername" value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>">
                             <input type="hidden" name="originalEmail" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
 
-                            <button type="submit" class="btn" style="background-color: green; color: white;">Save Changes</button>
-                            <button type="button" class="btn btn-secondary ms-2" id="cancelEdit">Cancel</button>
+                            <!-- Button group for aligned buttons -->
+                            <div class="button-group">
+                                <button type="submit" class="btn" style="background-color: green; color: white;">Save Changes</button>
+                                <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="col-lg-3 mt-3">
-                        <h4>Account settings</h4>
-                        <!-- Add a class for the delete button styling -->
-                        <div class="delete-account-btn d-flex align-items-center" id="deleteAccountBtn">
+                    <!-- Account Settings Column -->
+                    <div class="col-lg-3 col-md-12 mt-3 account-settings px-4">
+                        <h4>Account Settings</h4>
+                        <button class="delete-account-btn w-100" id="deleteAccountBtn">
                             <span class="material-symbols-outlined">delete</span>
-                            <h5>Delete Account</h5>
-                        </div>
+                            <span class="btn-text">Delete Account</span>
+                        </button>
                     </div>
                 </div>
             </div>

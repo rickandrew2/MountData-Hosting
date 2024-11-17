@@ -1,11 +1,30 @@
 $(document).ready(function() {
+    // Adjust container visibility with proper transitions
     $('#editIcon').click(function() {
-      $('#profileContainer').hide(); // Hide profile and feed sections
-      $('#editProfileContainer').removeClass('d-none'); // Show edit profile container
+        $('#profileContainer').fadeOut(300, function() {
+            $('#editProfileContainer').removeClass('d-none').hide().fadeIn(300);
+        });
     });
-  });
 
-  document.addEventListener("DOMContentLoaded", function () {
+    // Handle window resize for responsive adjustments
+    $(window).resize(function() {
+        adjustContainerSpacing();
+    });
+
+    // Initial call to adjust spacing
+    adjustContainerSpacing();
+
+    // Function to adjust container spacing based on screen size
+    function adjustContainerSpacing() {
+        if (window.innerWidth <= 768) { // Mobile breakpoint
+            $('.profile-and-feed').addClass('mobile-spacing');
+            $('.edit-profile-container').addClass('mobile-spacing');
+        } else {
+            $('.profile-and-feed').removeClass('mobile-spacing');
+            $('.edit-profile-container').removeClass('mobile-spacing');
+        }
+    }
+
     const form = document.querySelector("form");
     const cancelBtn = document.getElementById("cancelEdit");
     let originalName = document.getElementById("editName").value;

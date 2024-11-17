@@ -106,7 +106,7 @@ require '../../check_login.php';
                             </a>
                             <ul class="dropdown-menu profile-dropdown dropdown-menu-end" aria-labelledby="profileDropdown">
                                 <li>
-                                    <a class="dropdown-item" href="userfeatures/userprofile/profile.php">
+                                    <a class="dropdown-item" href="../../userfeatures/userprofile/profile.php">
                                         <span class="material-symbols-outlined">settings</span>
                                         Settings
                                     </a>
@@ -226,8 +226,8 @@ require '../../check_login.php';
 
     <!--OWN JS-->
     <script src="community.js"></script>
-
     <script src="../../systemfeatures/search/search.js" defer></script>
+    <script src="../../assets/js/notification.js"></script>
 
     <!--NOTIFICATIONS-->
     <!-- Notifications Modal -->
@@ -246,69 +246,6 @@ require '../../check_login.php';
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            // Function to load notifications
-            function loadNotifications() {
-                $.ajax({
-                    url: '../../get_notifications.php',
-                    method: 'GET',
-                    success: function(data) {
-                        $('#notificationsContent').html(data);
-
-                        // Update notification count via AJAX
-                        $.ajax({
-                            url: '../../get_unread_count.php',
-                            method: 'GET',
-                            success: function(count) {
-                                if (count > 0) {
-                                    $('.notification-count').text(count).show();
-                                } else {
-                                    $('.notification-count').hide();
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-
-            // Function to update notification counts
-            function updateNotificationCounts() {
-                $.ajax({
-                    url: '../../get_unread_count.php',
-                    method: 'GET',
-                    success: function(count) {
-                        if (count > 0) {
-                            $('.notification-count, .profile-notification-count').text(count).show();
-                        } else {
-                            $('.notification-count, .profile-notification-count').hide();
-                        }
-                    }
-                });
-            }
-
-            // Load notifications when modal is opened
-            $('#notificationsModal').on('show.bs.modal', function() {
-                loadNotifications();
-
-                // Mark notifications as read when modal is opened
-                $.ajax({
-                    url: '../../mark_notifications_read.php',
-                    method: 'POST',
-                    success: function() {
-                        // Hide both notification count badges after marking as read
-                        $('.notification-count, .profile-notification-count').hide();
-                    }
-                });
-            });
-
-            // Update notification counts periodically (every 30 seconds)
-            setInterval(updateNotificationCounts, 30000);
-        });
-    </script>
-
-
 
 </body>
 

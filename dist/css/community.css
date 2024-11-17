@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wdth,wght@95.1,318&display=swap");
 .search-results {
   position: absolute; /* Keep it absolute for positioning */
@@ -446,6 +447,50 @@
 
 .dropdown-toggle.profilecon::after {
   display: none !important;
+}
+
+.chat-messages .message.bot {
+  background: #F5F5F5;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+.chat-messages .message.bot ul {
+  margin: 12px 0;
+  padding-left: 0;
+  list-style: none;
+}
+.chat-messages .message.bot ul li {
+  padding: 8px 0 8px 25px;
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.chat-messages .message.bot ul li:last-child {
+  border-bottom: none;
+}
+.chat-messages .message.bot ul li::before {
+  content: "•";
+  color: #4CAF50;
+  position: absolute;
+  left: 8px;
+  font-size: 1.2em;
+}
+.chat-messages .message.bot .section-header {
+  color: #2E7D32;
+  font-weight: 600;
+  margin: 15px 0 8px 0;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #E8F5E9;
+}
+.chat-messages .message.bot .category {
+  font-weight: 500;
+  color: #1B5E20;
+  margin: 12px 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chat-messages .message.bot .category .emoji {
+  font-size: 1.2em;
 }
 
 * {

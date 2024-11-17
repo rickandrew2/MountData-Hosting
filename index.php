@@ -381,7 +381,7 @@
         <div class="col-lg-6 mb-4">
           <h3 class="mt-5 text-align: text-center mb-5 footer-title">Connect with us</h3>
           <div class="social-icons d-flex justify-content-center">
-            <a href="https://www.facebook.com" target="_blank" class="me-2">
+            <a href="https://www.facebook.com/RickAndrew.06" target="_blank" class="me-2">
               <i class="fab fa-facebook fa-lg"></i>
             </a>
             <a href="mailto:example@gmail.com" target="_blank" class="me-2">
