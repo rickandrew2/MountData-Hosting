@@ -94,26 +94,44 @@ include('../../db_connection.php'); // Include the database connection
                     <!-- Profile Picture or Login Link -->
                     <li class="nav-item nav-login hideOnMobile">
                         <?php if ($loginStatus): ?>
-                            <a class="nav-link dropdown-toggle profilecon" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link profilecon" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="profilepic d-none" src="<?php echo htmlspecialchars(getUserImagePath()); ?>" alt="Profile Picture" width="40" height="40" class="rounded-circle">
                                 <span class="username"><?php echo htmlspecialchars(getUserName()); ?></span>
+                                <?php
+                                include '../../get_notification_count.php';
+                                $unread_count = getUnreadNotificationCount($_SESSION['user_id']);
+                                if ($unread_count > 0) {
+                                    echo "<span class='profile-notification-count'>$unread_count</span>";
+                                }
+                                ?>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <ul class="dropdown-menu profile-dropdown dropdown-menu-end" aria-labelledby="profileDropdown">
                                 <li>
-                                    <a class="dropdown-item dd-item-login dd-text" href="../../userfeatures/userprofile/profile.php">
-                                        <span class="dd-icon material-symbols-outlined">settings</span>
-                                        <span class="dd-text">Settings</span>
+                                    <a class="dropdown-item" href="../../userfeatures/userprofile/profile.php">
+                                        <span class="material-symbols-outlined">settings</span>
+                                        Settings
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item dd-item-login dd-text" href="../../logout.php">
-                                        <span class="dd-icon material-symbols-outlined">logout</span>
-                                        <span class="dd-text">Logout</span>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                                        <span class="material-symbols-outlined">notifications</span>
+                                        Notifications
+                                        <?php
+                                        if ($unread_count > 0) {
+                                            echo "<span class='notification-count'>$unread_count</span>";
+                                        }
+                                        ?>
+                                    </button>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#" onclick="confirmLogout(event)">
+                                        <span class="material-symbols-outlined">logout</span>
+                                        Logout
                                     </a>
                                 </li>
                             </ul>
                         <?php else: ?>
-                            <a class="nav-link navlog" href="../../login.php">Login</a>
+                            <a class="nav-link navlog" href="login.php">Login</a>
                         <?php endif; ?>
                     </li>
                 </ul>
@@ -262,7 +280,7 @@ include('../../db_connection.php'); // Include the database connection
             <div class="modal-content">
                 <span class="close" onclick="closeMapModal()">&times;</span>
                 <!-- Placeholder for the message -->
-                <h3 class="map-label">Mountain Location Map</h3> 
+                <h3 class="map-label">Mountain Location Map</h3>
                 <div id="modalMapMessage"></div>
                 <div id="modalMap" style="width: 100%; height: 400px;"></div>
             </div>
@@ -276,50 +294,71 @@ include('../../db_connection.php'); // Include the database connection
 
 
 
-        <!--FOOTER-->
-        <footer>
-            <div class="container-fluid footer1">
-                <div class="row p-5 text-center text-md-start">
-                    <div class="col-12 col-md-4 mb-4">
-                        <span class="ftr-icon material-symbols-outlined">photo_camera</span>
-                        <h3 class="mt-3 fs-2 footer-title">Share Your Journey</h3>
-                        <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Connect with fellow adventurers and share your experiences. Tag us in your photos to inspire others!</h3>
+    <!--FOOTER-->
+    <footer>
+        <div class="container-fluid footer1">
+            <div class="row p-5 text-center text-md-start">
+                <div class="col-12 col-md-4 mb-4">
+                    <span class="ftr-icon material-symbols-outlined">photo_camera</span>
+                    <h3 class="mt-3 fs-2 footer-title">Share Your Journey</h3>
+                    <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Connect with fellow adventurers and share your experiences. Tag us in your photos to inspire others!</h3>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <span class="ftr-icon material-symbols-outlined">landscape</span>
+                    <h3 class="mt-3 fs-2 footer-title">Adventure Awaits</h3>
+                    <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Every adventure brings a new experience. Discover breathtaking trails, hidden gems, and the beauty of nature with us.</h3>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <span class="ftr-icon material-symbols-outlined">explore</span>
+                    <h3 class="mt-3 fs-2 footer-title">Explore Responsibly</h3>
+                    <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;"> We believe in responsible exploration. Follow our guidelines to leave minimal impact and preserve the beauty of nature.</h3>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Google Maps JavaScript API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqm58SgYCVN-CdOxefv0BPG_PTJ75yINM&callback=initMap" async defer></script>
+
+    <!--OWN JS-->
+    <script src="profiles.js"></script>
+    <script src="bookmarks.js"></script>
+    <script src="script.js"></script>
+
+    <script src="../../systemfeatures/search/search.js"></script>
+
+    <!--BOOTSTRAP JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!--JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../systemfeatures/search/search.js" defer></script>
+
+    <script src="../../assets/js/notification.js"></script>
+    <script src="../../assets/js/logout.js"></script>
+
+    <!--NOTIFICATIONS-->
+    <!-- Notifications Modal -->
+    <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="notificationsModalLabel">Notifications</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="col-12 col-md-4 mb-4">
-                        <span class="ftr-icon material-symbols-outlined">landscape</span>
-                        <h3 class="mt-3 fs-2 footer-title">Adventure Awaits</h3>
-                        <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;">Every adventure brings a new experience. Discover breathtaking trails, hidden gems, and the beauty of nature with us.</h3>
-                    </div>
-                    <div class="col-12 col-md-4 mb-4">
-                        <span class="ftr-icon material-symbols-outlined">explore</span>
-                        <h3 class="mt-3 fs-2 footer-title">Explore Responsibly</h3>
-                        <h3 class="mt-3 fs-4 footer1-des" style="text-align: justify;"> We believe in responsible exploration. Follow our guidelines to leave minimal impact and preserve the beauty of nature.</h3>
+                    <div class="modal-body" id="notificationsContent">
+                        <!-- Notifications will be loaded here -->
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
+    </div>
 
-        <!-- Google Maps JavaScript API -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqm58SgYCVN-CdOxefv0BPG_PTJ75yINM&callback=initMap" async defer></script>
-
-        <!--OWN JS-->
-        <script src="profiles.js"></script>
-        <script src="bookmarks.js"></script>
-        <script src="script.js"></script>
-
-        <script src="../../systemfeatures/search/search.js"></script>
-
-        <!--BOOTSTRAP JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-        <!--JQUERY-->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="../../systemfeatures/search/search.js" defer></script>
-
-        <script>
-            const isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>; // true or false based on session
-            initModalMap(isLoggedIn);
-        </script>
+    <script>
+        const isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>; // true or false based on session
+        initModalMap(isLoggedIn);
+    </script>
 
 </body>
 

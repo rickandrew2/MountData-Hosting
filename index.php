@@ -119,7 +119,7 @@
                   </button>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="logout.php">
+                  <a class="dropdown-item" href="#" onclick="confirmLogout(event)">
                     <span class="material-symbols-outlined">logout</span>
                     Logout
                   </a>
@@ -554,6 +554,25 @@
   </div>
 
   <script src="systemfeatures/chatbot/chatbot.js"></script>
+
+  <script>
+  function confirmLogout(event) {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will be logged out of your account",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, log out',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User confirmed logout, proceed with logout
+        window.location.href = 'logout.php';
+      }
+    });
+  }
+  </script>
 
 </body>
 

@@ -123,7 +123,7 @@ require '../../check_login.php';
                                     </button>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="logout.php">
+                                    <a class="dropdown-item" href="#" onclick="confirmLogout(event)">
                                         <span class="material-symbols-outlined">logout</span>
                                         Logout
                                     </a>
@@ -228,6 +228,7 @@ require '../../check_login.php';
     <script src="community.js"></script>
     <script src="../../systemfeatures/search/search.js" defer></script>
     <script src="../../assets/js/notification.js"></script>
+    <script src="../../assets/js/logout.js"></script>
 
     <!--NOTIFICATIONS-->
     <!-- Notifications Modal -->

@@ -123,7 +123,7 @@ include('../../db_connection.php'); // Include the database connection
                                     </button>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="logout.php">
+                                    <a class="dropdown-item" href="#" onclick="confirmLogout(event)">
                                         <span class="material-symbols-outlined">logout</span>
                                         Logout
                                     </a>
@@ -340,6 +340,7 @@ include('../../db_connection.php'); // Include the database connection
     </script>
 
     <script src="../../assets/js/notification.js"></script>
+    <script src="../../assets/js/logout.js"></script>
 
     <!--NOTIFICATIONS-->
     <!-- Notifications Modal -->
