@@ -159,7 +159,7 @@
     <!-- Blog Section Header -->
     <div class="row mb-4">
       <div class="col text-center">
-        <h2 class="blog-section-title">Latest Blog Posts</h2>
+        <h2 class="blog-section-title">Latest Kupal Posts</h2>
         <p class="blog-section-subtitle">Discover ways to connect with nature responsibly</p>
       </div>
     </div>
