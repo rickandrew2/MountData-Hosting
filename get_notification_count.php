@@ -4,12 +4,10 @@ function getUnreadNotificationCount($user_id) {
     
     $sql = "SELECT COUNT(*) as unread_count 
             FROM notifications n
-            LEFT JOIN reviews r ON n.review_id = r.review_id 
-            LEFT JOIN likes l ON r.review_id = l.review_id 
             WHERE n.user_id = ? 
             AND n.is_read = 0
             AND (
-                (n.notification_type = 'like' AND l.user_id != ?) 
+                (n.notification_type = 'like' AND n.triggered_by_user_id != ?) 
                 OR n.notification_type = 'admin'
             )";
             

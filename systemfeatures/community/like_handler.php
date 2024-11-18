@@ -15,9 +15,9 @@ if ($checkLikeResult->num_rows > 0) {
     $deleteLikeQuery = "DELETE FROM likes WHERE user_id = '$userId' AND review_id = '$reviewId'";
     $conn->query($deleteLikeQuery);
 
-    // Remove the notification
+    // Remove only the specific notification for this user's like
     $deleteNotificationQuery = "DELETE FROM notifications 
-                              WHERE user_id = '$userId' 
+                              WHERE triggered_by_user_id = '$userId' 
                               AND review_id = '$reviewId' 
                               AND notification_type = 'like'";
     $conn->query($deleteNotificationQuery);
@@ -38,10 +38,10 @@ if ($checkLikeResult->num_rows > 0) {
     $reviewOwner = $reviewOwnerResult->fetch_assoc();
     $receiverUserId = $reviewOwner['user_id'];
 
-    // Create a notification for the like (sent to the review owner)
+    // Modified notification query to include triggered_by_user_id
     $insertNotificationQuery = "INSERT INTO notifications 
-                              (user_id, review_id, notification_type, is_read) 
-                              VALUES ('$receiverUserId', '$reviewId', 'like', 0)";
+                              (user_id, review_id, notification_type, is_read, triggered_by_user_id) 
+                              VALUES ('$receiverUserId', '$reviewId', 'like', 0, '$userId')";
     $conn->query($insertNotificationQuery);
 
     // Increase the like count in the reviews table

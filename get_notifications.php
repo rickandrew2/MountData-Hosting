@@ -10,29 +10,32 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Modified query to correctly join tables and get the liker's information
-$sql = "SELECT n.notification_id, 
-        n.notification_type, 
-        n.is_read,
-        n.created_at,
-        n.review_id, 
-        r.comment, 
-        l.user_id as liker_id,
-        u.username as liker_username,
-        dr.comment as deleted_review_comment 
-        FROM notifications n 
-        LEFT JOIN reviews r ON n.review_id = r.review_id 
-        LEFT JOIN likes l ON r.review_id = l.review_id 
-        LEFT JOIN users u ON l.user_id = u.user_id 
-        LEFT JOIN reviews dr ON n.review_id = dr.review_id 
-        WHERE n.user_id = ? 
-        AND (
-            (n.notification_type = 'like' AND l.user_id != ?) -- Exclude self-likes
-            OR n.notification_type = 'admin' -- Always show admin notifications
-        )
-        GROUP BY n.notification_id 
-        ORDER BY n.created_at DESC 
-        LIMIT 10";
+// Modified query to get distinct likes and prevent duplicates
+$sql = "SELECT 
+    n.review_id,
+    n.notification_type,
+    MIN(n.is_read) as is_read,
+    MAX(n.created_at) as latest_created_at,
+    r.comment,
+    GROUP_CONCAT(DISTINCT u.username) as likers,
+    COUNT(DISTINCT n.triggered_by_user_id) as liker_count,
+    dr.comment as deleted_review_comment 
+    FROM (
+        SELECT DISTINCT review_id, user_id, notification_type, is_read, created_at, triggered_by_user_id
+        FROM notifications
+        WHERE notification_type = 'like'
+    ) n 
+    LEFT JOIN reviews r ON n.review_id = r.review_id 
+    LEFT JOIN users u ON n.triggered_by_user_id = u.user_id 
+    LEFT JOIN reviews dr ON n.review_id = dr.review_id 
+    WHERE n.user_id = ? 
+    AND (
+        (n.notification_type = 'like' AND n.triggered_by_user_id != ?)
+        OR n.notification_type = 'admin'
+    )
+    GROUP BY n.review_id, n.notification_type, r.comment, dr.comment
+    ORDER BY latest_created_at DESC 
+    LIMIT 10";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $user_id, $user_id);
@@ -42,14 +45,23 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $unreadClass = $row['is_read'] ? '' : 'unread';
-        $timeAgo = time_elapsed_string($row['created_at']);
+        $timeAgo = time_elapsed_string($row['latest_created_at']);
         
         if ($row['notification_type'] === 'like') {
             echo "<div class='notification-item {$unreadClass}'>";
             echo "<div class='notification-content'>";
             echo "<span class='material-symbols-outlined notification-icon'>favorite</span>";
             echo "<div class='notification-text'>";
-            echo "<strong>{$row['liker_username']}</strong> liked your review";
+            
+            // Format likers list
+            $likers = explode(',', $row['likers']);
+            if ($row['liker_count'] <= 2) {
+                echo "<strong>" . implode(' and ', $likers) . "</strong>";
+            } else {
+                echo "<strong>" . $likers[0] . ", " . $likers[1] . " and " . ($row['liker_count'] - 2) . " others</strong>";
+            }
+            
+            echo " liked your review";
             if ($row['comment']) {
                 $reviewPreview = strlen($row['comment']) > 50 ? 
                     substr($row['comment'], 0, 50) . "..." : 
