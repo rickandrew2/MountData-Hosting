@@ -24,6 +24,12 @@
     <!-- Favicon -->
     <link rel="icon" href="images/logomount.png" type="image/png" />
 
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" rel="stylesheet">
+    
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+
 </head>
 
 <body>
@@ -136,15 +142,6 @@
                                     </div>
                                 <?php endif; ?>
 
-                                <?php if (isset($_SESSION['login_error'])): ?>
-                                    <div class="alert alert-danger">
-                                        <?php
-                                        echo $_SESSION['login_error'];
-                                        unset($_SESSION['login_error']);
-                                        ?>
-                                    </div>
-                                <?php endif; ?>
-
                                 <form action="login_handler.php" method="POST">
                                     <div class="mb-3">
                                         <input type="text" name="username" class="form-control custom-input" placeholder="Email or Username" required>
@@ -221,8 +218,71 @@
         }
 
         // Pass PHP variable to JavaScript
-         const isLoggedIn = <?php echo json_encode($loginStatus); ?>;
+        const isLoggedIn = <?php echo json_encode($loginStatus); ?>;
+
+        // Check for different error types
+        <?php if (isset($_SESSION['login_error'])): ?>
+            <?php if ($_SESSION['login_error'] === 'banned'): ?>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Account Banned',
+                    html: 'Your account has been banned.<br><br>Please contact our support team at:<br><a href="mailto:support@mountdata.gmail">support@mountdata.gmail</a>',
+                    confirmButtonColor: '#28a745',
+                    customClass: {
+                        popup: 'swal-wide',
+                        title: 'swal-title',
+                        content: 'swal-text'
+                    }
+                });
+            <?php elseif ($_SESSION['login_error'] === "Please complete the reCAPTCHA."): ?>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'reCAPTCHA Required',
+                    text: 'Please complete the reCAPTCHA verification.',
+                    confirmButtonColor: '#28a745'
+                });
+            <?php elseif ($_SESSION['login_error'] === "Incorrect password. Please try again."): ?>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Password',
+                    text: 'The password you entered is incorrect. Please try again.',
+                    confirmButtonColor: '#28a745'
+                });
+            <?php elseif ($_SESSION['login_error'] === "Username or email does not exist."): ?>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Account Not Found',
+                    text: 'No account found with that username or email.',
+                    confirmButtonColor: '#28a745'
+                });
+            <?php endif; ?>
+            <?php unset($_SESSION['login_error']); ?>
+        <?php endif; ?>
     </script>
+
+    <style>
+        /* Optional: Custom styling for the SweetAlert */
+        .swal-wide {
+            width: 850px !important;
+            padding: 2em !important;
+        }
+        .swal-title {
+            font-size: 24px !important;
+            color: #dc3545 !important;
+        }
+        .swal-text {
+            font-size: 18px !important;
+        }
+        /* Style for the email link */
+        .swal2-html-container a {
+            color: #28a745; /* Changed to match the green color */
+            text-decoration: none;
+        }
+        .swal2-html-container a:hover {
+            text-decoration: underline;
+            color: #218838; /* Slightly darker shade for hover effect */
+        }
+    </style>
 </body>
 
 </html>

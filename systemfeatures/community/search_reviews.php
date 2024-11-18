@@ -1,10 +1,16 @@
 <?php
-include '../../db_connection.php'; // Make sure to include database connection
+session_start();
+include '../../db_connection.php';
 
+if (!isset($_SESSION['user_id'])) {
+    echo '<div class="alert alert-warning">Please log in to view reviews.</div>';
+    exit;
+}
+
+$currentUserId = $_SESSION['user_id'];
 $searchTerm = $_POST['query'] ?? '';
 
-
-// Modify the SQL query to include the search term
+// If search term is empty, get all reviews instead
 $sql = "
     SELECT r.*, 
            m.name AS mountainName, 
@@ -16,13 +22,24 @@ $sql = "
     FROM reviews r 
     JOIN mountains m ON r.mountain_id = m.mountain_id 
     JOIN users u ON r.user_id = u.user_id
-    WHERE m.name LIKE ? OR r.tags LIKE ?
 ";
 
+// Only add WHERE clause if there's a search term
+if (!empty($searchTerm)) {
+    $sql .= " WHERE m.name LIKE ? OR r.tags LIKE ?";
+}
+
+// Add ORDER BY to show latest reviews first
+$sql .= " ORDER BY r.review_date DESC";
 
 $stmt = $conn->prepare($sql);
-$searchTermWildcard = '%' . $searchTerm . '%';
-$stmt->bind_param('ss', $searchTermWildcard, $searchTermWildcard);
+
+// Only bind parameters if there's a search term
+if (!empty($searchTerm)) {
+    $searchTermWildcard = '%' . $searchTerm . '%';
+    $stmt->bind_param('ss', $searchTermWildcard, $searchTermWildcard);
+}
+
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -57,6 +74,14 @@ if ($result->num_rows > 0) {
         $difficultyLevel = isset($row['difficulty_level']) ? htmlspecialchars($row['difficulty_level']) : 'N/A';
         $elevation = isset($row['elevation']) ? htmlspecialchars($row['elevation']) : 'N/A';
 
+        // Add this near the top of the file, after getting the search results
+        $currentUserId = $_SESSION['user_id']; // Get current user ID for like checking
+
+        // Check if the current user has liked this review
+        $likeQuery = "SELECT * FROM likes WHERE user_id = '$currentUserId' AND review_id = '{$row['review_id']}'";
+        $likeResult = $conn->query($likeQuery);
+        $hasLiked = $likeResult->num_rows > 0;
+
 ?>
 
         <!-- Community section -->
@@ -76,9 +101,26 @@ if ($result->num_rows > 0) {
                 </div>
                 <div class="col-auto">
                     <!-- Options Button -->
-                    <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; background: none; font-size: 1.5rem;">
-                        &#x2026;
-                    </button>
+                    <div class="dropdown">
+                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; background: none; font-size: 1.5rem;">
+                            &#x2026;
+                        </button>
+                        <ul class="dropdown-menu dropdown-review-options dropdown-menu-end">
+                            <?php if ($userId == $currentUserId): ?>
+                                <li>
+                                    <a class="dropdown-item delete-review-btn text-danger" href="#" onclick="confirmDeletion(<?= $reviewId ?>)">
+                                        <i class="fas fa-trash-alt me-2"></i> Delete
+                                    </a>
+                                </li>
+                            <?php else: ?>
+                                <li>
+                                    <a class="dropdown-item report-review-btn text-warning" href="#" onclick="confirmReport(<?= $reviewId ?>, <?= $currentUserId ?>)">
+                                        <i class="fas fa-flag me-2"></i> Report
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -158,11 +200,13 @@ if ($result->num_rows > 0) {
 
                     <!-- Like Button -->
                     <div class="d-flex align-items-center mt-3 like-container">
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <svg class="icon like-button" data-review-id="<?= $reviewId; ?>" data-user-id="<?= $currentUserId; ?>" data-likes="<?= $hasLiked ? 'true' : 'false'; ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                             <path class="heart" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="currentColor" stroke-width="2" />
-                            <path class="heart-filled" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" />
+                            <path class="heart-filled" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="red" class="heart-filled" style="display: <?= $hasLiked ? 'block' : 'none'; ?>" />
                         </svg>
-                        <span class="like-count ms-1"><?= $likeCount; ?></span>
+                        <span class="like-count mx-2" data-review-id="<?= $reviewId; ?>">
+                            <?= $likeCount; ?> <?= ($likeCount <= 1) ? 'like' : 'likes' ?>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -176,7 +220,6 @@ if ($result->num_rows > 0) {
         <h3 class="mt-3">No Results Found</h3>
         <p style="color: #8a8a8a;">We couldn’t find any reviews that match your search. Please try different keywords or check back later!</p>
         <p style="color: #8a8a8a;">In the meantime, try looking for other community reviews on different trails!</p>
-        <span class="material-symbols-outlined" style="font-size: 2rem; color: #8a8a8a;">arrow_downward</span>
       </div>';
 }
 
@@ -184,4 +227,3 @@ if ($result->num_rows > 0) {
 $stmt->close();
 $conn->close();
 ?>
-

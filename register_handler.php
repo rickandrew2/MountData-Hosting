@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Store the data in the database
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password, image_path, created_at) VALUES (?, ?, ?, ?, NOW())");
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password, image_path, status, created_at) VALUES (?, ?, ?, ?, 'active', NOW())");
     $stmt->bind_param('ssss', $username, $email, $hashed_password, $image_path);
 
     if ($stmt->execute()) {

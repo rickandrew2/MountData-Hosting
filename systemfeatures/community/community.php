@@ -140,80 +140,82 @@ require '../../check_login.php';
 
     <div class="container p-3">
         <div class="row mx-1 align-items-start">
-            <?php
-            include('fetch_community.php');
-            ?>
-        </div> <!-- End of main content area -->
+            <!-- Main content column -->
+            <div class="container main-content col-lg-7 col-md-7 col-12 mt-2 p-4" style="height: auto;">
+                <?php
+                include('fetch_community.php');
+                ?>
+            </div>
 
-        <!-- Secondary column -->
-        <div class="container second-column col-lg-4 col-md-5 col-12 mt-2 p-4">
-            <h3 class="text-center mb-4">User Tips</h3>
-            <p class="mt-3 text-center">Essential Tips for Outdoor Enthusiasts</p>
-            <ul class="list-unstyled mt-3">
-                <li class="tip-item">
-                    <span class="material-symbols-outlined icon">local_drink</span>
-                    <div class="tip-content">
-                        <strong>Stay Hydrated:</strong> Always carry enough water, especially on hot days.
-                    </div>
-                </li>
-                <li class="tip-item">
-                    <span class="material-symbols-outlined icon">hiking</span>
-                    <div class="tip-content">
-                        <strong>Wear Proper Footwear:</strong> Invest in good hiking boots for support and traction.
-                    </div>
-                </li>
-                <li class="tip-item">
-                    <span class="material-symbols-outlined icon">remove_circle</span>
-                    <div class="tip-content">
-                        <strong>Leave No Trace:</strong> Pack out what you pack in to keep nature pristine.
-                    </div>
-                </li>
-                <li class="tip-item">
-                    <span class="material-symbols-outlined icon">cloud</span>
-                    <div class="tip-content">
-                        <strong>Check Weather Conditions:</strong> Be aware of the weather forecast before heading out.
-                    </div>
-                </li>
-                <li class="tip-item">
-                    <span class="material-symbols-outlined icon">pets</span>
-                    <div class="tip-content">
-                        <strong>Respect Wildlife:</strong> Observe animals from a distance and do not feed them.
-                    </div>
-                </li>
-            </ul>
+            <!-- Secondary column -->
+            <div class="container second-column col-lg-4 col-md-5 col-12 mt-2 p-4">
+                <h3 class="text-center mb-4">User Tips</h3>
+                <p class="mt-3 text-center">Essential Tips for Outdoor Enthusiasts</p>
+                <ul class="list-unstyled mt-3">
+                    <li class="tip-item">
+                        <span class="material-symbols-outlined icon">local_drink</span>
+                        <div class="tip-content">
+                            <strong>Stay Hydrated:</strong> Always carry enough water, especially on hot days.
+                        </div>
+                    </li>
+                    <li class="tip-item">
+                        <span class="material-symbols-outlined icon">hiking</span>
+                        <div class="tip-content">
+                            <strong>Wear Proper Footwear:</strong> Invest in good hiking boots for support and traction.
+                        </div>
+                    </li>
+                    <li class="tip-item">
+                        <span class="material-symbols-outlined icon">remove_circle</span>
+                        <div class="tip-content">
+                            <strong>Leave No Trace:</strong> Pack out what you pack in to keep nature pristine.
+                        </div>
+                    </li>
+                    <li class="tip-item">
+                        <span class="material-symbols-outlined icon">cloud</span>
+                        <div class="tip-content">
+                            <strong>Check Weather Conditions:</strong> Be aware of the weather forecast before heading out.
+                        </div>
+                    </li>
+                    <li class="tip-item">
+                        <span class="material-symbols-outlined icon">pets</span>
+                        <div class="tip-content">
+                            <strong>Respect Wildlife:</strong> Observe animals from a distance and do not feed them.
+                        </div>
+                    </li>
+                </ul>
 
-            <hr class="my-4" style="border-top: 2px solid white;">
+                <hr class="my-4" style="border-top: 2px solid white;">
 
-            <h3 class="text-center mb-4">Nature Conservation</h3>
-            <p class="mt-3 text-center">Help protect our beautiful landscapes by following these conservation tips:</p>
-            <ul class="list-unstyled mt-2">
-                <li class="tip-item">
-                    <span class="material-symbols-outlined icon">straight</span>
-                    <div class="tip-content">
-                        <strong>Stay on Trails:</strong> Prevent soil erosion and protect plant life by sticking to marked paths.
-                    </div>
-                </li>
-                <li class="tip-item">
-                    <span class="material-symbols-outlined icon">check_circle</span>
-                    <div class="tip-content">
-                        <strong>Remove Invasive Species:</strong> Help maintain biodiversity by reporting and removing non-native plants.
-                    </div>
-                </li>
-                <li class="tip-item">
-                    <span class="material-symbols-outlined icon">cleaning_services</span>
-                    <div class="tip-content">
-                        <strong>Participate in Clean-ups:</strong> Join local conservation groups for trail maintenance and clean-up efforts.
-                    </div>
-                </li>
-                <li class="tip-item">
-                    <span class="material-symbols-outlined icon">volunteer_activism</span>
-                    <div class="tip-content">
-                        <strong>Support Conservation Organizations:</strong> Consider donating or volunteering to organizations that protect natural areas.
-                    </div>
-                </li>
-            </ul>
+                <h3 class="text-center mb-4">Nature Conservation</h3>
+                <p class="mt-3 text-center">Help protect our beautiful landscapes by following these conservation tips:</p>
+                <ul class="list-unstyled mt-2">
+                    <li class="tip-item">
+                        <span class="material-symbols-outlined icon">straight</span>
+                        <div class="tip-content">
+                            <strong>Stay on Trails:</strong> Prevent soil erosion and protect plant life by sticking to marked paths.
+                        </div>
+                    </li>
+                    <li class="tip-item">
+                        <span class="material-symbols-outlined icon">check_circle</span>
+                        <div class="tip-content">
+                            <strong>Remove Invasive Species:</strong> Help maintain biodiversity by reporting and removing non-native plants.
+                        </div>
+                    </li>
+                    <li class="tip-item">
+                        <span class="material-symbols-outlined icon">cleaning_services</span>
+                        <div class="tip-content">
+                            <strong>Participate in Clean-ups:</strong> Join local conservation groups for trail maintenance and clean-up efforts.
+                        </div>
+                    </li>
+                    <li class="tip-item">
+                        <span class="material-symbols-outlined icon">volunteer_activism</span>
+                        <div class="tip-content">
+                            <strong>Support Conservation Organizations:</strong> Consider donating or volunteering to organizations that protect natural areas.
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
     </div>
 
 

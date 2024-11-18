@@ -730,4 +730,47 @@
     padding: 10px 30px;
     font-size: 14px;
   }
+}
+.dropdown-review-options {
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  margin-top: 5px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 8px 0 !important;
+  min-width: 160px !important;
+  background-color: white !important;
+  top: 100% !important;
+  left: auto !important;
+  right: 0 !important;
+  outline: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+.dropdown-review-options .dropdown-item {
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: background-color 0.2s ease !important;
+}
+.dropdown-review-options .dropdown-item i {
+  width: 16px !important;
+  text-align: center !important;
+  margin-right: 8px !important;
+}
+.dropdown-review-options .dropdown-item.delete-review-btn {
+  color: #dc3545 !important;
+}
+.dropdown-review-options .dropdown-item.delete-review-btn:hover {
+  background-color: rgba(220, 53, 69, 0.1) !important;
+}
+.dropdown-review-options .dropdown-item.delete-review-btn i {
+  color: #dc3545 !important;
+}
+.dropdown-review-options .dropdown-item.report-review-btn {
+  color: #ffc107 !important;
+}
+.dropdown-review-options .dropdown-item.report-review-btn:hover {
+  background-color: rgba(255, 193, 7, 0.1) !important;
+}
+.dropdown-review-options .dropdown-item.report-review-btn i {
+  color: #ffc107 !important;
 }/*# sourceMappingURL=community.css.map */

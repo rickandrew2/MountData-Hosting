@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    // Prepare the SQL statement to select user data including image_path
-    if ($stmt = $conn->prepare("SELECT user_id, username, password, image_path FROM users WHERE username = ? OR email = ?")) {
+    // Prepare the SQL statement to select user data including image_path and status
+    if ($stmt = $conn->prepare("SELECT user_id, username, password, image_path, status FROM users WHERE username = ? OR email = ?")) {
         $stmt->bind_param('ss', $username_or_email, $username_or_email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -43,12 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
 
+            // Check if user is banned
+            if ($user['status'] === 'banned') {
+                $_SESSION['login_error'] = 'banned';
+                header("Location: login.php");
+                exit();
+            }
+
             // Verify the password
             if (password_verify($password, $user['password'])) {
                 // Password is correct, set session variables
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];
-                $_SESSION['image_path'] = $user['image_path']; // Store the image path
+                $_SESSION['image_path'] = $user['image_path'];
                 $_SESSION['login_success'] = "Login successful! Welcome " . $user['username'] . ".";
                 header("Location: index.php");
                 exit();

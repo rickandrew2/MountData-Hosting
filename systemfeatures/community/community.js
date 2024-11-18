@@ -22,7 +22,6 @@ function confirmDeletion(reviewId) {
         cancelButtonColor: '#d33'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Send AJAX request to delete_comment.php
             const xhr = new XMLHttpRequest();
             xhr.open('POST', '../../userfeatures/report/delete.php', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -35,7 +34,7 @@ function confirmDeletion(reviewId) {
                             icon: 'success',
                             confirmButtonColor: '#28a745'
                         }).then(() => {
-                            location.reload(); // Reload to update the page after deletion
+                            location.reload();
                         });
                     } else {
                         Swal.fire({
@@ -47,14 +46,12 @@ function confirmDeletion(reviewId) {
                     }
                 }
             };
-            xhr.send('review_id=' + encodeURIComponent(reviewId)); // Send the reviewId to delete_comment.php
+            xhr.send('review_id=' + encodeURIComponent(reviewId));
         }
     });
 }
 
-
 function confirmReport(reviewId, userId) {
-    // Use SweetAlert2 for the confirmation
     Swal.fire({
         title: 'Report Review',
         text: 'Select a reason for reporting this review:',
@@ -73,31 +70,27 @@ function confirmReport(reviewId, userId) {
         cancelButtonColor: '#d33'
     }).then((result) => {
         if (result.isConfirmed) {
-            const reportReason = result.value; // Get the selected value
+            const reportReason = result.value;
 
             if (!reportReason) {
-                // If no reason is selected, show an error message
                 Swal.fire({
                     title: 'Error!',
                     text: 'You must select a reason for reporting.',
                     icon: 'error',
                     confirmButtonColor: '#d33'
                 });
-                return; // Exit the function if no reason is selected
+                return;
             }
 
-            // Create an AJAX request
             const xhr = new XMLHttpRequest();
             xhr.open('POST', '../../userfeatures/report/report.php', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-            // Define the data to be sent
             const data = 'review_id=' + encodeURIComponent(reviewId) +
-                         '&user_id=' + encodeURIComponent(userId) +
-                         '&report_reason=' + encodeURIComponent(reportReason) + // Use the selected reason
-                         '&report_date=' + encodeURIComponent(new Date().toISOString());
+                        '&user_id=' + encodeURIComponent(userId) +
+                        '&report_reason=' + encodeURIComponent(reportReason) +
+                        '&report_date=' + encodeURIComponent(new Date().toISOString());
 
-            // Handle the response from the server
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
@@ -107,7 +100,6 @@ function confirmReport(reviewId, userId) {
                             icon: 'success',
                             confirmButtonColor: '#28a745'
                         });
-                        // Optionally, you can refresh the page or update the UI here
                     } else {
                         Swal.fire({
                             title: 'Error!',
@@ -119,46 +111,55 @@ function confirmReport(reviewId, userId) {
                 }
             };
 
-            // Send the request
             xhr.send(data);
         }
     });
 }
 
 $(document).ready(function () {
-    // Handle like button click
-    $(".like-button").click(function () {
+    // Use event delegation for like button clicks
+    $(document).on('click', '.like-button', function() {
         var reviewId = $(this).data("review-id");
         var userId = $(this).data("user-id");
         var hasLiked = $(this).data("likes") === 'true';
+        var $likeButton = $(this);
 
         // Send AJAX request to like_handler.php
         $.ajax({
-            url: "like_handler.php", // Adjust the path as needed
+            url: "like_handler.php",
             type: "POST",
             data: {
                 review_id: reviewId
             },
-            success: function (response) {
+            success: function(response) {
                 var data = JSON.parse(response);
                 
                 if (data.status === 'liked') {
                     // Update the like button to filled state
-                    $(".like-button[data-review-id='" + reviewId + "'] .heart").hide();
-                    $(".like-button[data-review-id='" + reviewId + "'] .heart-filled").show();
-                    $(this).data("likes", 'true');
+                    $likeButton.find('.heart').hide();
+                    $likeButton.find('.heart-filled').show();
+                    $likeButton.data("likes", 'true');
                 } else {
                     // Update the like button to unfilled state
-                    $(".like-button[data-review-id='" + reviewId + "'] .heart").show();
-                    $(".like-button[data-review-id='" + reviewId + "'] .heart-filled").hide();
-                    $(this).data("likes", 'false');
+                    $likeButton.find('.heart').show();
+                    $likeButton.find('.heart-filled').hide();
+                    $likeButton.data("likes", 'false');
                 }
 
-                // Update the like count on the page with "like" or "likes"
+                // Update the like count
                 $(".like-count[data-review-id='" + reviewId + "']").text(
                     `${data.like_count} ${data.like_count <= 1 ? 'like' : 'likes'}`
                 );
             }
         });
+    });
+});
+
+// Initialize Bootstrap dropdowns
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all dropdowns
+    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+    var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl);
     });
 });
