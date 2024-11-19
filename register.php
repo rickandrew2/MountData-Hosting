@@ -332,9 +332,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <input type="email" name="email" class="form-control custom-input" placeholder="Email" required>
                                     </div>
                                     <div class="mb-3">
+                                        <label for="contact_number" class="form-label">Contact Number</label>
+                                        <input type="tel" name="contact_number" class="form-control custom-input" 
+                                            placeholder="ex: 09123456789" 
+                                            pattern="[0-9]{11}" 
+                                            title="Please enter a valid 11-digit phone number"
+                                            required>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="password" class="form-label">Password</label>
                                         <div class="input-group">
-                                            <input type="password" name="password" id="password" class="form-control custom-input"
+                                            <input type="password" name="password" id="password" 
+                                                class="form-control custom-input"
                                                 placeholder="Min 5 chars, 1 uppercase & 1 symbol"
                                                 pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*?])[A-Za-z\d!@#$%^&*?]{5,}$"
                                                 title="Password must be at least 5 characters and contain at least one uppercase letter and one symbol"
