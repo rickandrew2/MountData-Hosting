@@ -210,3 +210,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+function clearAllFilters() {
+    // Clear elevation inputs
+    document.querySelectorAll('#minElevation, #maxElevation').forEach(input => {
+        input.value = '';
+    });
+
+    // Clear difficulty radio buttons
+    document.querySelectorAll('input[name="difficulty"]').forEach(radio => {
+        radio.checked = false;
+    });
+
+    // Clear location checkboxes
+    document.querySelectorAll('input[name="location"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    filterMountains();
+}

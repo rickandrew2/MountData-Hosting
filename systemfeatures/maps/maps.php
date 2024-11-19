@@ -240,7 +240,6 @@ include('../../db_connection.php'); // Include the database connection
                             <label class="d-block"><input type="radio" name="difficulty" value="easy"> Easy</label>
                             <label class="d-block"><input type="radio" name="difficulty" value="moderate"> Moderate</label>
                             <label class="d-block"><input type="radio" name="difficulty" value="challenging"> Challenging</label>
-                        </div>
                         <div class="mb-3">
                             <h6>Location:</h6>
                             <label class="d-block"><input type="checkbox" name="location" value="Batangas"> Batangas</label>
@@ -251,6 +250,7 @@ include('../../db_connection.php'); // Include the database connection
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="clearAllFilters()">Clear All</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-success" onclick="filterMountains()">Apply Filters</button>
                     </div>

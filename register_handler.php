@@ -17,12 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitize input
     $username = htmlspecialchars(trim($_POST['name']));
     $email = htmlspecialchars(trim($_POST['email']));
-    $contact_number = htmlspecialchars(trim($_POST['contact_number']));
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
     // Debugging line
-    var_dump($username, $email, $contact_number, $password, $confirm_password); // Check received data
+    var_dump($username, $email, $password, $confirm_password); // Check received data
 
     // First, check if email already exists
     $check_email = $conn->prepare("SELECT email FROM users WHERE email = ?");
@@ -71,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Store the data in the database
-    $stmt = $conn->prepare("INSERT INTO users (username, email, contact_number, password, image_path, status, created_at) VALUES (?, ?, ?, ?, ?, 'active', NOW())");
-    $stmt->bind_param('sssss', $username, $email, $contact_number, $hashed_password, $image_path);
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password, image_path, status, created_at) VALUES (?, ?, ?, ?, 'active', NOW())");
+    $stmt->bind_param('ssss', $username, $email, $hashed_password, $image_path);
 
     if ($stmt->execute()) {
         $user_id = $conn->insert_id;

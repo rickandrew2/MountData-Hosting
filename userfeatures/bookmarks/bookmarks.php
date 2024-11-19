@@ -131,7 +131,7 @@ include('../../db_connection.php'); // Include the database connection
                                 </li>
                             </ul>
                         <?php else: ?>
-                            <a class="nav-link navlog" href="login.php">Login</a>
+                            <a class="nav-link navlog" href="../../login.php">Login</a>
                         <?php endif; ?>
                     </li>
                 </ul>
@@ -247,6 +247,7 @@ include('../../db_connection.php'); // Include the database connection
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="clearAllFilters()">Clear All</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-success" onclick="filterMountains()">Apply Filters</button>
                     </div>
