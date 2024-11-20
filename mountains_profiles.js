@@ -125,7 +125,7 @@ document.getElementById('writeReviewHeader').addEventListener('click', function(
                     text: 'Your review has been submitted.',
                     icon: 'success',
                     confirmButtonText: 'Okay',
-                    confirmButtonColor: '#3085d6'
+                    confirmButtonColor: '#28a745'
                 }).then(() => {
                     Swal.close(); // Close the modal after submission
                 });
@@ -331,7 +331,7 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
             formData.append('mountain_id', mountainId);
 
             fetch('userfeatures/reviews/upload_photo.php', {
-                method: 'POST',
+                method: 'POST', 
                 body: formData
             }).then(response => response.text())
             .then(data => {
@@ -340,7 +340,7 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
                     text: 'Your review has been submitted.',
                     icon: 'success',
                     confirmButtonText: 'Okay',
-                    confirmButtonColor: '#3085d6'
+                    confirmButtonColor: '#28a745'
                 }).then(() => {
                     // Reset the form and close the alert
                     document.getElementById('reviewForm').reset();

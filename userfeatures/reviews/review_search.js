@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const filterIcon = document.getElementById('filter-icon');
     let currentRatingFilter = '';
+    
+    // Get the user ID from the global variable set in check_login.php
+    const currentUserId = userId; // This comes from check_login.php's "var userId = <?php echo $user_id; ?>"
 
     // Debounce function to limit API calls
     function debounce(func, wait) {
@@ -54,6 +57,14 @@ document.addEventListener('DOMContentLoaded', function() {
             day: 'numeric'
         });
 
+        // Convert both IDs to numbers for reliable comparison
+        const reviewUserId = parseInt(review.user_id);
+        const loggedInUserId = parseInt(currentUserId);
+
+        console.log('Review User ID:', reviewUserId); // Debug
+        console.log('Logged In User ID:', loggedInUserId); // Debug
+        console.log('Are they equal?:', reviewUserId === loggedInUserId); // Debug
+
         return `
             <div class="review-comment">
                 <div class="container d-flex" style="margin-top: 20px;">
@@ -61,6 +72,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="name-n-date mx-3 mt-2">
                         <h5>${review.username}</h5>
                         <h6>${formattedDate}</h6>
+                    </div>
+                    <div class="dropdown ms-auto mt-2">
+                        <button class="btn btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; background: none; padding: 0; font-size: clamp(1rem, 2vw, 1.5rem);">
+                            &#x2026;
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            ${reviewUserId === loggedInUserId ? 
+                                `<li><a class="dropdown-item small" href="#" onclick="confirmDeletion(${review.review_id}); return false;">Delete</a></li>` :
+                                `<li><a class="dropdown-item small" style="color: red;" href="#" onclick="confirmReport(${review.review_id}, ${currentUserId}); return false;">⚠ Report</a></li>`
+                            }
+                        </ul>
                     </div>
                 </div>
                 <div class="container star-ratings mt-2">${stars}</div>
@@ -134,7 +156,7 @@ function generatePhotoHTML(photos) {
     });
 });
 
-// Add this function outside the DOMContentLoaded event listener
+
 function viewFullImage(imageSrc) {
     const popup = document.getElementById('imagePopup');
     const popupImage = document.getElementById('imagePopupContent');

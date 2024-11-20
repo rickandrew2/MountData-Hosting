@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="user_id" content="<?php echo $_SESSION['user_id']; ?>">
 
     <!-- My CSS -->
     <link rel="stylesheet" href="dist/css/mountains_profiles.css" />
