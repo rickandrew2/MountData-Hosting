@@ -130,7 +130,7 @@ include('../../db_connection.php'); // Include the database connection
                                 </li>
                             </ul>
                         <?php else: ?>
-                            <a class="nav-link navlog" href="login.php">Login</a>
+                            <a class="nav-link navlog" href="../../login.php">Login</a>
                         <?php endif; ?>
                     </li>
                 </ul>

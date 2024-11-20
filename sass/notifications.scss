@@ -96,11 +96,30 @@ $hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     &.admin-notification {
-        background-color: rgba($danger-color, 0.05);
-        border-left: 3px solid $danger-color;
+        background: linear-gradient(to right, rgba($danger-color, 0.08), rgba($danger-color, 0.02));
+        border-left: 4px solid $danger-color;
+        box-shadow: 0 2px 12px rgba($danger-color, 0.1);
 
         .notification-icon {
             color: $danger-color;
+            background-color: rgba($danger-color, 0.1);
+        }
+
+        .notification-text {
+            strong {
+                color: $danger-color;
+            }
+        }
+
+        .deleted-review-preview {
+            color: $gray-500;
+            font-style: italic;
+            margin-top: 8px;
+            padding: 8px;
+            background-color: rgba($danger-color, 0.05);
+            border-radius: $border-radius;
+            border-left: 2px solid $danger-color;
+            font-size: 0.9em;
         }
     }
 

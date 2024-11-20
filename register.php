@@ -332,6 +332,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <input type="email" name="email" class="form-control custom-input" placeholder="Email" required>
                                     </div>
                                     <div class="mb-3">
+                                        <label for="contact_number" class="form-label">Contact Number</label>
+                                        <input type="tel" name="contact_number" class="form-control custom-input" 
+                                               pattern="^(09|\+639)\d{9}$"
+                                               placeholder="Enter Philippine mobile number (e.g., 09123456789)"
+                                               title="Please enter a valid Philippine mobile number starting with 09 or +639" required>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="password" class="form-label">Password</label>
                                         <div class="input-group">
                                             <input type="password" name="password" id="password" class="form-control custom-input"

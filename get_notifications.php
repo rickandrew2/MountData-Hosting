@@ -18,22 +18,19 @@ $sql = "SELECT
     MAX(n.created_at) as latest_created_at,
     r.comment,
     GROUP_CONCAT(DISTINCT u.username) as likers,
-    COUNT(DISTINCT n.triggered_by_user_id) as liker_count,
-    dr.comment as deleted_review_comment 
+    COUNT(DISTINCT n.triggered_by_user_id) as liker_count
     FROM (
-        SELECT DISTINCT review_id, user_id, notification_type, is_read, created_at, triggered_by_user_id
+        SELECT DISTINCT review_id, notification_type, is_read, created_at, triggered_by_user_id, user_id
         FROM notifications
-        WHERE notification_type = 'like'
+        WHERE user_id = ?
+        AND (
+            (notification_type = 'like' AND triggered_by_user_id != ?)
+            OR notification_type = 'admin'
+        )
     ) n 
     LEFT JOIN reviews r ON n.review_id = r.review_id 
     LEFT JOIN users u ON n.triggered_by_user_id = u.user_id 
-    LEFT JOIN reviews dr ON n.review_id = dr.review_id 
-    WHERE n.user_id = ? 
-    AND (
-        (n.notification_type = 'like' AND n.triggered_by_user_id != ?)
-        OR n.notification_type = 'admin'
-    )
-    GROUP BY n.review_id, n.notification_type, r.comment, dr.comment
+    GROUP BY n.review_id, n.notification_type, r.comment
     ORDER BY latest_created_at DESC 
     LIMIT 10";
 
@@ -73,15 +70,12 @@ if ($result->num_rows > 0) {
         } else if ($row['notification_type'] === 'admin') {
             echo "<div class='notification-item {$unreadClass} admin-notification'>";
             echo "<div class='notification-content'>";
-            echo "<span class='material-symbols-outlined notification-icon'>admin_panel_settings</span>";
+            echo "<span class='material-symbols-outlined notification-icon' style='color: #ff0000;'>admin_panel_settings</span>";
             echo "<div class='notification-text'>";
             echo "<strong>Admin Notification</strong><br>";
-            echo "Your review has been deleted because it violated our community rules";
-            if ($row['deleted_review_comment']) {
-                $reviewPreview = strlen($row['deleted_review_comment']) > 50 ? 
-                    substr($row['deleted_review_comment'], 0, 50) . "..." : 
-                    $row['deleted_review_comment'];
-                echo "<span class='review-text'>{$reviewPreview}</span>";
+            echo "<p class='mb-1'>Your review has been deleted because it violated our community rules.</p>";
+            if ($row['comment']) {
+                echo "<p class='deleted-review-preview'>Deleted review: \"" . htmlspecialchars($row['comment']) . "\"</p>";
             }
             echo "</div>";
             echo "</div>";

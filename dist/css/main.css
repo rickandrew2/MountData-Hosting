@@ -70,11 +70,26 @@
   animation: pulse 2s infinite;
 }
 .notification-item.admin-notification {
-  background-color: rgba(220, 53, 69, 0.05);
-  border-left: 3px solid #dc3545;
+  background: linear-gradient(to right, rgba(220, 53, 69, 0.08), rgba(220, 53, 69, 0.02));
+  border-left: 4px solid #dc3545;
+  box-shadow: 0 2px 12px rgba(220, 53, 69, 0.1);
 }
 .notification-item.admin-notification .notification-icon {
   color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.1);
+}
+.notification-item.admin-notification .notification-text strong {
+  color: #dc3545;
+}
+.notification-item.admin-notification .deleted-review-preview {
+  color: #adb5bd;
+  font-style: italic;
+  margin-top: 8px;
+  padding: 8px;
+  background-color: rgba(220, 53, 69, 0.05);
+  border-radius: 8px;
+  border-left: 2px solid #dc3545;
+  font-size: 0.9em;
 }
 .notification-item .notification-content {
   display: flex;
