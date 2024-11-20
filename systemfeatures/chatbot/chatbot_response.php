@@ -23,7 +23,7 @@ $responses = [
                 <li>Reset Password: Click 'Forgot Password'</li>
                 <li>Update Profile: Access via profile picture</li>
             </ul>
-            <div class='chat-tip'>Need help? Contact support@mountdata.com</div>
+            <div class='chat-tip'>Need help? Contact mountdata.services@gmail.com</div>
         </div>"
     ],
     
@@ -326,7 +326,7 @@ $faq_responses = [
                 <li>Verify your email</li>
                 <li>Complete your profile</li>
             </ol>
-            <div class='chat-tip'>Need help? Contact support@mountdata.com</div>
+            <div class='chat-tip'>Need help? Contact mountdata.services@gmail.com</div>
         </div>",
         'showFAQ' => true
     ],
@@ -398,7 +398,7 @@ $faq_responses = [
                     </ul>
                 </li>
             </ul>
-            <div class='chat-tip'>Need help? Contact support@mountdata.com</div>
+            <div class='chat-tip'>Need help? Contact mountdata.services@gmail.com</div>
         </div>",
         'showFAQ' => true
     ],
@@ -419,7 +419,7 @@ $faq_responses = [
                 <li>Click \'Submit Inquiry\'</li>
                 <li>Our team typically responds within 24-48 hours</li>
             </ol>
-            <div class="chat-tip">For urgent matters, please contact us directly at support@mountdata.com</div>
+            <div class="chat-tip">For urgent matters, please contact us directly at mountdata.services@gmail.com</div>
         </div>',
         'showFAQ' => true
     ],

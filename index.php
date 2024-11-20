@@ -384,7 +384,7 @@
             <a href="https://www.facebook.com/RickAndrew.06" target="_blank" class="me-2">
               <i class="fab fa-facebook fa-lg"></i>
             </a>
-            <a href="mailto:example@gmail.com" target="_blank" class="me-2">
+            <a href="mailto:mountdata.services@gmail.com" target="_blank" class="me-2">
               <i class="fas fa-envelope fa-lg"></i>
             </a>
             <a href="https://twitter.com" target="_blank" class="me-2">
