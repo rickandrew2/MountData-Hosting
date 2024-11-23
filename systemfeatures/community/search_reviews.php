@@ -183,20 +183,22 @@ if ($result->num_rows > 0) {
 
                     <!-- Display Tags -->
                     <div class="mt-2">
-                        <div class="tags-container mt-1">
-                            <?php 
-                            // Ensure the tags are properly formatted and not empty
-                            if (!empty($tagArray)): 
-                                foreach ($tagArray as $tag): ?>
-                                    <span class="badge rounded-pill fs-6 me-1 mb-1 tag-badge" style="color: #3f8b22;">
-                                        <?= htmlspecialchars(trim($tag)); ?>
-                                    </span>
-                                <?php endforeach; 
-                            else: ?>
-                                <span class="badge rounded-pill fs-6 me-1 mb-1 tag-badge" style="color: #3f8b22;">No tags</span>
-                            <?php endif; ?>
+                            <div class="tags-container mt-1">
+                                <?php
+                                // Decode the JSON string into an array
+                                $tagsArray = json_decode($tags, true);
+                                // Ensure the tags are properly formatted and not empty
+                                if (!empty($tagsArray)):
+                                    foreach ($tagsArray as $tag): ?>
+                                        <span class="badge rounded-pill fs-6 me-1 mb-1 tag-badge" style="color: #3f8b22;">
+                                            <?= htmlspecialchars(trim($tag)); ?>
+                                        </span>
+                                    <?php endforeach;
+                                else: ?>
+                                    <span class="badge rounded-pill fs-6 me-1 mb-1 tag-badge" style="color: #3f8b22;">No tags</span>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                    </div>
 
                     <!-- Like Button -->
                     <div class="d-flex align-items-center mt-3 like-container">

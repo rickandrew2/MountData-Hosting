@@ -300,6 +300,26 @@ body {
     cursor: pointer;
 }
 
+.tag-badge {
+    color: #3f8b22; /* Text color */
+    background-color: rgba(63, 139, 34, 0.1); /* Light green background */
+    padding: 0.4rem 0.8rem; /* Padding for better size */
+    border: 1px solid #3f8b22; /* Border color */
+    transition: background-color 0.3s, transform 0.2s; /* Transition effects */
+}
+
+.tag-badge:hover {
+    background-color: #3f8b22; /* Change background on hover */
+    color: #ffffff !important; /* Change text color on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.badge.bg-secondary {
+    color: #ffffff; /* Text color for 'No tags' */
+    background-color: #6c757d; /* Dark gray background for 'No tags' */
+}
+
+
                                                          /*FOOTER*/
 .footer1{
     background-color: rgb(47, 126, 47); /* Lighter green */

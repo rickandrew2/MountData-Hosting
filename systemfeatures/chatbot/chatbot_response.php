@@ -42,10 +42,8 @@ $responses = [
                 <li>Use the search bar to find specific mountains</li>
                 <li>Filter mountains by height, difficulty, or region</li>
                 <li>Click on any mountain for detailed information</li>
-                <li>Save locations to your favorites</li>
-                <li>Get driving directions to trailheads</li>
             </ul>
-            <div class='chat-tip'>Pro tip: You can also download maps for offline use! 🗺️</div>
+            <div class='chat-tip'>Pro tip: You can explore anywhere you want in the map!</div>
         </div>"
     ],
     
@@ -111,17 +109,17 @@ $responses = [
                     <li>Distance and elevation data</li>
                     <li>User reviews and photos</li>
                     <li>Current trail conditions</li>
-                    <li>Estimated completion times</li>
+                    <li>Overall Mountain rating</li>
                     <li>Points of interest along the way</li>
                 </ul>
             </div>
             <div class='chat-section'>
                 <div class='chat-section-title'>Additional Information:</div>
                 <ul class='chat-list'>
-                    <li>Best seasons to visit</li>
-                    <li>Trail facilities</li>
-                    <li>Parking information</li>
-                    <li>Trail access points</li>
+                     <li>Recommended gear</li>
+                    <li>Nearby accommodations</li>
+                    <li>Weather updates</li>
+                    <li>Trail rules and guidelines</li>
                 </ul>
             </div>
             <div class='chat-tip'>Filter trails by difficulty, length, or user ratings to find the perfect hike for you! 🥾</div>
@@ -163,7 +161,6 @@ $responses = [
                 <div class='chat-section-title'>🆘 Emergency:</div>
                 <ul class='chat-list'>
                     <li>Call local emergency services</li>
-                    <li>Use our emergency beacon feature</li>
                     <li>Follow the safety protocols in our guide</li>
                 </ul>
             </div>
