@@ -52,6 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Verify the password
             if (password_verify($password, $user['password'])) {
+                // Update last_login timestamp
+                $update_stmt = $conn->prepare("UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE user_id = ?");
+                $update_stmt->bind_param('i', $user['user_id']);
+                $update_stmt->execute();
+                $update_stmt->close();
+
                 // Password is correct, set session variables
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];
