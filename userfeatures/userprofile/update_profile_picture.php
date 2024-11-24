@@ -23,6 +23,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_image'])) {
 
     // Move the file and update the database
     if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $target_file)) {
+        // Get the old image path before updating
+        $get_old_image = "SELECT image_path FROM users WHERE user_id = ?";
+        $stmt_old = $conn->prepare($get_old_image);
+        $stmt_old->bind_param("i", $user_id);
+        $stmt_old->execute();
+        $result = $stmt_old->get_result();
+        $old_image = $result->fetch_assoc();
+        
+        // Delete old image if it exists and is not the default profile picture
+        if ($old_image && $old_image['image_path']) {
+            $old_file = __DIR__ . $old_image['image_path'];
+            // Check if it's not the default profile picture
+            if (basename($old_image['image_path']) !== 'default-profile.png' && 
+                file_exists($old_file) && 
+                is_file($old_file)) {
+                unlink($old_file);
+            }
+        }
+
         $sql = "UPDATE users SET image_path = ? WHERE user_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("si", $target_file_relative, $user_id);
