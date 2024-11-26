@@ -182,127 +182,161 @@ input[type="password"] + button {
     font-weight: bold; /* Make it bold */
 }
 
-                                                                 /*NAVIGATION BAR*/
 /* NAVIGATION BAR */
 .navbar-container {
+    position: fixed;
+    top: 0;
     width: 100%;
-    z-index: 10; /* Ensure nav is above other elements */
-    background: transparent; /* Maintain transparent background */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow */
-    display: flex; /* Use flexbox for horizontal alignment */
-    align-items: center; /* Center items vertically */
-    justify-content: space-between; /* Space between items */
+    z-index: 10;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-.nav-item {
-    position: relative; /* Ensures the dropdown menu positions itself relative to this item */
-    margin: 10px; /* Adjusts spacing between nav items */
+.navbar-container .nav-item {
+    position: relative;
+    margin: 10px;
 }
 
 .navbar-container a {
-    color: rgb(0, 0, 0); /* Default link color */
+    color: #404040;
 }
 
 .navbar-container a:hover {
     color: green;
 }
 
-.nav-login {
-    border-radius: 20px; /* Rounded corners */
-    text-align: center; /* Centers text inside the button */
+.navbar-container .nav-login {
+    border-radius: 20px;
+    text-align: center;
 }
 
-.nav-login a {
-    border-radius: 20px; /* Rounded corners */
-    color: white;
-    text-decoration: none; /* Remove underline */
-    background-color: green;
+.navbar-container .nav-login .profilecon {
+    background-color: transparent;
 }
 
-.nav-login a:hover {
-    background-color: rgb(0, 0, 0); /* Change background to black on hover */
-    color: rgb(255, 255, 255) !important; /* Change text color to white on hover */
+.navbar-container .nav-login .profilecon .profilepic {
+    border-radius: 50%;
+    display: inline;
+}
+
+.navbar-container .nav-login .profilecon .username {
+    display: none;
+}
+
+.nav-link.navlog {
+    border-radius: 20px;
+    text-decoration: none;
+    background-color: green !important;
+    color: white !important;
+}
+
+.nav-link.navlog:hover {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255) !important;
 }
 
 .dropdown-menu {
-    position: absolute; /* Positions dropdown menu */
-    left: -50px; /* Moves the dropdown menu to the left */
-    z-index: 1000; /* Ensures the dropdown appears above other elements */
-    background-color: white; /* Sets a background color for the dropdown */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow */
-    padding: 5px; /* Adds padding around the dropdown */
-    width: 200px; /* Adjusts the width of the dropdown menu */
-    min-width: 100%; /* Minimum width for the dropdown */
+    position: absolute;
+    left: -50px;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    max-width: 100%;
+    min-width: 200px;
+    border: none;
+    border-radius: 8px;
+    animation: dropdownFade 0.2s ease;
 }
 
 .dropdown-menu li .dropdown-item {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: black;
-
+    color: #2c2c2c;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
 .dropdown-menu li .dropdown-item:hover {
-    background-color: #F0F0F0; /* Change background to light gray on hover */
+    background-color: rgba(0, 128, 0, 0.1);
+    color: green;
+    transform: translateX(5px);
 }
 
-.dd-icon {
-    margin-right: 8px;
-    font-size: 23px; /* Adjust icon size */
-    color: #000000; 
-    padding: 5px;
-    background-color: #E0E0E0; /* Light Gray */
-    border-radius: 10px;
+.dropdown-menu li .dropdown-item:hover .dd-icon {
+    background-color: rgba(0, 128, 0, 0.2);
+    color: green;
 }
 
-.dd-text {
-    font-size: 17px;
-    font-weight: 400;
-    color: rgb(0, 0, 0);
+.dropdown-menu li .dropdown-item .dd-icon {
+    margin-right: 12px;
+    font-size: 20px;
+    color: #404040;
+    padding: 8px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu li .dropdown-item .dd-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: inherit;
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Media Queries for Responsive Display */
-/* Hide profile picture on small screens */
 @media (max-width: 991px) {
     li .nav-link {
-        text-align: center; /* Center the text for the nav link */
+        text-align: center;
     }
-
-    .dropdown-menu {
+    
+    li .dropdown-menu {
         width: 100%;
     }
 
-    .dropdown-menu .dropdown-item {
-        display: flex; /* Use flexbox for alignment */
-        align-items: center; /* Center items vertically */
-        justify-content: center; /* Center items horizontally */
-        text-align: center; /* Center text for dropdown items */
+    li .dropdown-menu .dropdown-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 
-    .dropdown-menu .dropdown-item .dd-icon,
-    .dropdown-menu .dropdown-item .dd-text {
-        text-align: center; /* Center text for icon and text */
+    li .dropdown-menu .dropdown-item .dd-icon,
+    li .dropdown-menu .dropdown-item .dd-text {
+        text-align: center;
     }
 
-    .nav-login .profilepic { /* Ensure you are targeting the correct element */
-        display: none; /* Hide the profile picture */
+    .nav-login .profilepic {
+        display: none;
     }
 
-    .nav-login .username { /* Also, ensure this targets the correct element */
-        display: inline !important; /* Show the username */
-        color: black; /* Change color if necessary */
+    .nav-login .username {
+        display: inline !important;
+        color: #404040;
     }
 
-    .nav-login a { /* Target the <a> tag inside .nav-login */
-        border-radius: 20px; /* Rounded corners */
-        color: rgb(0, 0, 0);
-        text-decoration: none; /* Remove underline */
+    .nav-login a {
+        border-radius: 20px;
+        color: #404040;
+        text-decoration: none;
     }
 
     .nav-login a:active {
         background-color: transparent;
-        color: rgb(255, 255, 255) !important; /* Change text color to white on active */
+        color: rgb(255, 255, 255) !important;
     }
 
     .dropdown-menu {
@@ -322,6 +356,15 @@ input[type="password"] + button {
     }
 }
 
+@media (min-width: 991px) {
+    .username {
+        display: none;
+    }
+
+    .nav-login .profilepic {
+        display: inline !important;
+    }
+}
 
 .search-container {
     display: inline-flex; /* Keep inline-flex for horizontal alignment */
@@ -492,6 +535,11 @@ input[type="password"] + button {
         padding: 10px; /* Adjust padding for smaller screens */
         margin: 5px; /* Reduce margin for smaller screens */
     }
+}
+
+/* Add margin-top to account for fixed navbar */
+.bg-image {
+    padding-top: 76px; /* Adjust this value based on your navbar height */
 }
 
 

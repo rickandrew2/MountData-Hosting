@@ -146,7 +146,7 @@
       <h1>Search it up!</h1>
       <div class="search-container">
         <span class="material-symbols-outlined">search</span>
-        <input type="text" placeholder="Search by name" class="search-bar" />
+        <input type="text" placeholder="Search by Mountain name" class="search-bar" />
       </div>
       <h3>Explore Nearby Details</h3>
       <div class="search-results"></div> <!-- Results will be displayed here -->
@@ -159,7 +159,7 @@
     <!-- Blog Section Header -->
     <div class="row mb-4">
       <div class="col text-center">
-        <h2 class="blog-section-title">Latest Blog Posts</h2>
+        <h2 class="blog-section-title">Latest Blog Posts HELLO</h2>
         <p class="blog-section-subtitle">Discover ways to connect with nature responsibly</p>
       </div>
     </div>

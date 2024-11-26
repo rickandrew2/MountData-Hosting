@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-     <!--SWEET ALERT CDN-->
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.all.min.js"></script>
-     
+    <!--SWEET ALERT CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.all.min.js"></script>
+
     <!--SweetAlert CSS-->
     <link href=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.min.css" rel="stylesheet">
 
@@ -26,7 +26,7 @@
 
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" rel="stylesheet">
-    
+
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
 
@@ -266,21 +266,27 @@
             width: 850px !important;
             padding: 2em !important;
         }
+
         .swal-title {
             font-size: 24px !important;
             color: #dc3545 !important;
         }
+
         .swal-text {
             font-size: 18px !important;
         }
+
         /* Style for the email link */
         .swal2-html-container a {
-            color: #28a745; /* Changed to match the green color */
+            color: #28a745;
+            /* Changed to match the green color */
             text-decoration: none;
         }
+
         .swal2-html-container a:hover {
             text-decoration: underline;
-            color: #218838; /* Slightly darker shade for hover effect */
+            color: #218838;
+            /* Slightly darker shade for hover effect */
         }
     </style>
 </body>

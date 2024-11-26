@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    // Prepare the SQL statement to select user data including image_path and status
-    if ($stmt = $conn->prepare("SELECT user_id, username, password, image_path, status FROM users WHERE username = ? OR email = ?")) {
+    // Prepare the SQL statement to select user data including image_path, status, and contact_number
+    if ($stmt = $conn->prepare("SELECT user_id, username, password, image_path, status, contact_number FROM users WHERE username = ? OR email = ?")) {
         $stmt->bind_param('ss', $username_or_email, $username_or_email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['image_path'] = $user['image_path'];
+                $_SESSION['contact_number'] = $user['contact_number']; // Set contact number in session
                 $_SESSION['login_success'] = "Login successful! Welcome " . $user['username'] . ".";
                 header("Location: index.php");
                 exit();
@@ -88,4 +89,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $conn->close(); // Always close the database connection
 }
-?>

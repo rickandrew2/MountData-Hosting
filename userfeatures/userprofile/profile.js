@@ -29,6 +29,7 @@ $(document).ready(function() {
     const cancelBtn = document.getElementById("cancelEdit");
     let originalName = document.getElementById("editName").value;
     let originalEmail = document.getElementById("editEmail").value;
+    let originalContact = document.getElementById("editContact").value;
 
     // Function to get the query parameter from the URL
     function getQueryParam(param) {
@@ -44,21 +45,46 @@ $(document).ready(function() {
             title: "Profile Updated Successfully",
             icon: 'success',
             confirmButtonText: 'Okay',
-            confirmButtonColor: "green" // Set the "OK" button background color to green
+            confirmButtonColor: "green"
         });
     } else if (message === "username_error") {
         Swal.fire({
             title: "Username already exists. Please choose another.",
             icon: 'error',
             confirmButtonText: 'Okay',
-            confirmButtonColor: "green" // Set the "OK" button background color to green
+            confirmButtonColor: "green"
         });
     } else if (message === "email_error") {
         Swal.fire({
-            title: "Email already exists. Please choose another.",
+            title: "Email Already Exists",
+            text: "This email address is already registered. Please use a different email.",
             icon: 'error',
             confirmButtonText: 'Okay',
-            confirmButtonColor: "green" // Set the "OK" button background color to green
+            confirmButtonColor: "green"
+        });
+    } else if (message === "invalid_email") {
+        Swal.fire({
+            title: "Invalid Email Format",
+            text: "Please enter a valid Gmail address (example@gmail.com)",
+            icon: 'error',
+            confirmButtonText: 'Okay',
+            confirmButtonColor: "green"
+        });
+    } else if (message === "invalid_contact") {
+        Swal.fire({
+            title: "Invalid contact number format",
+            text: "Please enter a valid Philippine mobile number (e.g., 09xxxxxxxxx or +639xxxxxxxxx)",
+            icon: 'error',
+            confirmButtonText: 'Okay',
+            confirmButtonColor: "green"
+        });
+    } else if (message === "invalid_password") {
+        Swal.fire({
+            title: "Invalid Password Format",
+            text: "Password must be at least 5 characters long, contain at least one uppercase letter and one symbol (!@#$%^&*?)",
+            icon: 'error',
+            confirmButtonText: 'Okay',
+            confirmButtonColor: "green"
         });
     }
 
@@ -68,19 +94,107 @@ $(document).ready(function() {
     });
 
     form.addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
 
         const newName = document.getElementById("editName").value;
         const newEmail = document.getElementById("editEmail").value;
+        const newContact = document.getElementById("editContact").value;
         const newPassword = document.getElementById("editPassword").value;
 
-        // Check if any changes were made
-        if (newName === originalName && newEmail === originalEmail && !newPassword) {
-            // No changes made, redirect smoothly
-            window.location.href = "profile.php";
+        // First check email format
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        if (!emailRegex.test(newEmail)) {
+            Swal.fire({
+                title: "Invalid Email Format",
+                text: "Please enter a valid Gmail address (example@gmail.com)",
+                icon: 'error',
+                confirmButtonText: 'Okay',
+                confirmButtonColor: "green"
+            });
+            return;
+        }
+
+        // Check contact number format (Philippine format)
+        const contactRegex = /^(09|\+639)\d{9}$/;
+        if (!contactRegex.test(newContact)) {
+            Swal.fire({
+                title: "Invalid Contact Number Format",
+                text: "Please enter a valid Philippine mobile number (e.g., 09xxxxxxxxx or +639xxxxxxxxx)",
+                icon: 'error',
+                confirmButtonText: 'Okay',
+                confirmButtonColor: "green"
+            });
+            return;
+        }
+
+        // Password validation regex
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*?])[A-Za-z\d!@#$%^&*?]{5,}$/;
+
+        // If password field is not empty, validate it
+        if (newPassword && !passwordRegex.test(newPassword)) {
+            Swal.fire({
+                title: "Invalid Password Format",
+                text: "Password must be at least 5 characters long, contain at least one uppercase letter and one symbol (!@#$%^&*?)",
+                icon: 'error',
+                confirmButtonText: 'Okay',
+                confirmButtonColor: "green"
+            });
+            return;
+        }
+
+        // Check if email exists (if it's different from original email)
+        if (newEmail !== originalEmail) {
+            // Make AJAX call to check email existence
+            $.ajax({
+                url: 'check_email.php',
+                type: 'POST',
+                data: { email: newEmail },
+                success: function(response) {
+                    if (response.exists) {
+                        Swal.fire({
+                            title: "Email Already Exists",
+                            text: "This email address is already registered. Please use a different email.",
+                            icon: 'error',
+                            confirmButtonText: 'Okay',
+                            confirmButtonColor: "green"
+                        });
+                    } else {
+                        // If email has changed, show confirmation dialog
+                        Swal.fire({
+                            title: 'Confirm Email Change',
+                            text: "Are you sure you want to change your email address?",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: 'green',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, change it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                form.submit();
+                            }
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Something went wrong. Please try again.',
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6'
+                    });
+                }
+            });
         } else {
-            // Submit the form
-            form.submit();
+            // Check if any other changes were made
+            if (newName === originalName && 
+                newEmail === originalEmail && 
+                newContact === originalContact) {
+                // No changes made, redirect smoothly
+                window.location.href = "profile.php";
+            } else {
+                // Other changes were made, submit the form
+                form.submit();
+            }
         }
     });
 });

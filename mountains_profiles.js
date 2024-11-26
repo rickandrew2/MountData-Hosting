@@ -518,21 +518,21 @@ document.addEventListener('DOMContentLoaded', checkBookmarks);
 function toggleBookmark(button) {
     // Check if the user is logged in
     if (!isLoggedIn) {
-        // Show SweetAlert if not logged in
         Swal.fire({
             title: 'Login Required',
             text: 'You need to log in to bookmark this item.',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Login',
-            cancelButtonText: 'Cancel'
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#28a745', // Bootstrap's btn-success green color
+            cancelButtonColor: '#d33'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Redirect to login page if confirmed
-                window.location.href = 'login.php'; // Change to your login URL
+                window.location.href = 'login.php';
             }
         });
-        return; // Exit the function if not logged in
+        return;
     }
 
     const mountainId = button.getAttribute('data-mountain-id');

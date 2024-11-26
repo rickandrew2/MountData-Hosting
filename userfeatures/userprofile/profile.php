@@ -158,7 +158,7 @@ $debug = false; // Set to false in production
     // Check if the user is logged in
     if ($loginStatus) {
         $user_id = $_SESSION['user_id']; // Get the user ID from the session
-        
+
         if ($debug) {
             echo "Current user_id: " . $user_id . "<br>";
         }
@@ -283,24 +283,32 @@ $debug = false; // Set to false in production
                         <form method="POST" action="edit_profile.php" class="w-100">
                             <div class="mb-3">
                                 <label for="editName" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="editName" name="editName" 
-                                    value="<?php echo isset($user['username']) ? htmlspecialchars($user['username']) : ''; ?>">
+                                <input type="text" class="form-control" id="editName" name="editName"
+                                    value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="editEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="editEmail" name="editEmail" 
+                                <input type="email" class="form-control" id="editEmail" name="editEmail"
                                     value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editContact" class="form-label">Contact Number</label>
+                                <input type="text" class="form-control" id="editContact" name="editContact"
+                                    value="<?php echo getUserContactNumber(); ?>">
+                                <small class="text-muted">Philippine mobile number format (e.g., 09xxxxxxxxx or +639xxxxxxxxx)</small>
                             </div>
                             <div class="mb-3">
                                 <label for="editPassword" class="form-label">New Password</label>
                                 <input type="password" class="form-control" id="editPassword" name="editPassword" placeholder="Enter new password">
+                                <small class="text-muted">Minimum 5 characters, 1 uppercase letter, and 1 symbol</small>
                             </div>
 
-                            <!-- Hidden inputs to store original username and email -->
+                            <!-- Hidden inputs -->
                             <input type="hidden" name="originalUsername" value="<?php echo isset($username) ? htmlspecialchars($username) : ''; ?>">
                             <input type="hidden" name="originalEmail" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
+                            <input type="hidden" name="originalContact" value="<?php echo getUserContactNumber(); ?>">
 
-                            <!-- Button group for aligned buttons -->
+                            <!-- Button group -->
                             <div class="button-group">
                                 <button type="submit" class="btn" style="background-color: green; color: white;">Save Changes</button>
                                 <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
@@ -359,7 +367,7 @@ $debug = false; // Set to false in production
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../systemfeatures/search/search.js" defer></script>
 
-     <!--NOTIFICATIONS-->
+    <!--NOTIFICATIONS-->
     <!-- Notifications Modal -->
     <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
         <div class="modal-dialog">

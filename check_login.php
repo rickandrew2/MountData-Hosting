@@ -27,6 +27,15 @@ function getUserName() {
     return 'Guest';
 }
 
+function getUserContactNumber() {
+    if (isLoggedIn()) {
+        // Add debug output to check what's actually in the session
+        error_log("Session contact_number: " . (isset($_SESSION['contact_number']) ? $_SESSION['contact_number'] : 'not set'));
+        return isset($_SESSION['contact_number']) ? htmlspecialchars($_SESSION['contact_number']) : '';
+    }
+    return '';
+}
+
 // Create a variable to store login status
 $loginStatus = isLoggedIn();
 
@@ -40,6 +49,7 @@ echo "<script>var userId = $user_id;</script>"; // Pass user_id to JavaScript
 // echo "User ID: " . ($loginStatus ? $_SESSION['user_id'] : "None") . "<br>";
 // echo "Image Path: " . (isset($_SESSION['image_path']) ? $_SESSION['image_path'] : "No image") . "<br>";
 // echo "User Name: " . (isset($_SESSION['username']) ? $_SESSION['username'] : "No name") . "<br>";
+
 
 ?>
 
