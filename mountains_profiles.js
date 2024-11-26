@@ -394,7 +394,6 @@ function confirmDeletion(reviewId) {
 }
 
 function confirmReport(reviewId, userId) {
-    // Use SweetAlert2 for the confirmation
     Swal.fire({
         title: 'Report Review',
         text: 'Select a reason for reporting this review:',
@@ -413,45 +412,49 @@ function confirmReport(reviewId, userId) {
         cancelButtonColor: '#d33'
     }).then((result) => {
         if (result.isConfirmed) {
-            const reportReason = result.value; // Get the selected value
+            const reportReason = result.value;
 
             if (!reportReason) {
-                // If no reason is selected, show an error message
                 Swal.fire({
                     title: 'Error!',
                     text: 'You must select a reason for reporting.',
                     icon: 'error',
                     confirmButtonColor: '#d33'
                 });
-                return; // Exit the function if no reason is selected
+                return;
             }
 
-            // Create an AJAX request
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'userfeatures/report/report.php', true);
+            xhr.open('POST', '../../userfeatures/report/report.php', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-            // Define the data to be sent
             const data = 'review_id=' + encodeURIComponent(reviewId) +
-                         '&user_id=' + encodeURIComponent(userId) +
-                         '&report_reason=' + encodeURIComponent(reportReason) + // Use the selected reason
-                         '&report_date=' + encodeURIComponent(new Date().toISOString());
+                        '&reporter_id=' + encodeURIComponent(userId) +
+                        '&report_reason=' + encodeURIComponent(reportReason);
 
-            // Handle the response from the server
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        Swal.fire({
-                            title: 'Reported!',
-                            text: 'The review has been reported successfully.',
-                            icon: 'success',
-                            confirmButtonColor: '#28a745'
-                        });
-                        // Optionally, you can refresh the page or update the UI here
-                    } else {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                title: 'Reported!',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonColor: '#28a745'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonColor: '#d33'
+                            });
+                        }
+                    } catch (e) {
                         Swal.fire({
                             title: 'Error!',
-                            text: 'There was an error reporting the review: ' + xhr.responseText,
+                            text: 'An unexpected error occurred',
                             icon: 'error',
                             confirmButtonColor: '#d33'
                         });
@@ -459,7 +462,6 @@ function confirmReport(reviewId, userId) {
                 }
             };
 
-            // Send the request
             xhr.send(data);
         }
     });

@@ -735,3 +735,44 @@ form {
     }
 }
 
+.community-section {
+    width: 100%;
+    overflow-x: hidden; // Force hide horizontal scroll
+    
+    .container-fluid {
+        max-width: 100%;
+    }
+    
+    .img-container {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        
+        img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+    }
+    
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    [class*="col-"] {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+// Ensure the feed container itself doesn't scroll
+.feed-profile {
+    overflow-x: hidden;
+    
+    .feed {
+        overflow-x: hidden;
+    }
+}
+

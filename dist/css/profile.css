@@ -1128,4 +1128,38 @@ body {
   background-color: rgb(208, 208, 208);
   border-color: #2f7e2f;
   box-shadow: 0 2px 10px rgba(47, 126, 47, 0.3);
+}
+
+.community-section {
+  width: 100%;
+  overflow-x: hidden;
+}
+.community-section .container-fluid {
+  max-width: 100%;
+}
+.community-section .img-container {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+.community-section .img-container img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.community-section .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.community-section [class*=col-] {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.feed-profile {
+  overflow-x: hidden;
+}
+.feed-profile .feed {
+  overflow-x: hidden;
 }/*# sourceMappingURL=profile.css.map */

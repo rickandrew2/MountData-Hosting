@@ -37,6 +37,12 @@ $(document).ready(function() {
         return urlParams.get(param);
     }
 
+    // Function to remove query parameters and update URL
+    function removeQueryParams() {
+        const url = window.location.pathname;
+        window.history.replaceState({}, document.title, url);
+    }
+
     // Check for message in the URL
     const message = getQueryParam('message');
 
@@ -46,6 +52,9 @@ $(document).ready(function() {
             icon: 'success',
             confirmButtonText: 'Okay',
             confirmButtonColor: "green"
+        }).then(() => {
+            // Remove query parameters after showing the alert
+            removeQueryParams();
         });
     } else if (message === "username_error") {
         Swal.fire({

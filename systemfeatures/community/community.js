@@ -87,23 +87,32 @@ function confirmReport(reviewId, userId) {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
             const data = 'review_id=' + encodeURIComponent(reviewId) +
-                        '&user_id=' + encodeURIComponent(userId) +
-                        '&report_reason=' + encodeURIComponent(reportReason) +
-                        '&report_date=' + encodeURIComponent(new Date().toISOString());
+                        '&reporter_id=' + encodeURIComponent(userId) +
+                        '&report_reason=' + encodeURIComponent(reportReason);
 
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        Swal.fire({
-                            title: 'Reported!',
-                            text: 'The review has been reported successfully.',
-                            icon: 'success',
-                            confirmButtonColor: '#28a745'
-                        });
-                    } else {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                title: 'Reported!',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonColor: '#28a745'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonColor: '#d33'
+                            });
+                        }
+                    } catch (e) {
                         Swal.fire({
                             title: 'Error!',
-                            text: 'There was an error reporting the review: ' + xhr.responseText,
+                            text: 'An unexpected error occurred',
                             icon: 'error',
                             confirmButtonColor: '#d33'
                         });
