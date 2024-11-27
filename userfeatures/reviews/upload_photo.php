@@ -1,4 +1,16 @@
 <?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    http_response_code(401); // Unauthorized
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'You must be logged in to upload photos'
+    ]);
+    exit;
+}
+
 // Include database connection
 require_once '../../db_connection.php';
 

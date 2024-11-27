@@ -1,5 +1,7 @@
 let map; // Main map variable
 let modalMap; // Modal map variable
+let markers = []; // Array to store markers
+let modalMarkers = []; // Array to store modal markers
 
 function initMap() {
     // Initialize the main map with custom styles
@@ -101,43 +103,40 @@ function handleMountainClick(image) {
 
     // Center the main map on the selected mountain
     map.setCenter(location);
-    map.setZoom(10); // Adjust zoom level for main map
+    map.setZoom(10);
 
-  
-
-    // Add a marker for the selected mountain on the main map
-    new google.maps.Marker({
+    // Create and store the marker for the main map
+    const marker = new google.maps.Marker({
         position: location,
         map: map,
-        title: image.alt, // Use the mountain name as the title
-       
+        title: image.alt,
     });
+    markers.push(marker); // Add marker to array
 
     // Check if the screen size is less than 768px before initializing/updating the modal map
     if (window.innerWidth < 768) {
-        initModalMap(); // Initialize modal map if on small screen
-        modalMap.setCenter(location); // Center the modal map on the selected mountain
-        modalMap.setZoom(10); // Adjust zoom level for modal map
+        initModalMap();
+        modalMap.setCenter(location);
+        modalMap.setZoom(10);
 
-        // Add a marker for the selected mountain on the modal map
-        new google.maps.Marker({
+        // Create and store the marker for the modal map
+        const modalMarker = new google.maps.Marker({
             position: location,
-            map: modalMap, // Add marker to the modal map
-            title: image.alt, // Use the mountain name as the title
-           
+            map: modalMap,
+            title: image.alt,
         });
+        modalMarkers.push(modalMarker); // Add modal marker to array
 
-        // Open the modal
         openMapModal();
     }
 }
 
 function openMapModal() {
-    document.getElementById('mapModal').style.display = 'block'; // Show the modal
+    document.getElementById('mapModal').style.display = 'block';
 }
 
 function closeMapModal() {
-    document.getElementById('mapModal').style.display = 'none'; // Hide the modal
+    document.getElementById('mapModal').style.display = 'none';
 }
 
 // Close the modal if the user clicks anywhere outside of the modal
@@ -264,4 +263,19 @@ function clearAllFilters() {
     });
 
     filterMountains();
+}
+
+// Add new function to clear markers
+function clearMarkers() {
+    // Clear markers from the main map
+    markers.forEach(marker => {
+        marker.setMap(null);
+    });
+    markers = [];
+
+    // Clear markers from the modal map
+    modalMarkers.forEach(marker => {
+        marker.setMap(null);
+    });
+    modalMarkers = [];
 }

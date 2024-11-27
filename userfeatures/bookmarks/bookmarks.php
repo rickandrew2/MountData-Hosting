@@ -267,7 +267,12 @@ include('../../db_connection.php'); // Include the database connection
                 </ul>
             </div>
             <div class="col-md-9 map-container d-md-block" id="mapColumn">
-                <div id="map" style="width: 100%; height: 100%;"></div> <!-- Keep original map -->
+                <div class="map-controls">
+                    <button onclick="clearMarkers()" class="reset-map-btn">
+                        <span class="material-symbols-outlined">refresh</span> Clear Pins
+                    </button>
+                </div>
+                <div id="map" style="width: 100%; height: 100%;"></div>
             </div>
         </div>
 

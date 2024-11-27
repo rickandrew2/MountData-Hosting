@@ -1,7 +1,10 @@
 <?php
 // check_login.php
 
-session_start();
+// Only start session if one hasn't been started already
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Function to check if user is logged in
 function isLoggedIn() {
@@ -39,17 +42,16 @@ function getUserContactNumber() {
 // Create a variable to store login status
 $loginStatus = isLoggedIn();
 
-
 // Embed user_id in JavaScript if logged in
 $user_id = $loginStatus ? $_SESSION['user_id'] : 'null'; // Use 'null' if not logged in
-echo "<script>var userId = $user_id;</script>"; // Pass user_id to JavaScript
 
-// Debugging output (Remove this in production)
-// echo "Login Status: " . ($loginStatus ? "Logged In" : "Not Logged In") . "<br>";
-// echo "User ID: " . ($loginStatus ? $_SESSION['user_id'] : "None") . "<br>";
-// echo "Image Path: " . (isset($_SESSION['image_path']) ? $_SESSION['image_path'] : "No image") . "<br>";
-// echo "User Name: " . (isset($_SESSION['username']) ? $_SESSION['username'] : "No name") . "<br>";
+// Use JSON_encode for safer JavaScript output
+echo "<script>var userId = " . json_encode($user_id) . ";</script>";
 
+// Preserve session across admin actions if needed
+if (isset($_SESSION['admin_id']) && isset($_SESSION['user_id'])) {
+    $_SESSION['preserve_session'] = true;
+}
 
 ?>
 

@@ -80,11 +80,49 @@
 
 
 .map-container {
-    height: auto; // Full height for the map container
-    background-color: #e9ecef; // Light gray background for the map
-    border-radius: 8px; // Rounded corners
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Subtle shadow
+    height: auto;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
 
+    // Add these new styles for map controls
+    .map-controls {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+
+        .reset-map-btn {
+            background-color: white;
+            color: #333;
+            border: 1px solid #28a745; // Green border to match your theme
+            border-radius: 20px; // Rounded corners like sort buttons
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+            &:hover {
+                background-color: #28a745; // Green background on hover
+                color: white;
+                .material-symbols-outlined {
+                    color: white;
+                }
+            }
+
+            .material-symbols-outlined {
+                font-size: 16px;
+                color: #28a745; // Green icon to match border
+                transition: color 0.3s ease;
+            }
+        }
+    }
 
     #map-iframe {
         height: 100%; // Full height for the map iframe

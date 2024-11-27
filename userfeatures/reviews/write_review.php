@@ -1,4 +1,16 @@
 <?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    http_response_code(401); // Unauthorized
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'You must be logged in to submit a review'
+    ]);
+    exit;
+}
+
 // Prevent any output before the JSON response
 ob_clean(); // Clear any output buffers
 header('Content-Type: application/json'); // Set JSON content type

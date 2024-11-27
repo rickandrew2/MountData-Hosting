@@ -1,4 +1,4 @@
-const apiKey = '87458fbdc632430fa9674542241411'; // Replace with your actual WeatherAPI key
+const apiKey = '470f745aea7042b7add134833242711'; // Replace with your actual WeatherAPI key
 const latitude = mountainLatitude; // use your fetched latitude
 const longitude = mountainLongitude; // use your fetched longitude
 

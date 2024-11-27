@@ -1,5 +1,7 @@
 let map; // Main map variable
 let modalMap; // Modal map variable
+let markers = []; // Array to store markers for main map
+let modalMarkers = []; // Array to store markers for modal map
 
 function initMap() {
     // Initialize the main map
@@ -46,6 +48,19 @@ function initModalMap(isLoggedIn) {
     }
 }
 
+function clearMarkers() {
+    // Clear markers from the main map
+    markers.forEach(marker => {
+        marker.setMap(null);
+    });
+    markers = [];
+
+    // Clear markers from the modal map
+    modalMarkers.forEach(marker => {
+        marker.setMap(null);
+    });
+    modalMarkers = [];
+}
 
 function handleMountainClick(image) {
     const lat = parseFloat(image.getAttribute('data-lat'));
@@ -54,14 +69,15 @@ function handleMountainClick(image) {
 
     // Center the main map on the selected mountain
     map.setCenter(location);
-    map.setZoom(10); // Adjust zoom level for main map
+    map.setZoom(10);
 
-    // Add a marker for the selected mountain on the main map
-    new google.maps.Marker({
+    // Create and store the marker for the main map
+    const marker = new google.maps.Marker({
         position: location,
         map: map,
-        title: image.alt, // Use the mountain name as the title
+        title: image.alt,
     });
+    markers.push(marker); // Add marker to array
 
     // Check if the screen size is less than 768px before initializing/updating the modal map
     if (window.innerWidth < 768) {

@@ -1,3 +1,31 @@
+<?php
+// Add these lines at the very top, before session_start()
+ini_set('session.cookie_lifetime', 0);
+ini_set('session.use_strict_mode', 1);
+ini_set('session.use_only_cookies', 1);
+session_start();
+
+// Store user session data
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+
+// If session was lost but we have a valid user_id, restore it
+if ($user_id && !isset($_SESSION['user_id'])) {
+    $_SESSION['user_id'] = $user_id;
+}
+
+include 'check_login.php'; // This will check if the user is logged in
+include 'db_connection.php'; // Ensure this file contains your database connection code
+
+// Separate session variable for user authentication
+$loginStatus = isset($_SESSION['user_id']);
+
+// Only redirect if accessing protected features, not the entire profile
+if (isset($_GET['protected_feature']) && !$loginStatus) {
+    $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +33,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="user_id" content="<?php echo $_SESSION['user_id']; ?>">
+    <meta name="user_id" content="<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : ''; ?>">
 
     <!-- My CSS -->
     <link rel="stylesheet" href="dist/css/mountains_profiles.css" />
@@ -37,11 +65,6 @@
 
 
     <!-- NAVIGATION BAR -->
-    <?php
-    include 'check_login.php'; // This will check if the user is logged in
-    include 'db_connection.php'; // Ensure this file contains your database connection code
-    ?>
-
     <nav class="navbar navbar-expand-lg navbar-container fs-5">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
@@ -93,10 +116,17 @@
 
                     <!-- Profile Picture or Login Link -->
                     <li class="nav-item nav-login hideOnMobile">
-                        <?php if ($loginStatus): ?>
-                            <a class="nav-link dropdown-toggle profilecon" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?php if ($loginStatus): ?>
+                            <a class="nav-link profilecon" id="profileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="profilepic d-none" src="<?php echo htmlspecialchars(getUserImagePath()); ?>" alt="Profile Picture" width="40" height="40" class="rounded-circle">
                                 <span class="username"><?php echo htmlspecialchars(getUserName()); ?></span>
+                                <?php
+                                include 'get_notification_count.php';
+                                $unread_count = getUnreadNotificationCount($_SESSION['user_id']);
+                                if ($unread_count > 0) {
+                                    echo "<span class='profile-notification-count'>$unread_count</span>";
+                                }
+                                ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                                 <li>
@@ -104,6 +134,17 @@
                                         <span class="dd-icon material-symbols-outlined">settings</span>
                                         <span class="dd-text">Settings</span>
                                     </a>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                                        <span class="material-symbols-outlined">notifications</span>
+                                        Notifications
+                                        <?php
+                                        if ($unread_count > 0) {
+                                            echo "<span class='notification-count'>$unread_count</span>";
+                                        }
+                                        ?>
+                                    </button>
                                 </li>
                                 <li>
                                     <a class="dropdown-item dd-item-login dd-text" href="logout.php">
@@ -265,7 +306,7 @@
 
                 <div class="search-reviews" style="display: flex; align-items: center; position: relative; width: 100%;">
                     <i class="fas fa-search" style="position: absolute; left: 10px; color: black"></i>
-                    <input type="text" placeholder="Search reviews..." class="search-bar" id="search-input" style="font-size: 1.2rem;">
+                    <input type="text" placeholder="Search reviews by keyword..." class="search-bar" id="search-input" style="font-size: 1.2rem;">
                     <div class="filter-icon" style="position: absolute; right: 10px; padding: 10px; cursor: pointer;">
                         <i class="fas fa-filter" style="color: black;"></i>
                     </div>

@@ -1,56 +1,75 @@
 <?php
-include_once '../../db_connection.php';
-include_once '../../check_login.php'; // Assuming this file sets the logged-in user's ID in $user_id
+session_start();
+include '../../db_connection.php';
 
-// Check if the user is logged in and has a valid mountain_id
-if (isset($_SESSION['user_id']) && isset($_GET['mountain_id']) && is_numeric($_GET['mountain_id'])) {
-    $user_id = $_SESSION['user_id']; // Get the logged-in user's ID
-    $mountain_id = intval($_GET['mountain_id']); // Sanitize mountain_id
+header('Content-Type: application/json'); // Set content type to JSON
 
-    // Prepare SQL statement to check if the bookmark already exists
-    $checkSql = "SELECT `bookmark_id` FROM `bookmarks` WHERE `user_id` = ? AND `mountain_id` = ?";
-    $stmt = $conn->prepare($checkSql);
-    
-    if ($stmt) {
-        $stmt->bind_param("ii", $user_id, $mountain_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        // Check if bookmark exists
-        if ($result->num_rows > 0) {
-            // Bookmark exists, proceed to remove it
-            $deleteSql = "DELETE FROM `bookmarks` WHERE `user_id` = ? AND `mountain_id` = ?";
-            $deleteStmt = $conn->prepare($deleteSql);
-            if ($deleteStmt) {
-                $deleteStmt->bind_param("ii", $user_id, $mountain_id);
-                if ($deleteStmt->execute()) {
-                    echo json_encode(['status' => 'success', 'message' => 'Bookmark removed.']);
-                } else {
-                    echo json_encode(['status' => 'error', 'message' => 'Error removing bookmark.']);
-                }
-                $deleteStmt->close();
-            }
-        } else {
-            // Bookmark does not exist, proceed to add it
-            $insertSql = "INSERT INTO `bookmarks` (`user_id`, `mountain_id`, `bookmark_date`) VALUES (?, ?, NOW())";
-            $insertStmt = $conn->prepare($insertSql);
-            if ($insertStmt) {
-                $insertStmt->bind_param("ii", $user_id, $mountain_id);
-                if ($insertStmt->execute()) {
-                    echo json_encode(['status' => 'success', 'message' => 'Bookmark added.']);
-                } else {
-                    echo json_encode(['status' => 'error', 'message' => 'Error adding bookmark.']);
-                }
-                $insertStmt->close();
-            }
-        }
-        $stmt->close();
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'Error preparing the SQL statement.']);
-    }
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request.']);
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'User not logged in'
+    ]);
+    exit;
 }
 
-$conn->close(); // Close the database connection
+$user_id = $_SESSION['user_id'];
+$mountain_id = isset($_GET['mountain_id']) ? intval($_GET['mountain_id']) : 0;
+
+if ($mountain_id === 0) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Invalid mountain ID'
+    ]);
+    exit;
+}
+
+// Check if bookmark exists
+$check_sql = "SELECT * FROM bookmarks WHERE user_id = ? AND mountain_id = ?";
+$check_stmt = $conn->prepare($check_sql);
+$check_stmt->bind_param("ii", $user_id, $mountain_id);
+$check_stmt->execute();
+$result = $check_stmt->get_result();
+
+if ($result->num_rows > 0) {
+    // Bookmark exists, so remove it
+    $delete_sql = "DELETE FROM bookmarks WHERE user_id = ? AND mountain_id = ?";
+    $delete_stmt = $conn->prepare($delete_sql);
+    $delete_stmt->bind_param("ii", $user_id, $mountain_id);
+    
+    if ($delete_stmt->execute()) {
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Bookmark removed',
+            'isBookmarked' => false
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Failed to remove bookmark'
+        ]);
+    }
+    $delete_stmt->close();
+} else {
+    // Bookmark doesn't exist, so add it
+    $insert_sql = "INSERT INTO bookmarks (user_id, mountain_id) VALUES (?, ?)";
+    $insert_stmt = $conn->prepare($insert_sql);
+    $insert_stmt->bind_param("ii", $user_id, $mountain_id);
+    
+    if ($insert_stmt->execute()) {
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Bookmark added',
+            'isBookmarked' => true
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Failed to add bookmark'
+        ]);
+    }
+    $insert_stmt->close();
+}
+
+$check_stmt->close();
+$conn->close();
 ?>

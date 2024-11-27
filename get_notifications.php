@@ -12,15 +12,17 @@ $user_id = $_SESSION['user_id'];
 
 // Modified query to get distinct likes and prevent duplicates
 $sql = "SELECT 
+    n.notification_id,
     n.review_id,
     n.notification_type,
+    n.message,
     MIN(n.is_read) as is_read,
     MAX(n.created_at) as latest_created_at,
     r.comment,
     GROUP_CONCAT(DISTINCT u.username) as likers,
     COUNT(DISTINCT n.triggered_by_user_id) as liker_count
     FROM (
-        SELECT DISTINCT review_id, notification_type, is_read, created_at, triggered_by_user_id, user_id
+        SELECT DISTINCT notification_id, review_id, notification_type, message, is_read, created_at, triggered_by_user_id, user_id
         FROM notifications
         WHERE user_id = ?
         AND (
@@ -30,7 +32,13 @@ $sql = "SELECT
     ) n 
     LEFT JOIN reviews r ON n.review_id = r.review_id 
     LEFT JOIN users u ON n.triggered_by_user_id = u.user_id 
-    GROUP BY n.review_id, n.notification_type, r.comment
+    GROUP BY 
+        CASE 
+            WHEN n.notification_type = 'like' THEN n.review_id 
+            ELSE n.notification_id
+        END,
+        n.notification_type,
+        n.message
     ORDER BY latest_created_at DESC 
     LIMIT 10";
 
@@ -73,9 +81,11 @@ if ($result->num_rows > 0) {
             echo "<span class='material-symbols-outlined notification-icon' style='color: #ff0000;'>admin_panel_settings</span>";
             echo "<div class='notification-text'>";
             echo "<strong>Admin Notification</strong><br>";
-            echo "<p class='mb-1'>Your review has been deleted because it violated our community rules.</p>";
-            if ($row['comment']) {
-                echo "<p class='deleted-review-preview'>Deleted review: \"" . htmlspecialchars($row['comment']) . "\"</p>";
+            if ($row['message']) {
+                echo "<p class='mb-1'>" . htmlspecialchars($row['message']) . "</p>";
+            } else {
+                // Fallback message if no specific message is stored
+                echo "<p class='mb-1'>Your review has been deleted because it violated our community rules.</p>";
             }
             echo "</div>";
             echo "</div>";
