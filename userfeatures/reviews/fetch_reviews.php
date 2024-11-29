@@ -1,5 +1,19 @@
 <?php
 
+// Add this near the top of your fetch_reviews.php file
+function getTimeFilterClause($timeFilter) {
+    switch($timeFilter) {
+        case '7days':
+            return "AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+        case '30days':
+            return "AND created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
+        case '90days':
+            return "AND created_at >= DATE_SUB(NOW(), INTERVAL 90 DAY)";
+        default:
+            return ""; // All time
+    }
+}
+
 // Function to fetch ratings
 function fetchRatings($conn, $mountain_id) {
     $ratingsQuery = "SELECT rating, COUNT(*) as count FROM reviews WHERE mountain_id = ? GROUP BY rating";
@@ -67,10 +81,14 @@ function getCurrentPage() {
 
 // Function to fetch reviews
 function fetchReviews($conn, $mountain_id, $reviewsPerPage, $offset) {
+    $timeFilter = isset($_GET['time']) ? $_GET['time'] : 'all';
+    $timeClause = getTimeFilterClause($timeFilter);
+
     $sql = "SELECT r.review_id, r.user_id, r.rating, r.comment, r.review_date, u.username, u.image_path, r.review_photo 
             FROM reviews r 
             JOIN users u ON r.user_id = u.user_id 
             WHERE r.mountain_id = ? 
+            $timeClause 
             ORDER BY r.review_date DESC 
             LIMIT ? OFFSET ?";
     

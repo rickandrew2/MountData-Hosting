@@ -590,6 +590,57 @@
 .rating-container .reviews-content .write-review h5:hover, .rating-container .reviews-content .write-review h5:focus {
   background-color: rgb(0, 102, 0);
 }
+.rating-container .reviews-content .search-reviews {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.rating-container .reviews-content .search-reviews .filter-container {
+  min-width: 150px;
+  position: relative;
+}
+.rating-container .reviews-content .search-reviews .filter-container .filter-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 20px;
+  background-color: #E0E0E0;
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease;
+}
+.rating-container .reviews-content .search-reviews .filter-container .filter-select:focus {
+  background-color: white;
+  border: 1px solid #28a745;
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}
+.rating-container .reviews-content .search-reviews .filter-container .filter-select:hover {
+  background-color: #d4d4d4;
+}
+.rating-container .reviews-content .search-reviews .filter-container::after {
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #333;
+}
+@media (max-width: 768px) {
+  .rating-container .reviews-content .search-reviews {
+    flex-direction: column;
+  }
+  .rating-container .reviews-content .search-reviews .filter-container {
+    width: 100%;
+  }
+}
 .rating-container .reviews-content .search-reviews .search-bar {
   width: 100%;
   padding: 1rem 2.5rem;
@@ -610,6 +661,48 @@
 }
 .rating-container .reviews-content .search-reviews .filter-icon:hover {
   outline: 2px solid black;
+}
+.rating-container .reviews-content .search-reviews .time-filter {
+  min-width: 120px;
+  position: relative;
+}
+.rating-container .reviews-content .search-reviews .time-filter .time-filter-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 20px;
+  background-color: #E0E0E0;
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease;
+}
+.rating-container .reviews-content .search-reviews .time-filter .time-filter-select:focus {
+  background-color: white;
+  border: 1px solid #28a745;
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}
+.rating-container .reviews-content .search-reviews .time-filter .time-filter-select:hover {
+  background-color: #d4d4d4;
+}
+.rating-container .reviews-content .search-reviews .time-filter::after {
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #333;
+}
+@media (max-width: 768px) {
+  .rating-container .reviews-content .search-reviews .time-filter {
+    width: 100%;
+    margin: 10px 0;
+  }
 }
 
 .photos-content .upload-photos h5 {
@@ -1266,28 +1359,20 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 .contact-numbers h5 {
+  color: #2d5a27;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 1.8rem;
-  color: #333333;
-  font-weight: 600;
-  margin-bottom: 25px;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #e0e0e0;
+  gap: 0.75rem;
 }
-.contact-numbers h5 i {
-  background-color: #e8f5e9;
-  color: #28a745;
-  padding: 12px;
+.contact-numbers h5 .fa-phone {
+  background: linear-gradient(135deg, #2d5a27, #3c8c2c);
+  color: white;
+  padding: 0.75rem;
   border-radius: 50%;
   font-size: 1.2rem;
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 .contact-numbers .contact-list {
   list-style-type: none;
@@ -1385,4 +1470,61 @@
 }
 .bookmark .bookmark-button .material-symbols-outlined {
   font-size: 2rem;
+}
+
+.mountain-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+.mountain-icon .material-symbols-outlined {
+  font-size: 3rem;
+  background: linear-gradient(135deg, #2d5a27, #3c8c2c);
+  color: white;
+  padding: 1rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.mountain-icon .material-symbols-outlined::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+  transition: left 0.5s ease;
+}
+.mountain-icon .material-symbols-outlined:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #3c8c2c, #2d5a27);
+}
+.mountain-icon .material-symbols-outlined:hover::before {
+  left: 100%;
+}
+.mountain-icon .material-symbols-outlined:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+@media (max-width: 768px) {
+  .mountain-icon {
+    margin-top: 0.5rem;
+  }
+  .mountain-icon .material-symbols-outlined {
+    font-size: 2.5rem;
+    padding: 0.8rem;
+  }
+}
+@media (max-width: 576px) {
+  .mountain-icon .material-symbols-outlined {
+    font-size: 2rem;
+    padding: 0.6rem;
+  }
 }/*# sourceMappingURL=mountains_profiles.css.map */

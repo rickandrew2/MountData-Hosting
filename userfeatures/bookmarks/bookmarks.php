@@ -259,6 +259,19 @@ include('../../db_connection.php'); // Include the database connection
 
         <div class="row">
             <div class="col-md-3 mountain-column" id="mountainColumn">
+                <div class="search-mountains-container mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white">
+                            <span class="material-symbols-outlined">search</span>
+                        </span>
+                        <input
+                            type="text"
+                            id="mountainSearchBar"
+                            class="form-control"
+                            placeholder="Search mountains..."
+                            onkeyup="searchBookmarks()">
+                    </div>
+                </div>
                 <h2 class="mountain-heading mb-3" style="text-align: center;">Mountains
                     <span class="material-symbols-outlined icon-landscape"> landscape </span>
                 </h2>
@@ -365,6 +378,15 @@ include('../../db_connection.php'); // Include the database connection
         const isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>; // true or false based on session
         initModalMap(isLoggedIn);
     </script>
+
+    <script>
+        // Initialize isLoggedIn variable
+        const isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
+    </script>
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqm58SgYCVN-CdOxefv0BPG_PTJ75yINM&callback=initMap&v=weekly&libraries=marker"
+        defer></script>
 
 </body>
 

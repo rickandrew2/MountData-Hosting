@@ -39,7 +39,6 @@ function closeLightbox() {
 
 
 document.getElementById('writeReviewHeader').addEventListener('click', function() {
-    // Move isLoggedIn check to the start
     if (!isLoggedIn) {
         Swal.fire({
             title: 'Login Required',
@@ -55,14 +54,14 @@ document.getElementById('writeReviewHeader').addEventListener('click', function(
                 window.location.href = '/login.php';
             }
         });
-        return; // Exit early if not logged in
+        return;
     }
 
-    // If user is logged in, show the review submission form
+    // Show the combined review form
     Swal.fire({
         title: 'Submit Your Review',
         html: `
-        <form id="reviewForm" style="text-align: left; padding: 10px;">
+        <form id="reviewForm" enctype="multipart/form-data" style="text-align: left; padding: 10px;">
           <div style="margin-bottom: 10px;">
             <label for="rating" style="display: block; font-weight: bold;">Rating:</label>
             <div id="starRating" style="font-size: 24px; color: gray; margin-bottom: 15px;">
@@ -74,112 +73,7 @@ document.getElementById('writeReviewHeader').addEventListener('click', function(
                     <span class="star">★</span>
                 </div>
             </div>
-            <input type="hidden" id="ratingValue" name="ratingValue" value="5"> <!-- Default rating -->
-          </div>
-
-          <div style="margin-bottom: 15px;">
-            <label for="comment" style="display: block; font-weight: bold;">Comment (required):</label>
-            <textarea id="comment" name="comment" placeholder="Write your comment" required style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;"></textarea>
-          </div>
-
-          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-            <button type="button" id="cancelButton" class="swal2-cancel swal2-styled" style="background-color: #d33; color: white; padding: 10px 20px; border-radius: 5px;">Cancel</button>
-            <button type="submit" class="swal2-confirm swal2-styled" style="background-color: #28a745;; color: white; padding: 10px 20px; border-radius: 5px;">Submit Review</button>
-          </div>
-        </form>
-        `,
-        showConfirmButton: false, // Hide the default confirm button
-    });
-
-    // Initialize star rating functionality
-    document.querySelectorAll('#starRating span').forEach((star, index) => {
-        star.addEventListener('click', () => {
-            document.querySelectorAll('#starRating span').forEach(s => s.style.color = 'gray');
-            for (let i = 0; i <= index; i++) {
-                document.querySelectorAll('#starRating span')[i].style.color = '#28a745';
-            }
-            document.getElementById('ratingValue').value = index + 1;
-        });
-    });
-
-    // Cancel button functionality
-    document.getElementById('cancelButton').addEventListener('click', function() {
-        Swal.close();
-    });
-
-    // Handle form submission
-    document.getElementById('reviewForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const formData = new FormData(this);
-        formData.append('user_id', userId); // Assuming userId is defined in your script
-        formData.append('mountain_id', mountainId); // Assuming mountainId is defined in your script
-
-        fetch('userfeatures/reviews/write_review.php', { // Update to your actual PHP file path
-            method: 'POST',
-            body: formData
-        }).then(response => response.text())
-        .then(data => {
-            Swal.fire({
-                title: 'Success!',
-                text: 'Your review has been submitted.',
-                icon: 'success',
-                confirmButtonText: 'Okay',
-                confirmButtonColor: '#28a745'
-            }).then(() => {
-                Swal.close(); // Close the modal after submission
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            Swal.fire({
-                title: 'Error!',
-                text: 'There was an issue uploading your review. Please try again later.',
-                icon: 'error',
-                confirmButtonText: 'Okay',
-                confirmButtonColor: '#d33' // Red color for the button
-            });
-        });
-    });
-});
-
-document.getElementById('uploadBtn').addEventListener('click', function() {
-    // Move isLoggedIn check to the start
-    if (!isLoggedIn) {
-        Swal.fire({
-            title: 'Login Required',
-            text: 'You need to log in to upload photos.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Login',
-            cancelButtonText: 'Cancel',
-            confirmButtonColor: '#28a745',
-            cancelButtonColor: '#d33'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = '/login.php';
-            }
-        });
-        return; // Exit early if not logged in
-    }
-
-    // If user is logged in, show the upload form
-    Swal.fire({
-        title: 'Submit Your Review',
-        html: `
-        <form id="reviewForm" enctype="multipart/form-data" style="text-align: left; padding: 10px;">
-          <div style="margin-bottom: 10px;">
-            <label for="rating" style="display: block; font-weight: bold;">Rating:</label>
-            <div id="starRating" style="font-size: 24px; color: gray; margin-bottom: 15px;">
-           <div id="starRating" class="star-rating">
-                <span class="star">★</span>
-                <span class="star">★</span>
-                <span class="star">★</span>
-                <span class="star">★</span>
-                <span class="star">★</span>
-            </div>
-            </div>
-            <input type="hidden" id="ratingValue" name="ratingValue" value="5"> <!-- Default rating -->
+            <input type="hidden" id="ratingValue" name="ratingValue" value="5">
           </div>
 
           <div style="margin-bottom: 15px;">
@@ -201,7 +95,7 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
           </div>
 
           <div style="margin-bottom: 15px;">
-            <label for="photoUpload" style="display: block; font-weight: bold;">Upload Photos:</label>
+            <label for="photoUpload" style="display: block; font-weight: bold;">Upload Photos (optional):</label>
             <div id="dropzone" style="border: 2px dashed #ccc; padding: 20px; border-radius: 10px; background-color: #f9f9f9; text-align: center;">
               <p style="color: #888;">Drag & Drop photos here or click to upload</p>
               <input type="file" id="photoUpload" name="photoUpload[]" multiple accept="image/*" style="display: none;" />
@@ -211,10 +105,10 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
 
           <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
             <button type="button" id="cancelButton" class="swal2-cancel swal2-styled" style="background-color: #d33; color: white; padding: 10px 20px; border-radius: 5px;">Cancel</button>
-            <button type="submit" class="swal2-confirm swal2-styled" style="background-color:#28a745;; color: white; padding: 10px 20px; border-radius: 5px;">Submit Review</button>
+            <button type="submit" class="swal2-confirm swal2-styled" style="background-color:#28a745; color: white; padding: 10px 20px; border-radius: 5px;">Submit Review</button>
           </div>
         </form>
-    `,
+        `,
         didOpen: () => {
             // Initialize star rating
             document.querySelectorAll('#starRating span').forEach((star, index) => {

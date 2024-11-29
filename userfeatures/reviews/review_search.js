@@ -154,6 +154,39 @@ function generatePhotoHTML(photos) {
             }
         });
     });
+
+    document.getElementById('timeFilter').addEventListener('change', function() {
+        const timeFilter = this.value;
+        const searchQuery = document.getElementById('search-input').value;
+        const mountainId = window.mountainId; // Make sure this is defined in your PHP
+
+        // Update the URL to include the correct path to handle_review_search.php
+        const queryParams = new URLSearchParams({
+            mountain_id: mountainId,
+            search: searchQuery,
+            time: timeFilter
+        });
+
+        fetch(`userfeatures/reviews/handle_review_search.php?${queryParams}`)
+            .then(response => response.json())
+            .then(data => {
+                const reviewsContainer = document.querySelector('.reviews-comments-section');
+                
+                if (data.status === 'no_results') {
+                    reviewsContainer.innerHTML = `
+                        <div class="no-results mt-5" style="text-align: center">
+                            <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">search_off</span>
+                            <h3 class="mt-3">No Reviews Found</h3>
+                            <p style="color: #8a8a8a;">Try adjusting your search or filter criteria.</p>
+                        </div>`;
+                } else {
+                    reviewsContainer.innerHTML = data.reviews.map(review => {
+                        return generateReviewHTML(review);
+                    }).join('');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
 });
 
 

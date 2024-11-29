@@ -307,6 +307,14 @@ if (isset($_GET['protected_feature']) && !$loginStatus) {
                 <div class="search-reviews" style="display: flex; align-items: center; position: relative; width: 100%;">
                     <i class="fas fa-search" style="position: absolute; left: 10px; color: black"></i>
                     <input type="text" placeholder="Search reviews by keyword..." class="search-bar" id="search-input" style="font-size: 1.2rem;">
+                    <div class="time-filter">
+                        <select id="timeFilter" class="time-filter-select">
+                            <option value="all">All Time</option>
+                            <option value="7days">Last 7 Days</option>
+                            <option value="30days">Last 30 Days</option>
+                            <option value="90days">Last 90 Days</option>
+                        </select>
+                    </div>
                     <div class="filter-icon" style="position: absolute; right: 10px; padding: 10px; cursor: pointer;">
                         <i class="fas fa-filter" style="color: black;"></i>
                     </div>
@@ -362,9 +370,9 @@ if (isset($_GET['protected_feature']) && !$loginStatus) {
                         </div>
                     </div>
                     <!-- Upload photos button with responsive margins -->
-                    <div class="upload-photos col-12 col-md-12 col-lg-3" style="text-align: center;">
-                        <h5 class="upload-photos-btn mt-4 mt-lg-0 mx-3" id="uploadBtn">Upload photos</h5>
-                    </div>
+                    <div class="mountain-icon col-12 col-md-12 col-lg-3" style="text-align: center;">
+    <span class="material-symbols-outlined" style="font-size: 2rem;">landscape</span>
+</div>
                 </div>
                 <div class="container">
                     <hr>

@@ -33,6 +33,7 @@ if (!isset($_SESSION['user_id'])) {
     $maxElevation = isset($_GET['maxElevation']) ? (int)$_GET['maxElevation'] : 99999;
     $difficulty = isset($_GET['difficulty']) ? $conn->real_escape_string($_GET['difficulty']) : ''; // Escape user input for security
     $dateFilter = isset($_GET['date']) ? $conn->real_escape_string($_GET['date']) : ''; // Get the date parameter
+    $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 
     // Extract mountain IDs and check if the array is not empty
     $mountainIds = implode(',', array_map('intval', array_column($mountains, 'mountain_id')));
@@ -43,46 +44,55 @@ if (!isset($_SESSION['user_id'])) {
                 WHERE mountain_id IN ($mountainIds) 
                 AND elevation BETWEEN ? AND ?";
 
-        // Add filtering by bookmark date
-        if (!empty($dateFilter)) {
-            switch ($dateFilter) {
-                case 'last7days':
-                    $sql .= " AND EXISTS (SELECT 1 FROM bookmarks WHERE bookmarks.mountain_id = mountains.mountain_id AND bookmarks.user_id = ? AND bookmark_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))";
-                    break;
-                case 'last30days':
-                    $sql .= " AND EXISTS (SELECT 1 FROM bookmarks WHERE bookmarks.mountain_id = mountains.mountain_id AND bookmarks.user_id = ? AND bookmark_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY))";
-                    break;
-                case 'last90days':
-                    $sql .= " AND EXISTS (SELECT 1 FROM bookmarks WHERE bookmarks.mountain_id = mountains.mountain_id AND bookmarks.user_id = ? AND bookmark_date >= DATE_SUB(CURDATE(), INTERVAL 90 DAY))";
-                    break;
-            }
-        }
-
-        // Bind parameters for the final SQL query
+        // Initialize params and types arrays
         $params = [];
+        $types = ''; // Initialize types string
+
+        // Add elevation parameters
         $params[] = $minElevation;
         $params[] = $maxElevation;
+        $types .= 'ii'; // Two integers for elevation
 
-        // Add user ID if a date filter exists
-        if (!empty($dateFilter)) {
-            $params[] = $userId;
+        // Add search condition if search term exists
+        if (!empty($search)) {
+            $sql .= " AND (name LIKE ? OR location LIKE ? OR description LIKE ?)";
+            $searchPattern = "%$search%";
+            $params[] = $searchPattern;
+            $params[] = $searchPattern;
+            $params[] = $searchPattern;
+            $types .= 'sss'; // Three strings for LIKE conditions
         }
 
-        // Bind difficulty if it exists
+        // Add date filter if it exists
+        if (!empty($dateFilter)) {
+            $sql .= " AND EXISTS (SELECT 1 FROM bookmarks WHERE bookmarks.mountain_id = mountains.mountain_id AND bookmarks.user_id = ? AND bookmark_date >= DATE_SUB(CURDATE(), INTERVAL ? DAY))";
+            $params[] = $userId;
+            $types .= 'i'; // Integer for user_id
+
+            // Add appropriate day interval based on filter
+            switch ($dateFilter) {
+                case 'last7days':
+                    $params[] = 7;
+                    break;
+                case 'last30days':
+                    $params[] = 30;
+                    break;
+                case 'last90days':
+                    $params[] = 90;
+                    break;
+            }
+            $types .= 'i'; // Integer for days interval
+        }
+
+        // Add difficulty filter if it exists
         if (!empty($difficulty)) {
             $sql .= " AND difficulty_level = ?";
             $params[] = $difficulty;
+            $types .= 's'; // String for difficulty
         }
 
-        // Prepare the statement with the updated SQL
+        // Prepare and execute the statement
         $stmt = $conn->prepare($sql);
-
-        // Bind parameters dynamically
-        $types = str_repeat('i', count($params) - (empty($difficulty) ? 0 : 1));
-        if (!empty($difficulty)) {
-            $types .= 's';
-        }
-
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
         $result = $stmt->get_result();

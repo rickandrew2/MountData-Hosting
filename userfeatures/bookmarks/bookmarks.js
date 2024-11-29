@@ -33,7 +33,6 @@ function initModalMap(isLoggedIn) {
     const modalMapElement = document.getElementById("modalMap");
 
     if (!isLoggedIn) {
-        // Display message for users who need to log in
         messageContainer.innerHTML = `
             <div class="no-bookmarks mt-5" style="text-align: center;">
                 <span class="material-symbols-outlined" style="display: block; margin: 0 auto; font-size: 5rem;">login</span>
@@ -42,7 +41,6 @@ function initModalMap(isLoggedIn) {
             </div>`;
         modalMapElement.style.display = "none";
     } else {
-        // Clear any login messages and show the map for logged-in users
         messageContainer.innerHTML = '';
         modalMapElement.style.display = "block";
     }
@@ -163,20 +161,57 @@ function filterMountains() {
     const minElevation = document.getElementById('minElevation').value || 0;
     const maxElevation = document.getElementById('maxElevation').value || 99999;
     const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value || '';
-
-    // Get the date filter from the selected radio button
     const dateFilter = getSelectedDateFilter();
+
+    // Show loading state
+    Swal.fire({
+        title: 'Filtering...',
+        text: 'Please wait while we find your bookmarked trails',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => {
+            Swal.showLoading();
+        }
+    });
 
     fetch(`fetch_bookmarks.php?minElevation=${minElevation}&maxElevation=${maxElevation}&difficulty=${difficulty}&date=${dateFilter}`)
         .then(response => response.text())
         .then(data => {
             document.getElementById('mountainList').innerHTML = data;
 
-             // Reattach click event listeners to the new mountain images
-             const mountainImages = document.querySelectorAll('.mountain-pic');
-             mountainImages.forEach((image) => {
-                 image.addEventListener('click', () => handleMountainClick(image));
-             });
+            // Reattach click event listeners
+            const mountainImages = document.querySelectorAll('.mountain-pic');
+            mountainImages.forEach((image) => {
+                image.addEventListener('click', () => handleMountainClick(image));
+            });
+
+            // Show success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Filters Applied!',
+                text: 'Your bookmarks have been updated',
+                timer: 1500,
+                showConfirmButton: false,
+                position: 'top-end',
+                toast: true
+            });
+
+            // Close any open dropdowns
+            const dropdowns = document.querySelectorAll('.dropdown-content');
+            dropdowns.forEach(dropdown => {
+                dropdown.style.display = 'none';
+            });
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while filtering your bookmarks',
+                timer: 1500,
+                showConfirmButton: false,
+                position: 'top-end',
+                toast: true
+            });
         });
 }
 
@@ -205,26 +240,33 @@ function checkLogin() {
     }
 }
 
-// Add this to your existing JavaScript
+// Fix the event listener error by checking if elements exist
 document.addEventListener('DOMContentLoaded', function() {
-    const searchToggle = document.querySelector('.mobile-search-toggle');
     const searchContainer = document.querySelector('.search-container');
-    const navbar = document.querySelector('.navbar-container');
-
-    if (searchToggle) {
+    const searchToggle = document.querySelector('.mobile-search-toggle');
+    
+    if (searchContainer && searchToggle) { // Check if elements exist
         searchToggle.addEventListener('click', function() {
             searchContainer.classList.toggle('active');
-            navbar.classList.toggle('mobile-search-active');
+            const navbar = document.querySelector('.navbar-container');
+            if (navbar) {
+                navbar.classList.toggle('mobile-search-active');
+            }
+        });
+
+        // Close search when clicking outside
+        document.addEventListener('click', function(e) {
+            if (searchContainer && searchToggle) {
+                if (!searchContainer.contains(e.target) && !searchToggle.contains(e.target)) {
+                    searchContainer.classList.remove('active');
+                    const navbar = document.querySelector('.navbar-container');
+                    if (navbar) {
+                        navbar.classList.remove('mobile-search-active');
+                    }
+                }
+            }
         });
     }
-
-    // Close search when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!searchContainer.contains(e.target) && !searchToggle.contains(e.target)) {
-            searchContainer.classList.remove('active');
-            navbar.classList.remove('mobile-search-active');
-        }
-    });
 });
 
 function clearAllFilters() {
@@ -244,4 +286,24 @@ function clearAllFilters() {
     });
 
     filterMountains();
+}
+
+function searchBookmarks() {
+    const searchTerm = document.getElementById('mountainSearchBar').value.toLowerCase();
+
+    // Fetch bookmarks with the search term
+    fetch(`fetch_bookmarks.php?search=${encodeURIComponent(searchTerm)}`)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('mountainList').innerHTML = data;
+
+            // Reattach click event listeners to the new mountain images
+            const mountainImages = document.querySelectorAll('.mountain-pic');
+            mountainImages.forEach((image) => {
+                image.addEventListener('click', () => handleMountainClick(image));
+            });
+        })
+        .catch(error => {
+            console.error('Search failed:', error);
+        });
 }
