@@ -2,21 +2,38 @@
 include '../../db_connection.php'; 
 
 $minElevation = isset($_GET['minElevation']) ? (int)$_GET['minElevation'] : 0;
-$maxElevation = isset($_GET['maxElevation']) ? (int)$_GET['maxElevation'] : 99999;
+$maxElevation = isset($_GET['maxElevation']) ? (int)$_GET['maxElevation'] : null;
 $difficulty = isset($_GET['difficulty']) ? $_GET['difficulty'] : '';
 $locations = isset($_GET['locations']) ? (is_array($_GET['locations']) ? $_GET['locations'] : explode(',', $_GET['locations'])) : [];
+$search = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Build the base SQL query
+// Build the base SQL query with only minElevation
 $sql = "SELECT mountain_id, name, location, elevation, mountain_image, difficulty_level, description, latitude, longitude 
         FROM mountains 
-        WHERE elevation BETWEEN ? AND ?";
+        WHERE elevation >= ?";
 
-$params = [$minElevation, $maxElevation];
+$params = [$minElevation];
+$types = "i"; // Start with one integer parameter
+
+// Add maxElevation condition only if it's provided
+if ($maxElevation !== null) {
+    $sql .= " AND elevation <= ?";
+    $params[] = $maxElevation;
+    $types .= "i";
+}
 
 // Add difficulty filter if specified
 if (!empty($difficulty)) {
     $sql .= " AND difficulty_level = ?";
     $params[] = $difficulty;
+    $types .= "s";
+}
+
+// Add search filter if specified
+if (!empty($search)) {
+    $sql .= " AND name LIKE ?";
+    $params[] = '%' . $search . '%';
+    $types .= "s";
 }
 
 // If the locations array is not empty, process it
@@ -26,7 +43,8 @@ if (!empty($locations)) {
     // Create the LIKE conditions for each location
     foreach ($locations as $location) {
         $locationConditions[] = "location LIKE ?";
-        $params[] = '%' . trim($location) . '%'; // Add wildcards for partial matching
+        $params[] = '%' . trim($location) . '%';
+        $types .= "s";
     }
 
     // Append to the SQL query
@@ -35,12 +53,13 @@ if (!empty($locations)) {
     }
 }
 
-
 // Prepare the SQL statement
 $stmt = $conn->prepare($sql);
 
 // Bind the parameters dynamically
-$stmt->bind_param(str_repeat('s', count($params)), ...$params);
+if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+}
 
 // Execute the query
 $stmt->execute();

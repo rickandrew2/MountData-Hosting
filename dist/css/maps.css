@@ -591,7 +591,7 @@
 .map-container .map-controls {
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 80px;
   z-index: 1;
 }
 .map-container .map-controls .reset-map-btn {
@@ -776,6 +776,31 @@
   margin-left: 8px; /* Adds space between text and icon */
   font-size: 2em; /* Adjust size as needed */
   color: #8FBC8F;
+}
+
+.search-mountains-container {
+  padding: 10px;
+}
+
+.search-mountains-container .input-group {
+  border: 1px solid #28a745;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.search-mountains-container .input-group-text {
+  border: none;
+  background-color: transparent !important;
+  color: #28a745;
+}
+
+.search-mountains-container input {
+  border: none;
+  box-shadow: none !important;
+}
+
+.search-mountains-container input:focus {
+  border: none;
 }
 
 /*FOOTER*/

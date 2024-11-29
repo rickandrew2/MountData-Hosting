@@ -21,6 +21,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
+    // Add name validation
+    if (strlen($username) < 2) {
+        $_SESSION['register_error'] = "Name must be at least 2 characters long.";
+        header('Location: register.php');
+        exit;
+    }
+
+    // Check if name contains numbers or special characters
+    if (!preg_match("/^[a-zA-Z\s]+$/", $username)) {
+        $_SESSION['register_error'] = "Name can only contain letters and spaces.";
+        header('Location: register.php');
+        exit;
+    }
+
     // Debugging line
     var_dump($username, $email, $contact_number, $password, $confirm_password);
 

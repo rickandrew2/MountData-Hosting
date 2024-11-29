@@ -28,6 +28,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+  <!-- reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
 
 <body>
@@ -323,6 +326,9 @@
             <label for="message" class="form-label">Message</label>
             <textarea class="form-control" id="message" name="message" rows="4" placeholder="Type your message here" required></textarea>
           </div>
+
+          <!-- Add reCAPTCHA here -->
+          <div class="g-recaptcha mb-3" data-sitekey="6LdUD18qAAAAAIYxJqGUgDDQuy_rT4LPp8o4-CNt"></div>
 
           <button type="submit" id="sbmit" class="btn" style="background-color: green; color: white;">Submit</button>
         </form>

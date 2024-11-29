@@ -928,7 +928,7 @@ $primary-green: green;
     margin-right: 15px;
 }
   
-  .chat-button {
+.chat-button {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -947,7 +947,7 @@ $primary-green: green;
     }
 }
   
-  .chat-container {
+.chat-container {
     display: none;
     position: fixed;
     bottom: 90px;
@@ -959,117 +959,117 @@ $primary-green: green;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     overflow: hidden;
     margin-right: 15px;
-  }
+}
   
-  .chat-header {
+.chat-header {
     background: #4CAF50;
     color: white;
     padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
+}
   
-  .chat-header h4 {
+.chat-header h4 {
     margin: 0;
-  }
+}
   
-  .close-chat {
+.close-chat {
     background: none;
     border: none;
     color: white;
     font-size: 24px;
     cursor: pointer;
-  }
+}
   
-  .chat-messages {
+.chat-messages {
     height: calc(100% - 120px);
     padding: 15px;
     overflow-y: auto;
     scroll-behavior: smooth;
 
     .message {
-      margin-bottom: 15px;
-      padding: 15px;
-      border-radius: 15px;
-      max-width: 85%;
-      line-height: 1.5;
-      
-      // Style for bullet points and lists
-      ul {
-        margin: 10px 0;
-        padding-left: 20px;
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 15px;
+        max-width: 85%;
+        line-height: 1.5;
         
-        li {
-          margin-bottom: 8px;
-          position: relative;
-          padding-left: 5px;
-          list-style-type: none;
-          
-          &::before {
-            content: "•";
-            color: #4CAF50;
+        // Style for bullet points and lists
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+            
+            li {
+                margin-bottom: 8px;
+                position: relative;
+                padding-left: 5px;
+                list-style-type: none;
+                
+                &::before {
+                    content: "•";
+                    color: #4CAF50;
+                    font-weight: bold;
+                    position: absolute;
+                    left: -15px;
+                }
+            }
+        }
+
+        // Style for emojis
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+
+        // Style for section headers
+        .section-header {
             font-weight: bold;
-            position: absolute;
-            left: -15px;
-          }
-        }
-      }
-
-      // Style for emojis
-      .emoji {
-        font-size: 1.2em;
-        margin-right: 5px;
-      }
-
-      // Style for section headers
-      .section-header {
-        font-weight: bold;
-        margin: 12px 0 8px 0;
-        color: #2E7D32;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      &.user {
-        background: #E8F5E9;
-        margin-left: auto;
-        color: #1B5E20;
-      }
-
-      &.bot {
-        background: #F5F5F5;
-        color: #333;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-
-        // Additional styling for bot messages
-        p {
-          margin: 0 0 10px 0;
+            margin: 12px 0 8px 0;
+            color: #2E7D32;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        strong {
-          color: #2E7D32;
+        &.user {
+            background: #E8F5E9;
+            margin-left: auto;
+            color: #1B5E20;
         }
-      }
+
+        &.bot {
+            background: #F5F5F5;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+
+            // Additional styling for bot messages
+            p {
+                margin: 0 0 10px 0;
+            }
+
+            strong {
+                color: #2E7D32;
+            }
+        }
     }
-  }
+}
 
-  // Improve scrollbar appearance
-  .chat-messages::-webkit-scrollbar {
+// Improve scrollbar appearance
+.chat-messages::-webkit-scrollbar {
     width: 6px;
-  }
+}
 
-  .chat-messages::-webkit-scrollbar-track {
+.chat-messages::-webkit-scrollbar-track {
     background: #f1f1f1;
-  }
+}
 
-  .chat-messages::-webkit-scrollbar-thumb {
+.chat-messages::-webkit-scrollbar-thumb {
     background: #4CAF50;
     border-radius: 3px;
-  }
+}
 
-  .chat-input {
+.chat-input {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -1134,31 +1134,31 @@ $primary-green: green;
     margin-bottom: 10px;
 
     span {
-      width: 8px;
-      height: 8px;
-      background: #90A4AE;
-      border-radius: 50%;
-      animation: bounce 1.3s linear infinite;
+        width: 8px;
+        height: 8px;
+        background: #90A4AE;
+        border-radius: 50%;
+        animation: bounce 1.3s linear infinite;
 
-      &:nth-child(2) {
-        animation-delay: 0.15s;
-      }
+        &:nth-child(2) {
+            animation-delay: 0.15s;
+        }
 
-      &:nth-child(3) {
-        animation-delay: 0.3s;
-      }
+        &:nth-child(3) {
+            animation-delay: 0.3s;
+        }
     }
-  }
+}
 
 
 // Typing Indicator Animation
 @keyframes bounce {
-  0%, 60%, 100% {
-    transform: translateY(0);
-  }
-  30% {
-    transform: translateY(-4px);
-  }
+    0%, 60%, 100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-4px);
+    }
 }
 
 .chat-messages {
@@ -1243,4 +1243,10 @@ $primary-green: green;
             transform: scale(0.98);
         }
     }
+}
+
+.honeypot {
+    display: none !important;
+    position: absolute !important;
+    left: -9999px !important;
 }

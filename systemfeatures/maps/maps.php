@@ -240,31 +240,43 @@ include('../../db_connection.php'); // Include the database connection
                             <label class="d-block"><input type="radio" name="difficulty" value="easy"> Easy</label>
                             <label class="d-block"><input type="radio" name="difficulty" value="moderate"> Moderate</label>
                             <label class="d-block"><input type="radio" name="difficulty" value="challenging"> Challenging</label>
-                        <div class="mb-3">
-                            <h6>Location:</h6>
-                            <label class="d-block"><input type="checkbox" name="location" value="Batangas"> Batangas</label>
-                            <label class="d-block"><input type="checkbox" name="location" value="Cavite"> Cavite</label>
-                            <label class="d-block"><input type="checkbox" name="location" value="Laguna"> Laguna</label>
-                            <label class="d-block"><input type="checkbox" name="location" value="Rizal"> Rizal</label>
-                            <label class="d-block"><input type="checkbox" name="location" value="Quezon"> Quezon</label>
+                            <div class="mb-3">
+                                <h6>Location:</h6>
+                                <label class="d-block"><input type="checkbox" name="location" value="Batangas"> Batangas</label>
+                                <label class="d-block"><input type="checkbox" name="location" value="Cavite"> Cavite</label>
+                                <label class="d-block"><input type="checkbox" name="location" value="Laguna"> Laguna</label>
+                                <label class="d-block"><input type="checkbox" name="location" value="Rizal"> Rizal</label>
+                                <label class="d-block"><input type="checkbox" name="location" value="Quezon"> Quezon</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="clearAllFilters()">Clear All</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" onclick="filterMountains()">Apply Filters</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="clearAllFilters()">Clear All</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" onclick="filterMountains()">Apply Filters</button>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
-
     </div>
-    </div>
-
-
 
     <div class="row">
         <div class="col-md-3 mountain-column" id="mountainColumn">
+            <div class="search-mountains-container mb-3">
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <span class="material-symbols-outlined">search</span>
+                    </span>
+                    <input
+                        type="text"
+                        id="mountainSearchBar"
+                        class="form-control"
+                        placeholder="Search mountains..."
+                        onkeyup="searchMountains()">
+                </div>
+            </div>
+
             <h2 class="mountain-heading mb-3" style="text-align: center;">Mountains
                 <span class="material-symbols-outlined icon-landscape"> landscape </span>
             </h2>

@@ -222,18 +222,41 @@ function clearLocation() {
 
 function filterMountains() {
     const minElevation = document.getElementById('minElevation').value || 0;
-    const maxElevation = document.getElementById('maxElevation').value || 99999;
+    const maxElevation = document.getElementById('maxElevation').value || null;
     const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value || '';
 
     // Get selected locations as an array
     const locationCheckboxes = document.querySelectorAll('input[name="location"]:checked');
     const locations = Array.from(locationCheckboxes).map(checkbox => checkbox.value);
 
-    // Convert locations array to URL parameters
-    const locationParams = locations.map(loc => `locations[]=${encodeURIComponent(loc)}`).join('&');
+    // Show loading state
+    Swal.fire({
+        title: 'Filtering...',
+        text: 'Please wait while we find your perfect trails',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => {
+            Swal.showLoading();
+        }
+    });
 
-    // Fetch with updated URL to include locations array
-    fetch(`fetch_mountains.php?minElevation=${minElevation}&maxElevation=${maxElevation}&difficulty=${difficulty}&${locationParams}`)
+    // Build URL parameters, only include maxElevation if it has a value
+    let params = `minElevation=${minElevation}`;
+    if (maxElevation !== null) {
+        params += `&maxElevation=${maxElevation}`;
+    }
+    if (difficulty) {
+        params += `&difficulty=${difficulty}`;
+    }
+    
+    // Add location parameters
+    const locationParams = locations.map(loc => `locations[]=${encodeURIComponent(loc)}`).join('&');
+    if (locationParams) {
+        params += `&${locationParams}`;
+    }
+
+    // Fetch with updated URL
+    fetch(`fetch_mountains.php?${params}`)
         .then(response => response.text())
         .then(data => {
             document.getElementById('mountainList').innerHTML = data;
@@ -243,6 +266,54 @@ function filterMountains() {
             mountainImages.forEach((image) => {
                 image.addEventListener('click', () => handleMountainClick(image));
             });
+
+            // Close loading state and show success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Filters Applied!',
+                text: 'Your results have been updated',
+                timer: 1500,
+                showConfirmButton: false,
+                position: 'top-end',
+                toast: true
+            });
+
+            // Close any open dropdowns
+            const dropdowns = document.querySelectorAll('.dropdown-content');
+            dropdowns.forEach(dropdown => {
+                dropdown.style.display = 'none';
+            });
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong while filtering!',
+                timer: 2000,
+                showConfirmButton: false,
+                position: 'top-end',
+                toast: true
+            });
+        });
+}
+
+function searchMountains() {
+    const searchTerm = document.getElementById('mountainSearchBar').value.toLowerCase();
+
+    // Fetch mountains with the search term
+    fetch(`fetch_mountains.php?search=${encodeURIComponent(searchTerm)}`)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('mountainList').innerHTML = data;
+
+            // Reattach click event listeners to the new mountain images
+            const mountainImages = document.querySelectorAll('.mountain-pic');
+            mountainImages.forEach((image) => {
+                image.addEventListener('click', () => handleMountainClick(image));
+            });
+        })
+        .catch(error => {
+            console.error('Search failed:', error);
         });
 }
 
@@ -260,6 +331,17 @@ function clearAllFilters() {
     // Clear location checkboxes
     document.querySelectorAll('input[name="location"]').forEach(checkbox => {
         checkbox.checked = false;
+    });
+
+    // Show notification
+    Swal.fire({
+        icon: 'info',
+        title: 'Filters Cleared!',
+        text: 'Showing all mountains',
+        timer: 1500,
+        showConfirmButton: false,
+        position: 'top-end',
+        toast: true
     });
 
     filterMountains();

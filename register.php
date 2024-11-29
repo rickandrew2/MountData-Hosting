@@ -325,7 +325,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <form action="register.php" method="POST">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Name</label>
-                                        <input type="text" name="name" class="form-control custom-input" placeholder="Your Name" required>
+                                        <input type="text" 
+                                               name="name" 
+                                               class="form-control custom-input" 
+                                               placeholder="Your Name" 
+                                               pattern="[A-Za-z\s]+"
+                                               title="Name can only contain letters and spaces"
+                                               minlength="2"
+                                               required>
+                                        <small class="text-muted">Name must contain only letters and spaces</small>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
