@@ -183,7 +183,9 @@ function checkLogin() {
             },
             hideClass: {
                 popup: 'animate__animated animate__fadeOutUp' // Animation for hiding the popup
-            }
+            },
+            heightAuto: false,
+            scrollbarPadding: false
         });
     }
 }

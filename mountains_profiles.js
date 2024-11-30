@@ -127,42 +127,40 @@ document.getElementById('writeReviewHeader').addEventListener('click', function(
             const tags = [];
 
             tagsContainer.querySelectorAll('.tag').forEach(tag => {
-                tag.style.cursor = 'pointer'; // Cursor change for clickable tags
-                tag.style.padding = '8px 12px'; // Padding for tags
-                tag.style.borderRadius = '20px'; // Rounded corners
-                tag.style.border = '1px solid #ccc'; // Border style
-                tag.style.transition = 'background-color 0.3s, border-color 0.3s'; // Transition effects
+                const tagValue = tag.getAttribute('data-tag');
+                
+                tag.style.cursor = 'pointer';
+                tag.style.padding = '8px 12px';
+                tag.style.borderRadius = '20px';
+                tag.style.border = '1px solid #ccc';
+                tag.style.transition = 'background-color 0.3s, border-color 0.3s';
 
                 tag.addEventListener('click', () => {
-                    const tagValue = tag.getAttribute('data-tag');
-
-                    // Toggle tag selection
                     if (tags.includes(tagValue)) {
-                        tags.splice(tags.indexOf(tagValue), 1); // Remove if already selected
-                        tag.style.backgroundColor = ''; // Reset background
-                        tag.style.borderColor = '#ccc'; // Reset border color
-                        tag.style.color = ''; // Reset text color
+                        tags.splice(tags.indexOf(tagValue), 1);
+                        tag.style.backgroundColor = '';
+                        tag.style.borderColor = '#ccc';
+                        tag.style.color = '';
                     } else {
-                        tags.push(tagValue); // Add if not selected
-                        tag.style.backgroundColor = '#b2e0b2'; // Light Mint Green
-                        tag.style.borderColor = '#388e3c'; // Darker Green
-                        tag.style.color = 'white'; // White text
+                        tags.push(tagValue);
+                        tag.style.backgroundColor = '#b2e0b2';
+                        tag.style.borderColor = '#388e3c';
+                        tag.style.color = 'white';
                     }
 
-                    // Update the hidden input with selected tags
                     selectedTagsInput.value = JSON.stringify(tags);
                 });
 
-                // Hover effect for tags
+                // Use the same tagValue variable for hover effects
                 tag.addEventListener('mouseover', () => {
                     if (!tags.includes(tagValue)) {
-                        tag.style.backgroundColor = '#f0f8ff'; // Light background on hover
+                        tag.style.backgroundColor = '#f0f8ff';
                     }
                 });
 
                 tag.addEventListener('mouseout', () => {
                     if (!tags.includes(tagValue)) {
-                        tag.style.backgroundColor = ''; // Reset background
+                        tag.style.backgroundColor = '';
                     }
                 });
             });
@@ -220,13 +218,51 @@ document.getElementById('writeReviewHeader').addEventListener('click', function(
         event.preventDefault();
 
         const formData = new FormData(this);
-        formData.append('user_id', userId);
         formData.append('mountain_id', mountainId);
 
-        fetch('userfeatures/reviews/upload_photo.php', {
-            method: 'POST', 
-            body: formData
-        }).then(response => response.text())
+        // First, check for profanity
+        fetch('/userfeatures/reviews/write_review.php', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            // Log the raw response for debugging
+            response.clone().text().then(text => {
+                console.log('Raw response:', text);
+                // Try to extract JSON from the response if it contains HTML
+                const jsonMatch = text.match(/\{.*\}/);
+                if (jsonMatch) {
+                    return JSON.parse(jsonMatch[0]);
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Parsed data:', data);
+            
+            if (data.status === 'error') {
+                throw new Error(data.message);
+            }
+
+            // If no profanity, proceed with photo upload
+            return fetch('/userfeatures/reviews/upload_photo.php', {
+                method: 'POST',
+                body: formData
+            });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Photo upload failed');
+            }
+            return response.text();
+        })
         .then(data => {
             Swal.fire({
                 title: 'Success!',
@@ -235,19 +271,19 @@ document.getElementById('writeReviewHeader').addEventListener('click', function(
                 confirmButtonText: 'Okay',
                 confirmButtonColor: '#28a745'
             }).then(() => {
-                // Reset the form and close the alert
                 document.getElementById('reviewForm').reset();
-                preview.innerHTML = ''; // Clear previews
+                document.getElementById('preview').innerHTML = '';
+                location.reload();
             });
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error details:', error);
             Swal.fire({
                 title: 'Error!',
-                text: 'There was an issue uploading your review. Please try again later.',
+                text: error.message || 'There was an issue uploading your review. Please try again later.',
                 icon: 'error',
                 confirmButtonText: 'Okay',
-                confirmButtonColor: '#d33' // Red color for the button
+                confirmButtonColor: '#d33'
             });
         });
     });

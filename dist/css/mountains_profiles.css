@@ -636,9 +636,46 @@
 @media (max-width: 768px) {
   .rating-container .reviews-content .search-reviews {
     flex-direction: column;
+    gap: 0.75rem;
+  }
+  .rating-container .reviews-content .search-reviews .search-bar {
+    order: 1;
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 0.5rem;
   }
   .rating-container .reviews-content .search-reviews .filter-container {
+    order: 2;
     width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  .rating-container .reviews-content .search-reviews .filter-container .filter-select {
+    padding: 0.75rem 1rem;
+  }
+  .rating-container .reviews-content .search-reviews .time-filter {
+    order: 3;
+    width: 100%;
+    margin: 0;
+  }
+  .rating-container .reviews-content .search-reviews .time-filter .time-filter-select {
+    padding: 0.75rem 1rem;
+  }
+  .rating-container .reviews-content .search-reviews .filter-icon {
+    position: absolute;
+    right: 0.75rem;
+    top: 0.75rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 480px) {
+  .rating-container .reviews-content .search-reviews {
+    margin: 1rem 0.5rem;
+  }
+  .rating-container .reviews-content .search-reviews .search-bar,
+  .rating-container .reviews-content .search-reviews .filter-select,
+  .rating-container .reviews-content .search-reviews .time-filter-select {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
   }
 }
 .rating-container .reviews-content .search-reviews .search-bar {
