@@ -13,7 +13,7 @@
   <!-- Favicon -->
   <link rel="icon" href="images/logomount.png" type="image/png" />
 
-  <!--SWEET ALERT CDN-->
+  <!--SWEET ALERT CDNNNN-->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.2/dist/sweetalert2.all.min.js"></script>
 
   <!--SweetAlert CSS-->
